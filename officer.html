@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Officer Dashboard - JanSetu</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="officer.css">
+</head>
+<body class="bg-light">
+
+    <!-- Navbar -->
+    <nav class="navbar" style="position: fixed; width: 100%; top: 0; z-index: 1000;">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-bridge-water"></i> Jan<span>Setu</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="portal.html">Citizen Portal</a>
+                <a href="#" class="btn btn-primary" id="logout-btn" class="hidden">Sign Out</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Officer Dashboard Section -->
+    <section id="dashboard-section" class="officer-dashboard active">
+        
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <div class="officer-profile">
+                <div class="avatar">
+                    <img src="https://ui-avatars.com/api/?name=Officer+Demo&background=0b3b60&color=fff" alt="Officer">
+                </div>
+                <div class="info">
+                    <h4>Officer Sharma</h4>
+                    <span>Zone 4 Field Agent</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-target="view-tasks"><i class="fa-solid fa-list-check"></i> Assigned Tasks</button>
+                <button class="nav-btn" data-target="view-map"><i class="fa-solid fa-map-location-dot"></i> Territory Map</button>
+                <button class="nav-btn" data-target="view-metrics"><i class="fa-solid fa-chart-line"></i> Performance Metrics</button>
+            </nav>
+
+            <div class="escalation-alert mt-4">
+                <h5><i class="fa-solid fa-triangle-exclamation"></i> Escalations</h5>
+                <p>1 task is overdue by 24hrs. Immediate action required.</p>
+                <button class="btn btn-danger btn-sm w-100 mt-2">View Critical</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+
+            <!-- View: Assigned Tasks -->
+            <div id="view-tasks" class="dashboard-view active">
+                <div class="view-header">
+                    <h2>Task Management</h2>
+                    <div class="filters">
+                        <select class="styled-input" id="sort-tasks" onchange="sortTasks()">
+                            <option value="time">Sort by: Time Left to Start</option>
+                            <option value="urgency">Sort by: Urgency Level</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="task-tabs mb-4" style="display:flex; gap:1rem; border-bottom:1px solid var(--border-color); padding-bottom:1rem; flex-wrap:wrap;">
+                    <button class="btn btn-primary task-tab-btn" onclick="filterTasks('assigned', this)">Assigned Works</button>
+                    <button class="btn btn-outline-primary task-tab-btn" onclick="filterTasks('progress', this)">In Progress Works</button>
+                    <button class="btn btn-outline-primary task-tab-btn" onclick="filterTasks('completed', this)">Completed Works</button>
+                    <button class="btn btn-outline-danger task-tab-btn" onclick="filterTasks('escalated', this)">Escalated Works</button>
+                </div>
+
+                <!-- Task List -->
+                <div class="task-grid" id="main-task-grid">
+                    
+                    <!-- Task Card 1 (High Urgency) -->
+                    <div class="task-card border-danger task-item" data-status="assigned" data-urgency="95" data-time="2">
+                        <div class="task-header">
+                            <span class="badge badge-danger"><i class="fa-solid fa-fire"></i> High Urgency (95%)</span>
+                            <span class="ticket-id">#JAN-8942</span>
+                        </div>
+                        <h3 class="task-title">Severe Water Pipe Burst</h3>
+                        <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Sector 14 Main Road</p>
+                        <p class="task-desc mb-2">Citizen reported massive water leakage causing flooding on the main road. Immediate repair required.</p>
+                        
+                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                            <div>
+                                <small class="text-muted" style="display:block;">Time Left to Start:</small>
+                                <strong style="color:var(--text-dark); font-size:1.1rem;">2 Hours</strong>
+                            </div>
+                            <div>
+                                <small class="text-muted" style="display:block;">Crowd Validation:</small>
+                                <strong style="font-size:1.1rem;">85% Valid <span style="font-size:0.85rem; font-weight:normal;">(<span style="color:var(--accent-color);">42 Yes</span> / <span style="color:#e74c3c;">7 No</span>)</span></strong>
+                            </div>
+                        </div>
+
+                        <div class="task-status-control mt-3">
+                            <label>Update Status:</label>
+                            <select class="styled-input status-select" data-ticket="JAN-8942" onchange="updateTaskStatus(this, 'JAN-8942')">
+                                <option value="assigned" selected>Assigned</option>
+                                <option value="progress">In Progress</option>
+                                <option value="completed">Mark as Resolved</option>
+                            </select>
+                        </div>
+
+                        <!-- AI Verification Section (Hidden until Resolved is selected) -->
+                        <div class="resolution-panel hidden" id="res-JAN-8942">
+                            <hr>
+                            <h5 class="mb-2"><i class="fa-solid fa-camera"></i> Proof of Work</h5>
+                            <div class="upload-grid">
+                                <div class="upload-box before-img">
+                                    <small>Citizen's Image</small>
+                                    <img src="https://images.unsplash.com/photo-1541888062084-25e2978083a2?w=300&q=80" alt="Before">
+                                </div>
+                                <div class="upload-box after-img" onclick="document.getElementById('upload-8942').click()">
+                                    <small>Upload Resolution Image</small>
+                                    <i class="fa-solid fa-upload" style="font-size: 2rem; color: var(--text-muted); margin-top:1rem;"></i>
+                                    <input type="file" id="upload-8942" class="hidden" accept="image/*" onchange="previewResolution(this, 'res-preview-8942', 'verify-8942')">
+                                    <img src="" id="res-preview-8942" class="hidden" alt="After">
+                                </div>
+                            </div>
+                            <button class="btn btn-accent w-100 mt-3 hidden" id="verify-8942" onclick="runAIVerification('JAN-8942')"><i class="fa-solid fa-robot"></i> Run AI Verification</button>
+                            
+                            <!-- AI Results -->
+                            <div class="ai-verification-result hidden" id="ai-res-JAN-8942">
+                                <div class="confidence-circle" style="--percent: 94;">
+                                    <span>94%</span>
+                                </div>
+                                <div class="ai-text">
+                                    <strong>AI Analysis: Issue Resolved</strong>
+                                    <p>Visual comparison confirms the structural anomaly has been repaired. Ready for community validation.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Task Card 2 (Medium Urgency) -->
+                    <div class="task-card border-warning task-item" data-status="progress" data-urgency="65" data-time="12">
+                        <div class="task-header">
+                            <span class="badge badge-warning"><i class="fa-solid fa-triangle-exclamation"></i> Medium Urgency (65%)</span>
+                            <span class="ticket-id">#JAN-5021</span>
+                        </div>
+                        <h3 class="task-title">Uncollected Garbage Pile</h3>
+                        <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Indiranagar, Market Area</p>
+                        <p class="task-desc mb-2">Waste bin has not been cleared for 3 days. Strong odor reported by multiple citizens.</p>
+                        
+                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                            <div>
+                                <small class="text-muted" style="display:block;">Time Left to Complete:</small>
+                                <strong style="color:var(--text-dark); font-size:1.1rem;">12 Hours</strong>
+                            </div>
+                            <div>
+                                <small class="text-muted" style="display:block;">Crowd Validation:</small>
+                                <strong style="font-size:1.1rem;">92% Valid <span style="font-size:0.85rem; font-weight:normal;">(<span style="color:var(--accent-color);">115 Yes</span> / <span style="color:#e74c3c;">10 No</span>)</span></strong>
+                            </div>
+                        </div>
+
+                        <div class="task-status-control mt-3">
+                            <label>Update Status:</label>
+                            <select class="styled-input status-select" data-ticket="JAN-5021" onchange="updateTaskStatus(this, 'JAN-5021')">
+                                <option value="assigned">Assigned</option>
+                                <option value="progress" selected>In Progress</option>
+                                <option value="completed">Mark as Resolved</option>
+                            </select>
+                        </div>
+                        
+                        <!-- AI Verification Section -->
+                        <div class="resolution-panel hidden" id="res-JAN-5021">
+                            <hr>
+                            <h5 class="mb-2"><i class="fa-solid fa-camera"></i> Proof of Work</h5>
+                            <div class="upload-grid">
+                                <div class="upload-box before-img" style="background:#eaf2f8; display:flex; align-items:center; justify-content:center;">
+                                    <span>No Image Provided</span>
+                                </div>
+                                <div class="upload-box after-img" onclick="document.getElementById('upload-5021').click()">
+                                    <small>Upload Resolution Image</small>
+                                    <i class="fa-solid fa-upload" style="font-size: 2rem; color: var(--text-muted); margin-top:1rem;"></i>
+                                    <input type="file" id="upload-5021" class="hidden" accept="image/*" onchange="previewResolution(this, 'res-preview-5021', 'verify-5021')">
+                                    <img src="" id="res-preview-5021" class="hidden" alt="After">
+                                </div>
+                            </div>
+                            <button class="btn btn-accent w-100 mt-3 hidden" id="verify-5021" onclick="runAIVerification('JAN-5021')"><i class="fa-solid fa-robot"></i> Run AI Verification</button>
+                            
+                            <!-- AI Results -->
+                            <div class="ai-verification-result hidden" id="ai-res-JAN-5021">
+                                <div class="confidence-circle" style="--percent: 88;">
+                                    <span>88%</span>
+                                </div>
+                                <div class="ai-text">
+                                    <strong>AI Analysis: Clean Area Detected</strong>
+                                    <p>Area matches standard cleanliness metrics. Ready for closure.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- View: Map -->
+            <div id="view-map" class="dashboard-view hidden">
+                <div class="view-header">
+                    <h2>Territory Map Overview</h2>
+                    <p class="text-muted">Visualizing open complaints in your assigned zones.</p>
+                </div>
+                <div class="map-container">
+                    <div id="real-map" style="width: 100%; height: 600px; border-radius: 8px;"></div>
+                </div>
+            </div>
+
+            <!-- View: Metrics -->
+            <div id="view-metrics" class="dashboard-view hidden">
+                <div class="view-header">
+                    <h2>Officer Performance Dashboard</h2>
+                    <p class="text-muted">Metrics for current month.</p>
+                </div>
+                
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon bg-primary text-white"><i class="fa-solid fa-check-double"></i></div>
+                        <div class="metric-data">
+                            <h3>142</h3>
+                            <p>Tasks Completed</p>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon bg-warning text-white"><i class="fa-solid fa-stopwatch"></i></div>
+                        <div class="metric-data">
+                            <h3>24 hrs</h3>
+                            <p>Avg Resolution Time</p>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon bg-accent text-white"><i class="fa-solid fa-users"></i></div>
+                        <div class="metric-data">
+                            <h3>96%</h3>
+                            <p>Crowd Validation Rate</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container mt-4">
+                    <h3>Resolution Trend</h3>
+                    <div class="mock-chart">
+                        <!-- CSS Mock Bar Chart -->
+                        <div class="bar-col"><div class="bar" style="height: 40%"></div><span>Week 1</span></div>
+                        <div class="bar-col"><div class="bar" style="height: 65%"></div><span>Week 2</span></div>
+                        <div class="bar-col"><div class="bar" style="height: 50%"></div><span>Week 3</span></div>
+                        <div class="bar-col"><div class="bar" style="height: 90%; background: var(--accent-color)"></div><span>Week 4</span></div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </section>
+
+    <!-- Success Feedback Modal -->
+    <div class="modal-overlay hidden" id="officer-success-modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="success-icon">
+                <i class="fa-solid fa-check-double"></i>
+            </div>
+            <h2>Resolution Submitted</h2>
+            <p>The AI verification was successful and the issue has been routed to the citizen for crowd validation.</p>
+            <button class="btn btn-primary w-100 mt-3" onclick="closeSuccessModal()">Continue Work</button>
+        </div>
+    </div>
+
+    <script src="officer.js"></script>
+</body>
+</html>
