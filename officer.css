@@ -440,3 +440,22 @@
     font-size: 0.85rem;
     color: var(--text-muted);
 }
+
+/* Map Tooltips */
+.area-tooltip {
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    color: var(--primary-color);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    line-height: 1.4;
+}
+
+.area-tooltip b {
+    color: var(--text-dark);
+}
+

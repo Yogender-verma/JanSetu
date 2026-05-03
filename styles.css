@@ -43,6 +43,9 @@ ul {
 }
 
 /* Utilities */
+.hidden {
+    display: none !important;
+}
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -205,7 +208,7 @@ ul {
 
 .nav-links {
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
 }
 
 .nav-links a {
@@ -392,7 +395,7 @@ ul {
 .problem-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    gap: 1rem;
 }
 
 .problem-card {
@@ -440,7 +443,7 @@ ul {
 .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
+    gap: 1rem;
 }
 
 .feature-box {
@@ -547,7 +550,7 @@ ul {
 .impact-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
+    gap: 1rem;
     text-align: center;
 }
 
@@ -693,7 +696,7 @@ ul {
     .workflow-timeline {
         flex-direction: column;
         align-items: center;
-        gap: 2rem;
+        gap: 1rem;
     }
     
     .workflow-timeline::before {
@@ -735,4 +738,159 @@ ul {
     .footer-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(11, 59, 96, 0.6);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    animation: fadeInUp 0.4s ease;
+}
+
+.modal-content h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.modal-content p {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(39, 174, 96, 0.1);
+    color: var(--accent-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    margin: 0 auto 1.5rem;
+}
+
+
+/* Dark Mode */
+[data-theme="dark"] {
+    --primary-color: #3b82f6;
+    --primary-light: #1d4ed8;
+    --text-dark: #f1f5f9;
+    --text-muted: #94a3b8;
+    --bg-light: #0f172a;
+    --white: #1e293b;
+    --border-color: #334155;
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.5);
+}
+
+[data-theme="dark"] body {
+    background-color: #0f172a;
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .navbar {
+    background: rgba(30, 41, 59, 0.95);
+    border-bottom: 1px solid #334155;
+}
+
+[data-theme="dark"] .glass-card, 
+[data-theme="dark"] .feature-card, 
+[data-theme="dark"] .step-card, 
+[data-theme="dark"] .impact-card {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .admin-panel,
+[data-theme="dark"] .portal-panel {
+    background: #1e293b !important;
+    border-color: #334155;
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+    background: #0f172a !important;
+    color: #f1f5f9 !important;
+    border-color: #334155 !important;
+}
+
+[data-theme="dark"] table th {
+    background: #0f172a !important;
+}
+
+[data-theme="dark"] tr {
+    border-color: #334155 !important;
+}
+
+[data-theme="dark"] .stat-card,
+[data-theme="dark"] .insight-box,
+[data-theme="dark"] [style*="background: #f8faff"],
+[data-theme="dark"] [style*="background: #fdfaf3"],
+[data-theme="dark"] [style*="background: #fbf8fc"],
+[data-theme="dark"] [style*="background: #f8f9f9"],
+[data-theme="dark"] [style*="background: #fffdf8"],
+[data-theme="dark"] [style*="background: #fdf3f2"] {
+    background: #0f172a !important;
+}
+
+[data-theme="dark"] .view-header h2,
+[data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3, [data-theme="dark"] h4, [data-theme="dark"] h5 {
+    color: #f1f5f9 !important;
+}
+
+/* Theme Toggle & Lang Selector */
+.control-panel {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: 1rem;
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    color: var(--text-dark);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.theme-toggle:hover {
+    color: var(--primary-color);
+}
+
+.lang-select {
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    background: var(--white);
+    color: var(--text-dark);
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.navbar:not(.scrolled) .logo {
+    color: var(--white);
 }

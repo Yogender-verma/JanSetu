@@ -1,492 +1,461 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Citizen Portal | JanSetu</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="portal.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Citizen Portal | JanSetu</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="styles.css" rel="stylesheet"/>
+<link href="portal.css" rel="stylesheet"/>
 </head>
 <body class="bg-light">
-    <!-- Navbar -->
-    <nav class="navbar scrolled" id="portal-navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo">
-                <span class="logo-icon"><i class="fa-solid fa-bridge-water"></i></span>
-                <span class="logo-text">Jan<span class="logo-highlight">Setu</span></span>
-            </a>
-            <div class="nav-actions">
-                <a href="index.html" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
-                <button id="logout-btn" class="btn btn-secondary btn-sm hidden"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Container -->
-    <main class="portal-main">
-        <!-- Login Section -->
-        <section id="login-section" class="portal-section active">
-            <div class="login-container">
-                <div class="login-header">
-                    <h2>Welcome to JanSetu</h2>
-                    <p>Select your role to access the correct dashboard.</p>
-                </div>
-
-                <div class="role-selector mb-4" style="display:flex; background:#eaf2f8; padding:0.5rem; border-radius:8px; gap:0.5rem;">
-                    <button type="button" id="role-citizen" class="btn btn-primary" style="flex:1; border-radius:6px; box-shadow:none;"><i class="fa-solid fa-user"></i> Citizen</button>
-                    <button type="button" id="role-officer" class="btn" style="flex:1; border-radius:6px; background:transparent; color:var(--text-muted);"><i class="fa-solid fa-shield-halved"></i> Officer</button>
-                </div>
-                
-                <div class="demo-credentials" id="demo-creds-citizen">
-                    <div class="demo-badge"><i class="fa-solid fa-circle-info"></i> Citizen Demo Credentials</div>
-                    <div class="demo-grid">
-                        <div class="demo-item">
-                            <span>Username:</span>
-                            <strong>citizen_demo</strong>
-                        </div>
-                        <div class="demo-item">
-                            <span>Password:</span>
-                            <strong>jan123</strong>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="demo-credentials hidden" id="demo-creds-officer" style="border-color:var(--primary-color); background:#f8faff;">
-                    <div class="demo-badge" style="color:var(--primary-color);"><i class="fa-solid fa-circle-info"></i> Officer Demo Credentials</div>
-                    <div class="demo-grid">
-                        <div class="demo-item">
-                            <span>Username:</span>
-                            <strong>officer_demo</strong>
-                        </div>
-                        <div class="demo-item">
-                            <span>Password:</span>
-                            <strong>jan123</strong>
-                        </div>
-                    </div>
-                </div>
-
-                <form id="login-form" class="portal-form">
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <div class="input-with-icon">
-                            <i class="fa-solid fa-user"></i>
-                            <input type="text" id="username" placeholder="Enter username" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <div class="input-with-icon">
-                            <i class="fa-solid fa-lock"></i>
-                            <input type="password" id="password" placeholder="Enter password" required>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Login to Portal</button>
-                </form>
-            </div>
-        </section>
-
-        <!-- Dashboard Section -->
-        <section id="report-section" class="portal-section hidden">
-            <div class="dashboard-container">
-                <div class="dashboard-header">
-                    <div>
-                        <h2>Citizen Dashboard</h2>
-                        <p>Report issues, track progress, and validate community repairs.</p>
-                    </div>
-                    <div class="user-badge">
-                        <div class="avatar"><i class="fa-solid fa-user"></i></div>
-                        <span>Citizen</span>
-                    </div>
-                </div>
-
-                <!-- Main Navigation Tabs -->
-                <div class="portal-tabs main-tabs">
-                    <button class="tab-btn main-tab-btn active" data-tab="tab-report">
-                        <i class="fa-solid fa-bullhorn"></i> Report Issue
+<!-- Navbar -->
+<nav class="navbar scrolled" id="portal-navbar">
+<div class="nav-container">
+<a class="logo" href="index.html">
+<span class="logo-icon"><i class="fa-solid fa-bridge-water"></i></span>
+<span class="logo-text">Jan<span class="logo-highlight">Setu</span></span>
+</a>
+<div class="nav-actions">
+<a class="btn btn-outline-primary btn-sm" href="index.html"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+<button class="btn btn-secondary btn-sm hidden" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+</div>
+</div>
+</nav>
+<!-- Main Container -->
+<main class="portal-main">
+<!-- Login Section -->
+<section class="portal-section active" id="login-section">
+<div class="login-container">
+<div class="login-header">
+<h2>Welcome to JanSetu</h2>
+<p>Select your role to access the correct dashboard.</p>
+</div>
+<div class="role-selector mb-4" style="display:flex; background:#eaf2f8; padding:0.5rem; border-radius:8px; gap:0.5rem;">
+<button class="btn btn-primary" id="role-citizen" style="flex:1; border-radius:6px; box-shadow:none;" type="button"><i class="fa-solid fa-user"></i> Citizen</button>
+<button class="btn" id="role-officer" style="flex:1; border-radius:6px; background:transparent; color:var(--text-muted);" type="button"><i class="fa-solid fa-shield-halved"></i> Officer</button>
+</div>
+<div class="demo-credentials" id="demo-creds-citizen">
+<div class="demo-badge"><i class="fa-solid fa-circle-info"></i> Citizen Demo Credentials</div>
+<div class="demo-grid">
+<div class="demo-item">
+<span>Username:</span>
+<strong>citizen_demo</strong>
+</div>
+<div class="demo-item">
+<span>Password:</span>
+<strong>jan123</strong>
+</div>
+</div>
+</div>
+<div class="demo-credentials hidden" id="demo-creds-officer" style="border-color:var(--primary-color); background:#f8faff;">
+<div class="demo-badge" style="color:var(--primary-color);"><i class="fa-solid fa-circle-info"></i> Officer Demo Credentials</div>
+<div class="demo-grid">
+<div class="demo-item">
+<span>Username:</span>
+<strong>officer_demo</strong>
+</div>
+<div class="demo-item">
+<span>Password:</span>
+<strong>jan123</strong>
+</div>
+</div>
+</div>
+<form class="portal-form" id="login-form">
+<div class="form-group">
+<label for="username">Username</label>
+<div class="input-with-icon">
+<i class="fa-solid fa-user"></i>
+<input id="username" placeholder="Enter username" required="" type="text"/>
+</div>
+</div>
+<div class="form-group">
+<label for="password">Password</label>
+<div class="input-with-icon">
+<i class="fa-solid fa-lock"></i>
+<input id="password" placeholder="Enter password" required="" type="password"/>
+</div>
+</div>
+<button class="btn btn-primary btn-block" type="submit">Login to Portal</button>
+</form>
+</div>
+</section>
+<!-- Dashboard Section -->
+<section class="portal-section hidden" id="report-section">
+<div class="dashboard-container">
+<div class="dashboard-header">
+<div>
+<h2>Citizen Dashboard</h2>
+<p>Report issues, track progress, and validate community repairs.</p>
+</div>
+<div class="user-badge">
+<div class="avatar"><i class="fa-solid fa-user"></i></div>
+<span>Citizen</span>
+</div>
+</div>
+<!-- Main Navigation Tabs -->
+<div class="portal-tabs main-tabs">
+<button class="tab-btn main-tab-btn active" data-tab="tab-report">
+<i class="fa-solid fa-bullhorn"></i> Report Issue
                     </button>
-                    <button class="tab-btn main-tab-btn" data-tab="tab-complaints">
-                        <i class="fa-solid fa-list-check"></i> My Complaints
+<button class="tab-btn main-tab-btn" data-tab="tab-complaints">
+<i class="fa-solid fa-list-check"></i> My Complaints
                     </button>
-                    <button class="tab-btn main-tab-btn" data-tab="tab-notifications">
-                        <i class="fa-solid fa-bell"></i> Notifications <span class="badge">3</span>
+<button class="tab-btn main-tab-btn" data-tab="tab-notifications">
+<i class="fa-solid fa-bell"></i> Notifications <span class="badge">3</span>
+</button>
+<button class="tab-btn main-tab-btn" data-tab="tab-validation">
+<i class="fa-solid fa-users"></i> Crowd Validation
                     </button>
-                    <button class="tab-btn main-tab-btn" data-tab="tab-validation">
-                        <i class="fa-solid fa-users"></i> Crowd Validation
+<button class="tab-btn main-tab-btn" data-tab="tab-credibility">
+<i class="fa-solid fa-award"></i> Civic Profile
                     </button>
-                    <button class="tab-btn main-tab-btn" data-tab="tab-credibility">
-                        <i class="fa-solid fa-award"></i> Civic Profile
-                    </button>
-                </div>
-
-                <div class="tab-content-container">
-                    
-                    <!-- TAB 1: REPORT ISSUE -->
-                    <div id="tab-report" class="main-tab-pane active">
-                        <!-- Sub Tabs & Location Header -->
-                        <div class="report-header">
-                            <div class="portal-tabs sub-tabs">
-                                <button class="tab-btn sub-tab-btn active" data-tab="quick-report">
-                                    <i class="fa-solid fa-bolt"></i> Quick Report
+</div>
+<div class="tab-content-container">
+<!-- TAB 1: REPORT ISSUE -->
+<div class="main-tab-pane active" id="tab-report">
+<!-- Sub Tabs & Location Header -->
+<div class="report-header">
+<div class="portal-tabs sub-tabs">
+<button class="tab-btn sub-tab-btn active" data-tab="quick-report">
+<i class="fa-solid fa-bolt"></i> Quick Report
                                 </button>
-                                <button class="tab-btn sub-tab-btn" data-tab="detailed-report">
-                                    <i class="fa-solid fa-wand-magic-sparkles"></i> Detailed AI Report
+<button class="tab-btn sub-tab-btn" data-tab="detailed-report">
+<i class="fa-solid fa-wand-magic-sparkles"></i> Detailed AI Report
                                 </button>
-                            </div>
-                            <div class="location-chip" title="Location Auto-Detected">
-                                <i class="fa-solid fa-location-dot"></i>
-                                <span id="quick-location-text">Detecting...</span>
-                            </div>
-                        </div>
-
-                        <!-- Quick Report Mode -->
-                        <div id="quick-report" class="sub-tab-pane active">
-                            <p class="instruction-text">Tap the issue you are facing. Our AI will instantly categorize it, assign urgency, and submit the report to the nearest officer.</p>
-                            
-                            <div class="category-grid quick-grid">
-                                <div class="category-card" data-category="Roads & Potholes">
-                                    <i class="fa-solid fa-road-spikes"></i>
-                                    <span>Roads & Potholes</span>
-                                </div>
-                                <div class="category-card" data-category="Water Supply">
-                                    <i class="fa-solid fa-droplet-slash"></i>
-                                    <span>Water Supply</span>
-                                </div>
-                                <div class="category-card" data-category="Garbage & Waste">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                    <span>Garbage & Waste</span>
-                                </div>
-                                <div class="category-card" data-category="Electricity & Lights">
-                                    <i class="fa-solid fa-plug-circle-xmark"></i>
-                                    <span>Electricity & Lights</span>
-                                </div>
-                            </div>
-                            
-                            <div id="quick-processing" class="ai-processing hidden">
-                                <div class="spinner"></div>
-                                <p>AI is analyzing location and generating report...</p>
-                            </div>
-                        </div>
-
-                        <!-- Detailed Report Mode -->
-                        <div id="detailed-report" class="sub-tab-pane hidden">
-                            <p class="instruction-text">Provide any detail (photo, voice, or text). Any single input is enough. Multiple inputs improve AI accuracy.</p>
-                            
-                            <form id="detailed-form" class="portal-form">
-                                <div class="input-options-grid">
-                                    <div class="form-step">
-                                        <h3 class="step-title">Upload Media</h3>
-                                        <div class="upload-area" id="upload-area">
-                                            <i class="fa-solid fa-cloud-arrow-up"></i>
-                                            <p>Click or drag image/video</p>
-                                            <input type="file" id="media-upload" accept="image/*,video/*" hidden>
-                                        </div>
-                                        <div id="file-preview" class="file-preview hidden">
-                                            <span id="file-name">filename.jpg</span>
-                                            <button type="button" id="remove-file" class="btn-icon"><i class="fa-solid fa-xmark"></i></button>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-step">
-                                        <h3 class="step-title">Describe Issue</h3>
-                                        <div class="form-group">
-                                            <input type="text" id="issue-title" placeholder="Short Title (e.g., Broken pipe)" class="styled-input mb-2">
-                                        </div>
-                                        <div class="description-wrapper">
-                                            <textarea id="issue-description" rows="3" placeholder="Additional details..." class="styled-input"></textarea>
-                                            <button type="button" class="btn-voice" id="voice-btn" title="Use Voice Input">
-                                                <i class="fa-solid fa-microphone"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-actions center-actions">
-                                    <button type="button" class="btn btn-primary btn-lg" id="analyze-btn">
-                                        <i class="fa-solid fa-wand-magic-sparkles"></i> Analyze with AI
+</div>
+<div class="location-chip" title="Location Auto-Detected">
+<i class="fa-solid fa-location-dot"></i>
+<span id="quick-location-text">Detecting...</span>
+</div>
+</div>
+<!-- Quick Report Mode -->
+<div class="sub-tab-pane active" id="quick-report">
+<p class="instruction-text">Tap the issue you are facing. Our AI will instantly categorize it, assign urgency, and submit the report to the nearest officer.</p>
+<div class="category-grid quick-grid">
+<div class="category-card" data-category="Roads &amp; Potholes">
+<i class="fa-solid fa-road-spikes"></i>
+<span>Roads &amp; Potholes</span>
+</div>
+<div class="category-card" data-category="Water Supply">
+<i class="fa-solid fa-droplet-slash"></i>
+<span>Water Supply</span>
+</div>
+<div class="category-card" data-category="Garbage &amp; Waste">
+<i class="fa-solid fa-trash-can"></i>
+<span>Garbage &amp; Waste</span>
+</div>
+<div class="category-card" data-category="Electricity &amp; Lights">
+<i class="fa-solid fa-plug-circle-xmark"></i>
+<span>Electricity &amp; Lights</span>
+</div>
+</div>
+<div class="ai-processing hidden" id="quick-processing">
+<div class="spinner"></div>
+<p>AI is analyzing location and generating report...</p>
+</div>
+</div>
+<!-- Detailed Report Mode -->
+<div class="sub-tab-pane hidden" id="detailed-report">
+<p class="instruction-text">Provide any detail (photo, voice, or text). Any single input is enough. Multiple inputs improve AI accuracy.</p>
+<form class="portal-form" id="detailed-form">
+<div class="input-options-grid">
+<div class="form-step">
+<h3 class="step-title">Upload Media</h3>
+<div class="upload-area" id="upload-area">
+<i class="fa-solid fa-cloud-arrow-up"></i>
+<p>Click or drag image/video</p>
+<input accept="image/*,video/*" hidden="" id="media-upload" type="file"/>
+</div>
+<div class="file-preview hidden" id="file-preview">
+<span id="file-name">filename.jpg</span>
+<button class="btn-icon" id="remove-file" type="button"><i class="fa-solid fa-xmark"></i></button>
+</div>
+</div>
+<div class="form-step">
+<h3 class="step-title">Describe Issue</h3>
+<div class="form-group">
+<input class="styled-input mb-2" id="issue-title" placeholder="Short Title (e.g., Broken pipe)" type="text"/>
+</div>
+<div class="description-wrapper">
+<textarea class="styled-input" id="issue-description" placeholder="Additional details..." rows="3"></textarea>
+<button class="btn-voice" id="voice-btn" title="Use Voice Input" type="button">
+<i class="fa-solid fa-microphone"></i>
+</button>
+</div>
+</div>
+</div>
+<div class="form-actions center-actions">
+<button class="btn btn-primary btn-lg" id="analyze-btn" type="button">
+<i class="fa-solid fa-wand-magic-sparkles"></i> Analyze with AI
                                     </button>
-                                </div>
-
-                                <div id="detailed-processing" class="ai-processing hidden">
-                                    <div class="spinner"></div>
-                                    <p>AI is analyzing your inputs...</p>
-                                </div>
-
-                                <div id="ai-results" class="ai-results-box hidden">
-                                    <h3><i class="fa-solid fa-robot"></i> AI Analysis Results</h3>
-                                    <div class="ai-grid">
-                                        <div class="ai-item">
-                                            <span>Detected Category:</span>
-                                            <strong id="ai-category"><i class="fa-solid fa-spinner fa-spin"></i></strong>
-                                        </div>
-                                        <div class="ai-item">
-                                            <span>Urgency Level:</span>
-                                            <strong id="ai-urgency"><i class="fa-solid fa-spinner fa-spin"></i></strong>
-                                        </div>
-                                    </div>
-                                    <div class="ai-summary">
-                                        <span>Generated Official Description:</span>
-                                        <p id="ai-summary-text">...</p>
-                                    </div>
-                                    <div class="form-actions mt-3">
-                                        <button type="submit" class="btn btn-accent btn-lg btn-block" id="submit-detailed-btn">
-                                            <i class="fa-solid fa-paper-plane"></i> Submit Final Report
+</div>
+<div class="ai-processing hidden" id="detailed-processing">
+<div class="spinner"></div>
+<p>AI is analyzing your inputs...</p>
+</div>
+<div class="ai-results-box hidden" id="ai-results">
+<h3><i class="fa-solid fa-robot"></i> AI Analysis Results</h3>
+<div class="ai-grid">
+<div class="ai-item">
+<span>Detected Category:</span>
+<strong id="ai-category"><i class="fa-solid fa-spinner fa-spin"></i></strong>
+</div>
+<div class="ai-item">
+<span>Urgency Level:</span>
+<strong id="ai-urgency"><i class="fa-solid fa-spinner fa-spin"></i></strong>
+</div>
+</div>
+<div class="ai-summary">
+<span>Generated Official Description:</span>
+<p id="ai-summary-text">...</p>
+</div>
+<div class="form-actions mt-3">
+<button class="btn btn-accent btn-lg btn-block" id="submit-detailed-btn" type="submit">
+<i class="fa-solid fa-paper-plane"></i> Submit Final Report
                                         </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <!-- TAB 2: MY COMPLAINTS (Tracking & History) -->
-                    <div id="tab-complaints" class="main-tab-pane hidden">
-                        <div class="tracking-section mb-4">
-                            <h3 class="section-title-small">Active Tracking</h3>
-                            <div id="tracking-list">
-                                <div class="tracking-card mb-4">
-                                    <div class="tracking-header">
-                                        <div>
-                                            <h4>Water Pipe Leakage</h4>
-                                            <span class="ticket-id">#JAN-8942</span>
-                                        </div>
-                                        <span class="status-badge badge-warning">In Progress</span>
-                                    </div>
-                                    
-                                    <div class="timeline-container">
-                                        <div class="timeline-step completed">
-                                            <div class="step-icon"><i class="fa-solid fa-check"></i></div>
-                                            <div class="step-content">
-                                                <h5>Submitted</h5>
-                                                <p>Today, 10:30 AM</p>
-                                            </div>
-                                        </div>
-                                        <div class="timeline-step completed">
-                                            <div class="step-icon"><i class="fa-solid fa-check"></i></div>
-                                            <div class="step-content">
-                                                <h5>Assigned</h5>
-                                                <p>Today, 11:15 AM</p>
-                                                <small>Assigned to Officer Sharma</small>
-                                            </div>
-                                        </div>
-                                        <div class="timeline-step active">
-                                            <div class="step-icon"><i class="fa-solid fa-truck-fast"></i></div>
-                                            <div class="step-content">
-                                                <h5>In Progress</h5>
-                                                <p>Today, 02:00 PM</p>
-                                                <small>Team dispatched to location.</small>
-                                            </div>
-                                        </div>
-                                        <div class="timeline-step">
-                                            <div class="step-icon"><i class="fa-solid fa-check-double"></i></div>
-                                            <div class="step-content">
-                                                <h5>Resolved</h5>
-                                                <p>Pending</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="history-section">
-                            <h3 class="section-title-small">Complaint History</h3>
-                            <div class="history-list" id="history-list">
-                                <div class="history-item">
-                                    <div class="history-icon bg-green"><i class="fa-solid fa-road"></i></div>
-                                    <div class="history-details">
-                                        <h4>Pothole Repair</h4>
-                                        <p>Sector 14 Main Road • <span class="text-muted">Mar 15, 2026</span></p>
-                                    </div>
-                                    <span class="status-badge badge-success">Resolved</span>
-                                </div>
-                                <div class="history-item">
-                                    <div class="history-icon bg-green"><i class="fa-solid fa-trash"></i></div>
-                                    <div class="history-details">
-                                        <h4>Garbage Collection</h4>
-                                        <p>Block C • <span class="text-muted">Jan 10, 2026</span></p>
-                                    </div>
-                                    <span class="status-badge badge-success">Resolved</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- TAB 3: NOTIFICATIONS -->
-                    <div id="tab-notifications" class="main-tab-pane hidden">
-                        <h3 class="section-title-small">Recent Updates</h3>
-                        <div class="notification-list">
-                            <div class="notification-card unread">
-                                <div class="notif-icon bg-blue text-white"><i class="fa-solid fa-truck-fast"></i></div>
-                                <div class="notif-content">
-                                    <h4>Team Dispatched!</h4>
-                                    <p>Maintenance team has been dispatched for <strong>#JAN-8942</strong>.</p>
-                                    <span class="time">2 hours ago</span>
-                                </div>
-                                <div class="unread-dot"></div>
-                            </div>
-                            <div class="notification-card unread">
-                                <div class="notif-icon bg-accent text-white"><i class="fa-solid fa-user-tie"></i></div>
-                                <div class="notif-content">
-                                    <h4>Officer Assigned</h4>
-                                    <p>Officer Sharma has been assigned to your complaint.</p>
-                                    <span class="time">5 hours ago</span>
-                                </div>
-                                <div class="unread-dot"></div>
-                            </div>
-                            <div class="notification-card">
-                                <div class="notif-icon bg-yellow text-white"><i class="fa-solid fa-clipboard-check"></i></div>
-                                <div class="notif-content">
-                                    <h4>Validation Requested</h4>
-                                    <p>A pothole repair was reported completed. Please validate it.</p>
-                                    <span class="time">1 day ago</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- TAB 4: CROWD VALIDATION -->
-                    <div id="tab-validation" class="main-tab-pane hidden">
-                        
-                        <!-- Subsection 1: My Complaints Validation Status -->
-                        <div class="validation-section mb-4">
-                            <h3 class="section-title-small">My Complaints Validation Status</h3>
-                            <p class="instruction-text" style="text-align: left; margin-bottom: 1.5rem;">See how the community is voting on the authenticity of your reported issues.</p>
-                            
-                            <div class="validation-list" id="my-reports-validation">
-                                <div class="dashboard-card tracking-card mb-3">
-                                    <div class="tracking-header mb-2" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">
-                                        <div>
-                                            <h4>Water Pipe Leakage</h4>
-                                            <span class="ticket-id">#JAN-8942</span>
-                                        </div>
-                                        <span class="status-badge badge-warning">Under Verification</span>
-                                    </div>
-                                    <div class="validation-progress mt-3">
-                                        <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem; font-size:0.85rem; color:var(--text-muted);">
-                                            <span>Authenticity Votes</span>
-                                            <strong><span style="color: var(--accent-color);"><i class="fa-solid fa-thumbs-up"></i> 12</span> &nbsp;|&nbsp; <span style="color: #e74c3c;"><i class="fa-solid fa-thumbs-down"></i> 2</span></strong>
-                                        </div>
-                                        <div class="progress-bar-bg" style="width:100%; height:8px; background:#fbe3e4; border-radius:4px; overflow:hidden; display:flex;">
-                                            <div class="progress-bar-fill" style="width:85%; height:100%; background:var(--accent-color);"></div>
-                                            <div class="progress-bar-fill" style="width:15%; height:100%; background:#e74c3c;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Subsection 2: Community Complaint Verification -->
-                        <div class="validation-section">
-                            <h3 class="section-title-small">Community Complaint Verification</h3>
-                            <p class="instruction-text" style="text-align: left; margin-bottom: 1.5rem;">Help verify if the complaints submitted by others in your area are genuine and accurate.</p>
-                            
-                            <div class="validation-grid" id="community-complaints-grid">
-                                <div class="validation-card">
-                                    <div class="validation-img">
-                                        <img src="https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Reported Pothole">
-                                    </div>
-                                    <div class="validation-content">
-                                        <h4>Severe Pothole Reported</h4>
-                                        <p class="loc"><i class="fa-solid fa-location-dot"></i> 500m from your location</p>
-                                        <p class="desc">A citizen reported a dangerous pothole here. Is this issue genuine?</p>
-                                        <div class="validation-actions">
-                                            <button class="btn btn-outline-success"><i class="fa-solid fa-thumbs-up"></i> Yes, It's Real</button>
-                                            <button class="btn btn-outline-danger"><i class="fa-solid fa-thumbs-down"></i> No, Invalid</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- TAB 5: CIVIC PROFILE -->
-                    <div id="tab-credibility" class="main-tab-pane hidden">
-                        <div class="credibility-header mb-4">
-                            <h3 class="section-title-small">Civic Contribution Score</h3>
-                            <div class="dashboard-card" style="display:flex; align-items:center; gap:2rem; padding:2rem; background:linear-gradient(to right, #f8faff, #ffffff);">
-                                <div style="width:120px; height:120px; border-radius:50%; border:8px solid var(--accent-color); display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0;">
-                                    <h2 id="civic-score-display" style="color:var(--primary-color); font-size:2rem; line-height:1;">150</h2>
-                                    <span style="font-size:0.85rem; color:var(--text-muted); font-weight:500;">Points</span>
-                                </div>
-                                <div>
-                                    <h4 style="color:var(--text-dark); margin-bottom:0.5rem; font-size:1.2rem;">Community Standing: Excellent</h4>
-                                    <p style="color:var(--text-muted); line-height:1.6; font-size:0.95rem;">Your contributions help maintain a transparent and accountable civic ecosystem. Points are awarded for valid reports and accurate verification, and deducted for false claims.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="badges-section mb-4">
-                            <h3 class="section-title-small">Contribution Badges</h3>
-                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1.5rem;">
-                                <div class="dashboard-card" style="text-align:center; padding:1.5rem; border-top:4px solid var(--accent-color);">
-                                    <i class="fa-solid fa-shield-halved" style="font-size:2.5rem; color:var(--accent-color); margin-bottom:1rem;"></i>
-                                    <h5 style="color:var(--text-dark); margin-bottom:0.5rem;">Trusted Reporter</h5>
-                                    <p style="font-size:0.85rem; color:var(--text-muted);">Consistently submits valid reports.</p>
-                                </div>
-                                <div class="dashboard-card" style="text-align:center; padding:1.5rem; border-top:4px solid var(--primary-color);">
-                                    <i class="fa-solid fa-check-double" style="font-size:2.5rem; color:var(--primary-color); margin-bottom:1rem;"></i>
-                                    <h5 style="color:var(--text-dark); margin-bottom:0.5rem;">Community Validator</h5>
-                                    <p style="font-size:0.85rem; color:var(--text-muted);">Helps verify others' complaints.</p>
-                                </div>
-                                <div class="dashboard-card" style="text-align:center; padding:1.5rem; border-top:4px solid #bdc3c7; filter:grayscale(1); opacity:0.6;">
-                                    <i class="fa-solid fa-crown" style="font-size:2.5rem; color:#7f8c8d; margin-bottom:1rem;"></i>
-                                    <h5 style="color:var(--text-dark); margin-bottom:0.5rem;">Civic Leader</h5>
-                                    <p style="font-size:0.85rem; color:var(--text-muted);">Top 10% of active citizens.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="activity-section">
-                            <h3 class="section-title-small">Recent Activity</h3>
-                            <div class="history-list" id="score-activity-list">
-                                <div class="history-item">
-                                    <div class="history-icon bg-green"><i class="fa-solid fa-plus"></i></div>
-                                    <div class="history-details">
-                                        <h4>Verified Community Issue</h4>
-                                        <p>You validated a pothole report • <span class="text-muted">2 days ago</span></p>
-                                    </div>
-                                    <span class="status-badge badge-success">+10 Pts</span>
-                                </div>
-                                <div class="history-item">
-                                    <div class="history-icon bg-green"><i class="fa-solid fa-plus"></i></div>
-                                    <div class="history-details">
-                                        <h4>Valid Complaint Resolved</h4>
-                                        <p>Garbage Collection at Block C • <span class="text-muted">Jan 10, 2026</span></p>
-                                    </div>
-                                    <span class="status-badge badge-success">+20 Pts</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Success Modal -->
-    <div class="modal-overlay hidden" id="success-modal">
-        <div class="modal-content">
-            <div class="success-icon">
-                <i class="fa-solid fa-check"></i>
-            </div>
-            <h2>Complaint Submitted Successfully!</h2>
-            <p>Your issue has been logged and assigned.</p>
-            <div class="ticket-info">
-                <span>Complaint ID:</span>
-                <strong id="new-ticket-id">#JAN-8942</strong>
-            </div>
-            <p class="ticket-note">You will receive SMS updates on the resolution progress.</p>
-            <div class="modal-actions">
-                <button class="btn btn-primary" id="track-btn">Track Status</button>
-                <button class="btn btn-outline-primary" id="new-complaint-btn">Report Another</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="portal.js"></script>
+</div>
+</div>
+</form>
+</div>
+</div>
+<!-- TAB 2: MY COMPLAINTS (Tracking & History) -->
+<div class="main-tab-pane hidden" id="tab-complaints">
+<div class="tracking-section mb-4">
+<h3 class="section-title-small">Active Tracking</h3>
+<div id="tracking-list">
+<div class="tracking-card mb-4">
+<div class="tracking-header">
+<div>
+<h4>Water Pipe Leakage</h4>
+<span class="ticket-id">#JAN-8942</span>
+</div>
+<span class="status-badge badge-warning">In Progress</span>
+</div>
+<div class="timeline-container">
+<div class="timeline-step completed">
+<div class="step-icon"><i class="fa-solid fa-check"></i></div>
+<div class="step-content">
+<h5>Submitted</h5>
+<p>Today, 10:30 AM</p>
+</div>
+</div>
+<div class="timeline-step completed">
+<div class="step-icon"><i class="fa-solid fa-check"></i></div>
+<div class="step-content">
+<h5>Assigned</h5>
+<p>Today, 11:15 AM</p>
+<small>Assigned to Officer Sharma</small>
+</div>
+</div>
+<div class="timeline-step active">
+<div class="step-icon"><i class="fa-solid fa-truck-fast"></i></div>
+<div class="step-content">
+<h5>In Progress</h5>
+<p>Today, 02:00 PM</p>
+<small>Team dispatched to location.</small>
+</div>
+</div>
+<div class="timeline-step">
+<div class="step-icon"><i class="fa-solid fa-check-double"></i></div>
+<div class="step-content">
+<h5>Resolved</h5>
+<p>Pending</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="history-section">
+<h3 class="section-title-small">Complaint History</h3>
+<div class="history-list" id="history-list">
+<div class="history-item">
+<div class="history-icon bg-green"><i class="fa-solid fa-road"></i></div>
+<div class="history-details">
+<h4>Pothole Repair</h4>
+<p>Sector 14 Main Road • <span class="text-muted">Mar 15, 2026</span></p>
+</div>
+<span class="status-badge badge-success">Resolved</span>
+</div>
+<div class="history-item">
+<div class="history-icon bg-green"><i class="fa-solid fa-trash"></i></div>
+<div class="history-details">
+<h4>Garbage Collection</h4>
+<p>Block C • <span class="text-muted">Jan 10, 2026</span></p>
+</div>
+<span class="status-badge badge-success">Resolved</span>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB 3: NOTIFICATIONS -->
+<div class="main-tab-pane hidden" id="tab-notifications">
+<h3 class="section-title-small">Recent Updates</h3>
+<div class="notification-list">
+<div class="notification-card unread">
+<div class="notif-icon bg-blue text-white"><i class="fa-solid fa-truck-fast"></i></div>
+<div class="notif-content">
+<h4>Team Dispatched!</h4>
+<p>Maintenance team has been dispatched for <strong>#JAN-8942</strong>.</p>
+<span class="time">2 hours ago</span>
+</div>
+<div class="unread-dot"></div>
+</div>
+<div class="notification-card unread">
+<div class="notif-icon bg-accent text-white"><i class="fa-solid fa-user-tie"></i></div>
+<div class="notif-content">
+<h4>Officer Assigned</h4>
+<p>Officer Sharma has been assigned to your complaint.</p>
+<span class="time">5 hours ago</span>
+</div>
+<div class="unread-dot"></div>
+</div>
+<div class="notification-card">
+<div class="notif-icon bg-yellow text-white"><i class="fa-solid fa-clipboard-check"></i></div>
+<div class="notif-content">
+<h4>Validation Requested</h4>
+<p>A pothole repair was reported completed. Please validate it.</p>
+<span class="time">1 day ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB 4: CROWD VALIDATION -->
+<div class="main-tab-pane hidden" id="tab-validation">
+<!-- Subsection 1: My Complaints Validation Status -->
+<div class="validation-section mb-4">
+<h3 class="section-title-small">My Complaints Validation Status</h3>
+<p class="instruction-text" style="text-align: left; margin-bottom: 1.5rem;">See how the community is voting on the authenticity of your reported issues.</p>
+<div class="validation-list" id="my-reports-validation">
+<div class="dashboard-card tracking-card mb-3">
+<div class="tracking-header mb-2" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">
+<div>
+<h4>Water Pipe Leakage</h4>
+<span class="ticket-id">#JAN-8942</span>
+</div>
+<span class="status-badge badge-warning">Under Verification</span>
+</div>
+<div class="validation-progress mt-3">
+<div style="display:flex; justify-content:space-between; margin-bottom:0.5rem; font-size:0.85rem; color:var(--text-muted);">
+<span>Authenticity Votes</span>
+<strong><span style="color: var(--accent-color);"><i class="fa-solid fa-thumbs-up"></i> 12</span>  |  <span style="color: #e74c3c;"><i class="fa-solid fa-thumbs-down"></i> 2</span></strong>
+</div>
+<div class="progress-bar-bg" style="width:100%; height:8px; background:#fbe3e4; border-radius:4px; overflow:hidden; display:flex;">
+<div class="progress-bar-fill" style="width:85%; height:100%; background:var(--accent-color);"></div>
+<div class="progress-bar-fill" style="width:15%; height:100%; background:#e74c3c;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Subsection 2: Community Complaint Verification -->
+<div class="validation-section">
+<h3 class="section-title-small">Community Complaint Verification</h3>
+<p class="instruction-text" style="text-align: left; margin-bottom: 1.5rem;">Help verify if the complaints submitted by others in your area are genuine and accurate.</p>
+<div class="validation-grid" id="community-complaints-grid">
+<div class="validation-card">
+<div class="validation-img">
+<img alt="Reported Pothole" src="https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80"/>
+</div>
+<div class="validation-content">
+<h4>Severe Pothole Reported</h4>
+<p class="loc"><i class="fa-solid fa-location-dot"></i> 500m from your location</p>
+<p class="desc">A citizen reported a dangerous pothole here. Is this issue genuine?</p>
+<div class="validation-actions">
+<button class="btn btn-outline-success"><i class="fa-solid fa-thumbs-up"></i> Yes, It's Real</button>
+<button class="btn btn-outline-danger"><i class="fa-solid fa-thumbs-down"></i> No, Invalid</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB 5: CIVIC PROFILE -->
+<div class="main-tab-pane hidden" id="tab-credibility">
+<div class="credibility-header mb-4">
+<h3 class="section-title-small">Civic Contribution Score</h3>
+<div class="dashboard-card" style="display:flex; align-items:center; gap:2rem; padding:2rem; background:linear-gradient(to right, #f8faff, #ffffff);">
+<div style="width:120px; height:120px; border-radius:50%; border:8px solid var(--accent-color); display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0;">
+<h2 id="civic-score-display" style="color:var(--primary-color); font-size:2rem; line-height:1;">150</h2>
+<span style="font-size:0.85rem; color:var(--text-muted); font-weight:500;">Points</span>
+</div>
+<div>
+<h4 style="color:var(--text-dark); margin-bottom:0.5rem; font-size:1.2rem;">Community Standing: Excellent</h4>
+<p style="color:var(--text-muted); line-height:1.6; font-size:0.95rem;">Your contributions help maintain a transparent and accountable civic ecosystem. Points are awarded for valid reports and accurate verification, and deducted for false claims.</p>
+</div>
+</div>
+</div>
+<div class="badges-section mb-4">
+<h3 class="section-title-small">Contribution Badges</h3>
+<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1.5rem;">
+<div class="dashboard-card" style="text-align:center; padding:1.5rem; border-top:4px solid var(--accent-color);">
+<i class="fa-solid fa-shield-halved" style="font-size:2.5rem; color:var(--accent-color); margin-bottom:1rem;"></i>
+<h5 style="color:var(--text-dark); margin-bottom:0.5rem;">Trusted Reporter</h5>
+<p style="font-size:0.85rem; color:var(--text-muted);">Consistently submits valid reports.</p>
+</div>
+<div class="dashboard-card" style="text-align:center; padding:1.5rem; border-top:4px solid var(--primary-color);">
+<i class="fa-solid fa-check-double" style="font-size:2.5rem; color:var(--primary-color); margin-bottom:1rem;"></i>
+<h5 style="color:var(--text-dark); margin-bottom:0.5rem;">Community Validator</h5>
+<p style="font-size:0.85rem; color:var(--text-muted);">Helps verify others' complaints.</p>
+</div>
+<div class="dashboard-card" style="text-align:center; padding:1.5rem; border-top:4px solid #bdc3c7; filter:grayscale(1); opacity:0.6;">
+<i class="fa-solid fa-crown" style="font-size:2.5rem; color:#7f8c8d; margin-bottom:1rem;"></i>
+<h5 style="color:var(--text-dark); margin-bottom:0.5rem;">Civic Leader</h5>
+<p style="font-size:0.85rem; color:var(--text-muted);">Top 10% of active citizens.</p>
+</div>
+</div>
+</div>
+<div class="activity-section">
+<h3 class="section-title-small">Recent Activity</h3>
+<div class="history-list" id="score-activity-list">
+<div class="history-item">
+<div class="history-icon bg-green"><i class="fa-solid fa-plus"></i></div>
+<div class="history-details">
+<h4>Verified Community Issue</h4>
+<p>You validated a pothole report • <span class="text-muted">2 days ago</span></p>
+</div>
+<span class="status-badge badge-success">+10 Pts</span>
+</div>
+<div class="history-item">
+<div class="history-icon bg-green"><i class="fa-solid fa-plus"></i></div>
+<div class="history-details">
+<h4>Valid Complaint Resolved</h4>
+<p>Garbage Collection at Block C • <span class="text-muted">Jan 10, 2026</span></p>
+</div>
+<span class="status-badge badge-success">+20 Pts</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Success Modal -->
+<div class="modal-overlay hidden" id="success-modal">
+<div class="modal-content">
+<div class="success-icon">
+<i class="fa-solid fa-check"></i>
+</div>
+<h2>Complaint Submitted Successfully!</h2>
+<p>Your issue has been logged and assigned.</p>
+<div class="ticket-info">
+<span>Complaint ID:</span>
+<strong id="new-ticket-id">#JAN-8942</strong>
+</div>
+<p class="ticket-note">You will receive SMS updates on the resolution progress.</p>
+<div class="modal-actions">
+<button class="btn btn-primary" id="track-btn">Track Status</button>
+<button class="btn btn-outline-primary" id="new-complaint-btn">Report Another</button>
+</div>
+</div>
+</div>
+<script src="portal.js"></script>
+<script src="jansetu-core.js"></script>
 </body>
 </html>
