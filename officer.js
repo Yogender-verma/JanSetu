@@ -46,12 +46,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const ticketId = e.target.getAttribute('data-ticket');
             const resPanel = document.getElementById(`res-${ticketId}`);
 
-            if (e.target.value === 'Resolved') {
-                resPanel.classList.remove('hidden');
+            if (e.target.value === 'Resolved' || e.target.value === 'completed') {
+                if (resPanel) resPanel.classList.remove('hidden');
             } else {
-                resPanel.classList.add('hidden');
-                document.getElementById(`ai-res-${ticketId}`).classList.add('hidden');
-                document.getElementById(`verify-${ticketId}`).classList.add('hidden');
+                if (resPanel) {
+                    resPanel.classList.add('hidden');
+                    const aiRes = document.getElementById(`ai-res-${ticketId}`);
+                    const verifyBtn = document.getElementById(`verify-${ticketId}`);
+                    if (aiRes) aiRes.classList.add('hidden');
+                    if (verifyBtn) verifyBtn.classList.add('hidden');
+                }
             }
         });
     });
@@ -120,11 +124,14 @@ window.updateTaskStatus = function (selectElement, ticketId) {
     const newStatus = selectElement.value;
     const taskCard = selectElement.closest('.task-item');
 
-    // Update data-status
+    // Only update status if it's not 'completed' 
+    // We wait for AI verification to mark it as truly completed
     if (newStatus !== 'completed' && newStatus !== 'Resolved') {
         taskCard.setAttribute('data-status', newStatus);
-    } else {
-        taskCard.setAttribute('data-status', 'completed');
+        
+        // Hide resolution panel if moving away from 'Mark as Resolved'
+        const resPanel = document.getElementById(`res-${ticketId}`);
+        if (resPanel) resPanel.classList.add('hidden');
     }
 };
 
@@ -136,11 +143,18 @@ function previewResolution(input, previewId, verifyBtnId) {
             const preview = document.getElementById(previewId);
             preview.src = e.target.result;
             preview.classList.remove('hidden');
-            input.parentElement.querySelector('i').classList.add('hidden');
-            input.parentElement.querySelector('small').classList.add('hidden');
-
-            // Show AI Verification button
-            document.getElementById(verifyBtnId).classList.remove('hidden');
+            
+            const uploadBox = input.parentElement;
+            uploadBox.querySelector('i').classList.add('hidden');
+            
+            // Check if both images are uploaded for this ticket
+            const ticketId = verifyBtnId.replace('verify-', '');
+            const beforeInput = document.getElementById(`file-before-${ticketId}`);
+            const afterInput = document.getElementById(`file-after-${ticketId}`);
+            
+            if (beforeInput.files.length > 0 && afterInput.files.length > 0) {
+                document.getElementById(verifyBtnId).classList.remove('hidden');
+            }
         }
         reader.readAsDataURL(input.files[0]);
     }
@@ -149,7 +163,7 @@ function previewResolution(input, previewId, verifyBtnId) {
 // AI Verification Simulation
 function runAIVerification(ticketId) {
     const btn = document.getElementById(`verify-${ticketId}`);
-    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Analyzing Images...';
     btn.disabled = true;
 
     setTimeout(() => {
@@ -159,8 +173,14 @@ function runAIVerification(ticketId) {
         // After 2 seconds showing result, show success modal
         setTimeout(() => {
             document.getElementById('officer-success-modal').classList.remove('hidden');
+            
+            // Actually update the card to completed in UI
+            const taskCard = btn.closest('.task-item');
+            const statusSelect = taskCard.querySelector('.status-select');
+            statusSelect.value = 'completed';
+            updateTaskStatus(statusSelect, ticketId);
         }, 2000);
-    }, 2000);
+    }, 2500);
 }
 
 function closeSuccessModal() {

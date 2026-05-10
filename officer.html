@@ -165,6 +165,37 @@
                                 <option value="escalated">Escalated</option>
                             </select>
                         </div>
+
+                        <!-- Resolution Panel (Hidden by default) -->
+                        <div class="resolution-panel hidden" id="res-JAN-5001">
+                            <h5 style="margin-bottom: 1rem; color: var(--primary-color); font-size: 0.9rem;">Resolution Required: Upload Evidence</h5>
+                            <div class="upload-grid">
+                                <div class="upload-box before-img" onclick="document.getElementById('file-before-JAN-5001').click()">
+                                    <small>Before Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-before-JAN-5001" class="hidden">
+                                    <input type="file" id="file-before-JAN-5001" hidden onchange="previewResolution(this, 'prev-before-JAN-5001', 'verify-JAN-5001')">
+                                </div>
+                                <div class="upload-box after-img" onclick="document.getElementById('file-after-JAN-5001').click()">
+                                    <small>After Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-after-JAN-5001" class="hidden">
+                                    <input type="file" id="file-after-JAN-5001" hidden onchange="previewResolution(this, 'prev-after-JAN-5001', 'verify-JAN-5001')">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-100 hidden" id="verify-JAN-5001" onclick="runAIVerification('JAN-5001')">
+                                <i class="fa-solid fa-microchip"></i> Run AI Verification
+                            </button>
+                            <div id="ai-res-JAN-5001" class="ai-verification-result hidden">
+                                <div class="confidence-circle" style="--percent: 98;">
+                                    <span>98%</span>
+                                </div>
+                                <div>
+                                    <h5 style="color:var(--accent-color); margin-bottom:4px;"><i class="fa-solid fa-circle-check"></i> Verification Successful</h5>
+                                    <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.4;">AI matched the location and detected clear infrastructure repair between images.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Task Card 5002 (assigned) -->
@@ -224,6 +255,37 @@
                                 <option value="completed">Mark as Resolved</option>
                                 <option value="escalated">Escalated</option>
                             </select>
+                        </div>
+
+                        <!-- Resolution Panel (Hidden by default) -->
+                        <div class="resolution-panel hidden" id="res-JAN-5002">
+                            <h5 style="margin-bottom: 1rem; color: var(--primary-color); font-size: 0.9rem;">Resolution Required: Upload Evidence</h5>
+                            <div class="upload-grid">
+                                <div class="upload-box before-img" onclick="document.getElementById('file-before-JAN-5002').click()">
+                                    <small>Before Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-before-JAN-5002" class="hidden">
+                                    <input type="file" id="file-before-JAN-5002" hidden onchange="previewResolution(this, 'prev-before-JAN-5002', 'verify-JAN-5002')">
+                                </div>
+                                <div class="upload-box after-img" onclick="document.getElementById('file-after-JAN-5002').click()">
+                                    <small>After Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-after-JAN-5002" class="hidden">
+                                    <input type="file" id="file-after-JAN-5002" hidden onchange="previewResolution(this, 'prev-after-JAN-5002', 'verify-JAN-5002')">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-100 hidden" id="verify-JAN-5002" onclick="runAIVerification('JAN-5002')">
+                                <i class="fa-solid fa-microchip"></i> Run AI Verification
+                            </button>
+                            <div id="ai-res-JAN-5002" class="ai-verification-result hidden">
+                                <div class="confidence-circle" style="--percent: 98;">
+                                    <span>98%</span>
+                                </div>
+                                <div>
+                                    <h5 style="color:var(--accent-color); margin-bottom:4px;"><i class="fa-solid fa-circle-check"></i> Verification Successful</h5>
+                                    <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.4;">AI matched the location and detected clear infrastructure repair between images.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -285,6 +347,35 @@
                                 <option value="escalated">Escalated</option>
                             </select>
                         </div>
+                        <div class="resolution-panel hidden" id="res-JAN-5003">
+                            <h5 style="margin-bottom: 1rem; color: var(--primary-color); font-size: 0.9rem;">Resolution Required: Upload Evidence</h5>
+                            <div class="upload-grid">
+                                <div class="upload-box before-img" onclick="document.getElementById('file-before-JAN-5003').click()">
+                                    <small>Before Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-before-JAN-5003" class="hidden">
+                                    <input type="file" id="file-before-JAN-5003" hidden onchange="previewResolution(this, 'prev-before-JAN-5003', 'verify-JAN-5003')">
+                                </div>
+                                <div class="upload-box after-img" onclick="document.getElementById('file-after-JAN-5003').click()">
+                                    <small>After Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-after-JAN-5003" class="hidden">
+                                    <input type="file" id="file-after-JAN-5003" hidden onchange="previewResolution(this, 'prev-after-JAN-5003', 'verify-JAN-5003')">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-100 hidden" id="verify-JAN-5003" onclick="runAIVerification('JAN-5003')">
+                                <i class="fa-solid fa-microchip"></i> Run AI Verification
+                            </button>
+                            <div id="ai-res-JAN-5003" class="ai-verification-result hidden">
+                                <div class="confidence-circle" style="--percent: 98;">
+                                    <span>98%</span>
+                                </div>
+                                <div>
+                                    <h5 style="color:var(--accent-color); margin-bottom:4px;"><i class="fa-solid fa-circle-check"></i> Verification Successful</h5>
+                                    <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.4;">AI matched the location and detected clear infrastructure repair.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Task Card 5004 (assigned) -->
@@ -345,6 +436,35 @@
                                 <option value="escalated">Escalated</option>
                             </select>
                         </div>
+                        <div class="resolution-panel hidden" id="res-JAN-5004">
+                            <h5 style="margin-bottom: 1rem; color: var(--primary-color); font-size: 0.9rem;">Resolution Required: Upload Evidence</h5>
+                            <div class="upload-grid">
+                                <div class="upload-box before-img" onclick="document.getElementById('file-before-JAN-5004').click()">
+                                    <small>Before Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-before-JAN-5004" class="hidden">
+                                    <input type="file" id="file-before-JAN-5004" hidden onchange="previewResolution(this, 'prev-before-JAN-5004', 'verify-JAN-5004')">
+                                </div>
+                                <div class="upload-box after-img" onclick="document.getElementById('file-after-JAN-5004').click()">
+                                    <small>After Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-after-JAN-5004" class="hidden">
+                                    <input type="file" id="file-after-JAN-5004" hidden onchange="previewResolution(this, 'prev-after-JAN-5004', 'verify-JAN-5004')">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-100 hidden" id="verify-JAN-5004" onclick="runAIVerification('JAN-5004')">
+                                <i class="fa-solid fa-microchip"></i> Run AI Verification
+                            </button>
+                            <div id="ai-res-JAN-5004" class="ai-verification-result hidden">
+                                <div class="confidence-circle" style="--percent: 98;">
+                                    <span>98%</span>
+                                </div>
+                                <div>
+                                    <h5 style="color:var(--accent-color); margin-bottom:4px;"><i class="fa-solid fa-circle-check"></i> Verification Successful</h5>
+                                    <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.4;">AI matched the location and detected clear infrastructure repair.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Task Card 5005 (assigned) -->
@@ -404,6 +524,35 @@
                                 <option value="completed">Mark as Resolved</option>
                                 <option value="escalated">Escalated</option>
                             </select>
+                        </div>
+                        <div class="resolution-panel hidden" id="res-JAN-5005">
+                            <h5 style="margin-bottom: 1rem; color: var(--primary-color); font-size: 0.9rem;">Resolution Required: Upload Evidence</h5>
+                            <div class="upload-grid">
+                                <div class="upload-box before-img" onclick="document.getElementById('file-before-JAN-5005').click()">
+                                    <small>Before Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-before-JAN-5005" class="hidden">
+                                    <input type="file" id="file-before-JAN-5005" hidden onchange="previewResolution(this, 'prev-before-JAN-5005', 'verify-JAN-5005')">
+                                </div>
+                                <div class="upload-box after-img" onclick="document.getElementById('file-after-JAN-5005').click()">
+                                    <small>After Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-after-JAN-5005" class="hidden">
+                                    <input type="file" id="file-after-JAN-5005" hidden onchange="previewResolution(this, 'prev-after-JAN-5005', 'verify-JAN-5005')">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-100 hidden" id="verify-JAN-5005" onclick="runAIVerification('JAN-5005')">
+                                <i class="fa-solid fa-microchip"></i> Run AI Verification
+                            </button>
+                            <div id="ai-res-JAN-5005" class="ai-verification-result hidden">
+                                <div class="confidence-circle" style="--percent: 98;">
+                                    <span>98%</span>
+                                </div>
+                                <div>
+                                    <h5 style="color:var(--accent-color); margin-bottom:4px;"><i class="fa-solid fa-circle-check"></i> Verification Successful</h5>
+                                    <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.4;">AI matched the location and detected clear infrastructure repair.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -525,6 +674,37 @@
                                 <option value="escalated">Escalated</option>
                             </select>
                         </div>
+
+                        <!-- Resolution Panel (Hidden by default) -->
+                        <div class="resolution-panel hidden" id="res-JAN-5007">
+                            <h5 style="margin-bottom: 1rem; color: var(--primary-color); font-size: 0.9rem;">Resolution Required: Upload Evidence</h5>
+                            <div class="upload-grid">
+                                <div class="upload-box before-img" onclick="document.getElementById('file-before-JAN-5007').click()">
+                                    <small>Before Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-before-JAN-5007" class="hidden">
+                                    <input type="file" id="file-before-JAN-5007" hidden onchange="previewResolution(this, 'prev-before-JAN-5007', 'verify-JAN-5007')">
+                                </div>
+                                <div class="upload-box after-img" onclick="document.getElementById('file-after-JAN-5007').click()">
+                                    <small>After Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-after-JAN-5007" class="hidden">
+                                    <input type="file" id="file-after-JAN-5007" hidden onchange="previewResolution(this, 'prev-after-JAN-5007', 'verify-JAN-5007')">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-100 hidden" id="verify-JAN-5007" onclick="runAIVerification('JAN-5007')">
+                                <i class="fa-solid fa-microchip"></i> Run AI Verification
+                            </button>
+                            <div id="ai-res-JAN-5007" class="ai-verification-result hidden">
+                                <div class="confidence-circle" style="--percent: 98;">
+                                    <span>98%</span>
+                                </div>
+                                <div>
+                                    <h5 style="color:var(--accent-color); margin-bottom:4px;"><i class="fa-solid fa-circle-check"></i> Verification Successful</h5>
+                                    <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.4;">AI matched the location and detected clear infrastructure repair between images.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Task Card 5008 (progress) -->
@@ -584,6 +764,37 @@
                                 <option value="completed">Mark as Resolved</option>
                                 <option value="escalated">Escalated</option>
                             </select>
+                        </div>
+
+                        <!-- Resolution Panel (Hidden by default) -->
+                        <div class="resolution-panel hidden" id="res-JAN-5008">
+                            <h5 style="margin-bottom: 1rem; color: var(--primary-color); font-size: 0.9rem;">Resolution Required: Upload Evidence</h5>
+                            <div class="upload-grid">
+                                <div class="upload-box before-img" onclick="document.getElementById('file-before-JAN-5008').click()">
+                                    <small>Before Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-before-JAN-5008" class="hidden">
+                                    <input type="file" id="file-before-JAN-5008" hidden onchange="previewResolution(this, 'prev-before-JAN-5008', 'verify-JAN-5008')">
+                                </div>
+                                <div class="upload-box after-img" onclick="document.getElementById('file-after-JAN-5008').click()">
+                                    <small>After Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-after-JAN-5008" class="hidden">
+                                    <input type="file" id="file-after-JAN-5008" hidden onchange="previewResolution(this, 'prev-after-JAN-5008', 'verify-JAN-5008')">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-100 hidden" id="verify-JAN-5008" onclick="runAIVerification('JAN-5008')">
+                                <i class="fa-solid fa-microchip"></i> Run AI Verification
+                            </button>
+                            <div id="ai-res-JAN-5008" class="ai-verification-result hidden">
+                                <div class="confidence-circle" style="--percent: 98;">
+                                    <span>98%</span>
+                                </div>
+                                <div>
+                                    <h5 style="color:var(--accent-color); margin-bottom:4px;"><i class="fa-solid fa-circle-check"></i> Verification Successful</h5>
+                                    <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.4;">AI matched the location and detected clear infrastructure repair between images.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -645,6 +856,35 @@
                                 <option value="escalated">Escalated</option>
                             </select>
                         </div>
+                        <div class="resolution-panel hidden" id="res-JAN-5009">
+                            <h5 style="margin-bottom: 1rem; color: var(--primary-color); font-size: 0.9rem;">Resolution Required: Upload Evidence</h5>
+                            <div class="upload-grid">
+                                <div class="upload-box before-img" onclick="document.getElementById('file-before-JAN-5009').click()">
+                                    <small>Before Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-before-JAN-5009" class="hidden">
+                                    <input type="file" id="file-before-JAN-5009" hidden onchange="previewResolution(this, 'prev-before-JAN-5009', 'verify-JAN-5009')">
+                                </div>
+                                <div class="upload-box after-img" onclick="document.getElementById('file-after-JAN-5009').click()">
+                                    <small>After Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-after-JAN-5009" class="hidden">
+                                    <input type="file" id="file-after-JAN-5009" hidden onchange="previewResolution(this, 'prev-after-JAN-5009', 'verify-JAN-5009')">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-100 hidden" id="verify-JAN-5009" onclick="runAIVerification('JAN-5009')">
+                                <i class="fa-solid fa-microchip"></i> Run AI Verification
+                            </button>
+                            <div id="ai-res-JAN-5009" class="ai-verification-result hidden">
+                                <div class="confidence-circle" style="--percent: 98;">
+                                    <span>98%</span>
+                                </div>
+                                <div>
+                                    <h5 style="color:var(--accent-color); margin-bottom:4px;"><i class="fa-solid fa-circle-check"></i> Verification Successful</h5>
+                                    <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.4;">AI matched the location and detected clear infrastructure repair.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Task Card 5010 (progress) -->
@@ -704,6 +944,35 @@
                                 <option value="completed">Mark as Resolved</option>
                                 <option value="escalated">Escalated</option>
                             </select>
+                        </div>
+                        <div class="resolution-panel hidden" id="res-JAN-5010">
+                            <h5 style="margin-bottom: 1rem; color: var(--primary-color); font-size: 0.9rem;">Resolution Required: Upload Evidence</h5>
+                            <div class="upload-grid">
+                                <div class="upload-box before-img" onclick="document.getElementById('file-before-JAN-5010').click()">
+                                    <small>Before Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-before-JAN-5010" class="hidden">
+                                    <input type="file" id="file-before-JAN-5010" hidden onchange="previewResolution(this, 'prev-before-JAN-5010', 'verify-JAN-5010')">
+                                </div>
+                                <div class="upload-box after-img" onclick="document.getElementById('file-after-JAN-5010').click()">
+                                    <small>After Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-after-JAN-5010" class="hidden">
+                                    <input type="file" id="file-after-JAN-5010" hidden onchange="previewResolution(this, 'prev-after-JAN-5010', 'verify-JAN-5010')">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-100 hidden" id="verify-JAN-5010" onclick="runAIVerification('JAN-5010')">
+                                <i class="fa-solid fa-microchip"></i> Run AI Verification
+                            </button>
+                            <div id="ai-res-JAN-5010" class="ai-verification-result hidden">
+                                <div class="confidence-circle" style="--percent: 98;">
+                                    <span>98%</span>
+                                </div>
+                                <div>
+                                    <h5 style="color:var(--accent-color); margin-bottom:4px;"><i class="fa-solid fa-circle-check"></i> Verification Successful</h5>
+                                    <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.4;">AI matched the location and detected clear infrastructure repair.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -765,6 +1034,35 @@
                                 <option value="escalated">Escalated</option>
                             </select>
                         </div>
+                        <div class="resolution-panel hidden" id="res-JAN-5011">
+                            <h5 style="margin-bottom: 1rem; color: var(--primary-color); font-size: 0.9rem;">Resolution Required: Upload Evidence</h5>
+                            <div class="upload-grid">
+                                <div class="upload-box before-img" onclick="document.getElementById('file-before-JAN-5011').click()">
+                                    <small>Before Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-before-JAN-5011" class="hidden">
+                                    <input type="file" id="file-before-JAN-5011" hidden onchange="previewResolution(this, 'prev-before-JAN-5011', 'verify-JAN-5011')">
+                                </div>
+                                <div class="upload-box after-img" onclick="document.getElementById('file-after-JAN-5011').click()">
+                                    <small>After Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-after-JAN-5011" class="hidden">
+                                    <input type="file" id="file-after-JAN-5011" hidden onchange="previewResolution(this, 'prev-after-JAN-5011', 'verify-JAN-5011')">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-100 hidden" id="verify-JAN-5011" onclick="runAIVerification('JAN-5011')">
+                                <i class="fa-solid fa-microchip"></i> Run AI Verification
+                            </button>
+                            <div id="ai-res-JAN-5011" class="ai-verification-result hidden">
+                                <div class="confidence-circle" style="--percent: 98;">
+                                    <span>98%</span>
+                                </div>
+                                <div>
+                                    <h5 style="color:var(--accent-color); margin-bottom:4px;"><i class="fa-solid fa-circle-check"></i> Verification Successful</h5>
+                                    <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.4;">AI matched the location and detected clear infrastructure repair.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Task Card 5012 (completed) -->
@@ -824,6 +1122,35 @@
                                 <option value="completed" selected>Mark as Resolved</option>
                                 <option value="escalated">Escalated</option>
                             </select>
+                        </div>
+                        <div class="resolution-panel hidden" id="res-JAN-5012">
+                            <h5 style="margin-bottom: 1rem; color: var(--primary-color); font-size: 0.9rem;">Resolution Required: Upload Evidence</h5>
+                            <div class="upload-grid">
+                                <div class="upload-box before-img" onclick="document.getElementById('file-before-JAN-5012').click()">
+                                    <small>Before Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-before-JAN-5012" class="hidden">
+                                    <input type="file" id="file-before-JAN-5012" hidden onchange="previewResolution(this, 'prev-before-JAN-5012', 'verify-JAN-5012')">
+                                </div>
+                                <div class="upload-box after-img" onclick="document.getElementById('file-after-JAN-5012').click()">
+                                    <small>After Work</small>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <img id="prev-after-JAN-5012" class="hidden">
+                                    <input type="file" id="file-after-JAN-5012" hidden onchange="previewResolution(this, 'prev-after-JAN-5012', 'verify-JAN-5012')">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-100 hidden" id="verify-JAN-5012" onclick="runAIVerification('JAN-5012')">
+                                <i class="fa-solid fa-microchip"></i> Run AI Verification
+                            </button>
+                            <div id="ai-res-JAN-5012" class="ai-verification-result hidden">
+                                <div class="confidence-circle" style="--percent: 98;">
+                                    <span>98%</span>
+                                </div>
+                                <div>
+                                    <h5 style="color:var(--accent-color); margin-bottom:4px;"><i class="fa-solid fa-circle-check"></i> Verification Successful</h5>
+                                    <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.4;">AI matched the location and detected clear infrastructure repair.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
