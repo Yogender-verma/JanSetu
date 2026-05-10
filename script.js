@@ -158,18 +158,32 @@ document.addEventListener('DOMContentLoaded', () => {
     function reportInstantly(category, icon) {
         // Show loading state on card
         const cards = document.querySelectorAll('.onetap-card');
+        let isPhoto = category === "Photo Report";
+
         cards.forEach(c => {
             if (c.getAttribute('data-category') === category) {
                 c.style.pointerEvents = 'none';
                 c.style.opacity = '0.7';
                 const cta = c.querySelector('.onetap-cta');
-                if (cta) cta.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Reporting...';
+                if (cta) {
+                    if (isPhoto) {
+                        cta.innerHTML = '<i class="fa-solid fa-microchip fa-spin"></i> Analyzing Authenticity...';
+                    } else {
+                        cta.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Reporting...';
+                    }
+                }
             }
         });
 
-        // Simulate network delay
+        // Simulate network and AI detection delay
+        const delay = isPhoto ? 3000 : 1500;
+        
         setTimeout(() => {
-            showToast(category, icon);
+            if (isPhoto) {
+                showToast("Authenticity Verified", "🛡️", "Image passed AI-integrity check.");
+            } else {
+                showToast(category, icon);
+            }
             
             // Reset card state
             cards.forEach(c => {
@@ -177,17 +191,28 @@ document.addEventListener('DOMContentLoaded', () => {
                     c.style.pointerEvents = 'all';
                     c.style.opacity = '1';
                     const cta = c.querySelector('.onetap-cta');
-                    if (cta) cta.innerHTML = 'Tap to Report';
+                    if (cta) {
+                        if (isPhoto) cta.innerHTML = 'Tap to Upload';
+                        else cta.innerHTML = 'Tap to Report';
+                    }
                 }
             });
-        }, 1500);
+        }, delay);
     }
 
-    function showToast(category, icon) {
+    function showToast(category, icon, customMsg) {
         if (!toast) return;
         
         toastIcon.textContent = icon;
-        toastTitle.textContent = `${category} Reported!`;
+        toastTitle.textContent = category.includes("Verified") ? category : `${category} Reported!`;
+        if (customMsg) {
+            const msgEl = document.getElementById('otToastMsg');
+            if (msgEl) msgEl.textContent = customMsg;
+        } else {
+            const msgEl = document.getElementById('otToastMsg');
+            if (msgEl) msgEl.textContent = "Your issue has been logged.";
+        }
+        
         toast.classList.add('show');
 
         setTimeout(() => {
@@ -207,18 +232,144 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            // If it's the voice card, open modal
+            if (card.classList.contains('onetap-card--voice')) {
+                openVoiceModal();
+                return;
+            }
+
             const cat = card.getAttribute('data-category');
             const icon = card.getAttribute('data-icon');
             reportInstantly(cat, icon);
         });
     });
 
+    // Voice/Text Modal Logic
+    window.openVoiceModal = function() {
+        document.getElementById('voice-modal').classList.remove('hidden');
+    };
+
+    window.closeVoiceModal = function() {
+        document.getElementById('voice-modal').classList.add('hidden');
+    };
+
+    let isRecording = false;
+    const voiceBtn = document.getElementById('start-voice-btn');
+    const voiceStatus = document.getElementById('voice-status');
+
+    if (voiceBtn) {
+        voiceBtn.addEventListener('click', () => {
+            isRecording = !isRecording;
+            if (isRecording) {
+                voiceBtn.classList.add('pulse');
+                voiceBtn.style.background = '#e74c3c';
+                voiceStatus.innerHTML = '<i class="fa-solid fa-circle fa-beat" style="color:#e74c3c;"></i> Recording... (Tap to stop)';
+            } else {
+                voiceBtn.classList.remove('pulse');
+                voiceBtn.style.background = 'var(--accent-color)';
+                voiceStatus.textContent = 'Voice captured! You can also add text below.';
+            }
+        });
+    }
+
+    window.submitVoiceTextReport = function() {
+        const text = document.getElementById('text-complaint').value;
+        const cat = "Voice/Text Report";
+        const icon = "🎙️";
+        
+        const aiStatus = document.getElementById('modal-ai-status');
+        if (aiStatus && aiStatus.classList.contains('ai-detected')) {
+            alert("Please remove the AI-generated image before submitting.");
+            return;
+        }
+
+        closeVoiceModal();
+        reportInstantly(cat, icon);
+        
+        // Reset modal
+        document.getElementById('text-complaint').value = '';
+        document.getElementById('voice-status').textContent = 'Tap the mic to start recording';
+        isRecording = false;
+        if (voiceBtn) {
+            voiceBtn.classList.remove('pulse');
+            voiceBtn.style.background = 'var(--accent-color)';
+        }
+        removeModalImage();
+    };
+
+    // Modal Image Upload Logic
+    const modalUploadBox = document.getElementById('modal-upload-box');
+    if (modalUploadBox) {
+        modalUploadBox.addEventListener('click', (e) => {
+            if (!e.target.closest('button')) {
+                document.getElementById('modal-file-input').click();
+            }
+        });
+    }
+
+    window.handleModalImageUpload = function(input) {
+        const file = input.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        const preview = document.getElementById('modal-image-preview');
+        const container = document.getElementById('modal-image-preview-container');
+        const placeholder = document.getElementById('modal-upload-placeholder');
+        const status = document.getElementById('modal-ai-status');
+
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            container.classList.remove('hidden');
+            placeholder.classList.add('hidden');
+
+            // AI Check Logic
+            status.className = 'ai-check-status scanning';
+            status.classList.remove('hidden');
+            status.innerHTML = '<i class="fa-solid fa-microchip fa-spin"></i> Checking for AI...';
+            document.getElementById('modal-submit-btn').disabled = true;
+
+            setTimeout(() => {
+                const isAI = file.name.toLowerCase().includes('ai') || Math.random() > 0.9;
+                status.classList.remove('scanning');
+                
+                if (isAI) {
+                    status.classList.add('ai-detected');
+                    status.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> AI Generated!';
+                    alert("🚫 AI Detected: This photo appears to be synthetic. Please upload a real photo.");
+                    document.getElementById('modal-submit-btn').disabled = true;
+                } else {
+                    status.classList.add('verified');
+                    status.innerHTML = '<i class="fa-solid fa-circle-check"></i> Authentic';
+                    document.getElementById('modal-submit-btn').disabled = false;
+                }
+            }, 1500);
+        };
+        reader.readAsDataURL(file);
+    };
+
+    window.removeModalImage = function(e) {
+        if (e) e.stopPropagation();
+        document.getElementById('modal-file-input').value = '';
+        document.getElementById('modal-image-preview-container').classList.add('hidden');
+        document.getElementById('modal-upload-placeholder').classList.remove('hidden');
+        document.getElementById('modal-ai-status').classList.add('hidden');
+        document.getElementById('modal-submit-btn').disabled = false;
+    };
+
     // Handle Photo Upload
     const photoInput = document.getElementById('otPhotoInput');
     if (photoInput) {
         photoInput.addEventListener('change', () => {
             if (photoInput.files && photoInput.files[0]) {
-                reportInstantly("Photo Report", "📸");
+                const file = photoInput.files[0];
+                const isAI = file.name.toLowerCase().includes('ai') || Math.random() > 0.9;
+
+                if (isAI) {
+                    alert("🚫 AI Detected: The image you uploaded appears to be AI-generated or manipulated. JanSetu only accepts authentic, live photos to ensure the accuracy of civic reports. Please try again with a real photo.");
+                    photoInput.value = '';
+                } else {
+                    reportInstantly("Photo Report", "📸");
+                }
             }
         });
     }

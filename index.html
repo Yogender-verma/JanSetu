@@ -34,7 +34,7 @@
                 <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
             </ul>
             <div class="nav-actions">
-                <a class="btn btn-outline-primary login-btn" href="portal.html" data-i18n="nav_login">Login</a>
+                <a class="btn btn-outline-primary login-btn" href="officer.html" data-i18n="officer"><i class="fa-solid fa-user-shield"></i> Officer</a>
                 <a class="btn btn-primary" href="admin.html" style="margin-left: 0.5rem;" data-i18n="nav_admin"><i
                         class="fa-solid fa-shield-halved"></i> Admin</a>
                 <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
@@ -50,10 +50,7 @@
             <p class="hero-subtitle" data-i18n="hero_subtitle">Bridging Citizens and Governance with Smart Technology. Report, track, and resolve
                 community issues with AI-powered efficiency.</p>
             <div class="hero-buttons">
-                <a class="btn btn-primary btn-lg" href="portal.html" data-i18n="btn_report"><i class="fa-solid fa-bullhorn"></i> Report an
-                    Issue</a>
-                <a class="btn btn-secondary btn-lg" href="portal.html" data-i18n="btn_track"><i
-                        class="fa-solid fa-magnifying-glass-location"></i> Track Complaint</a>
+                <a class="btn btn-primary btn-lg" href="#problem" data-i18n="btn_report"><i class="fa-solid fa-bullhorn"></i> Learn More</a>
             </div>
             <div class="hero-stats">
                 <div class="stat-item">
@@ -167,6 +164,17 @@
                     <h3 data-i18n="cat_photo">Upload Photo</h3>
                     <p data-i18n="cat_photo_desc">Snap &amp; auto-report any issue</p>
                     <span class="onetap-cta" data-i18n="tap_to_upload">Tap to Upload</span>
+                </button>
+
+                <!-- Voice/Text Report -->
+                <button class="onetap-card onetap-card--voice" data-category="Voice/Text Report" data-icon="🎙️"
+                    aria-label="Voice or Text Report" id="otVoiceText">
+                    <div class="onetap-image-wrap">
+                        <img src="voice_text.png" alt="Voice or Text" />
+                    </div>
+                    <h3>Voice or Text</h3>
+                    <p>Describe your issue in detail</p>
+                    <span class="onetap-cta">Tap to Start</span>
                 </button>
             </div>
         </div>
@@ -322,7 +330,6 @@
                         <li><a href="#home" data-i18n="nav_home">Home</a></li>
                         <li><a href="#features" data-i18n="nav_features">Features</a></li>
                         <li><a href="#workflow" data-i18n="nav_workflow">How it works</a></li>
-                        <li><a href="portal.html" data-i18n="btn_report">Report Issue</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
@@ -348,6 +355,45 @@
             </div>
         </div>
     </footer>
+    <!-- Voice/Text Modal -->
+    <div class="modal-overlay hidden" id="voice-modal">
+        <div class="modal-content" style="max-width: 450px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+                <h3 style="margin:0; color:var(--primary-color);"><i class="fa-solid fa-microphone" style="color:var(--accent-color);"></i> Voice & Text Report</h3>
+                <button onclick="closeVoiceModal()" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+            </div>
+            
+            <div class="voice-controls mb-4" style="background:#f8faff; padding:1.5rem; border-radius:12px; border:1px solid #d0e1f9; margin-bottom:1.5rem;">
+                <button class="btn btn-primary" id="start-voice-btn" style="width:70px; height:70px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem;">
+                    <i class="fa-solid fa-microphone fa-xl"></i>
+                </button>
+                <p id="voice-status" style="font-size:0.9rem; color:var(--text-muted);">Tap the mic to start recording</p>
+            </div>
+
+            <textarea id="text-complaint" class="styled-input w-100" placeholder="Or type your complaint here..." rows="3" style="width:100%; padding:1rem; border-radius:8px; border:1px solid var(--border-color); font-family:inherit; margin-bottom:1rem;"></textarea>
+            
+            <div class="modal-upload-section" style="margin-bottom:1.5rem; text-align:left;">
+                <label style="font-size:0.85rem; font-weight:700; color:var(--text-muted); display:block; margin-bottom:0.5rem;">ATTACH PHOTO (OPTIONAL)</label>
+                <div class="upload-box" id="modal-upload-box" style="padding:1rem; border:2px dashed var(--border-color); border-radius:12px; cursor:pointer; position:relative;">
+                    <input type="file" id="modal-file-input" hidden accept="image/*" onchange="handleModalImageUpload(this)">
+                    <div id="modal-upload-placeholder" style="display:flex; align-items:center; gap:1rem; color:var(--text-muted);">
+                        <i class="fa-solid fa-camera fa-lg"></i>
+                        <span style="font-size:0.9rem;">Tap to add a photo</span>
+                    </div>
+                    <div id="modal-image-preview-container" class="hidden" style="position:relative;">
+                        <img id="modal-image-preview" src="" style="width:100%; height:120px; object-fit:cover; border-radius:8px;">
+                        <button onclick="removeModalImage(event)" style="position:absolute; top:-10px; right:-10px; background:#ef4444; color:white; border:none; border-radius:50%; width:24px; height:24px; cursor:pointer;">&times;</button>
+                    </div>
+                    <div id="modal-ai-status" class="ai-check-status hidden"></div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary w-100" id="modal-submit-btn" onclick="submitVoiceTextReport()">
+                <i class="fa-solid fa-paper-plane"></i> Submit Full Report
+            </button>
+        </div>
+    </div>
+
     <script src="script.js"></script>
     <script src="i18n.js"></script>
     <script src="jansetu-core.js"></script>
