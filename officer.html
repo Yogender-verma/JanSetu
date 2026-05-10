@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Officer Dashboard - JanSetu</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="officer.css">
+    <script src="i18n.js" defer></script>
+</head>
+
+<body class="bg-light">
+
+    <!-- Navbar -->
+    <nav class="navbar scrolled">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-bridge-water"></i> Jan<span>Setu</span>
+            </a>
+            <div class="nav-actions">
+                <a href="index.html" class="nav-link"><i class="fa-solid fa-house"></i> Home</a>
+                <div class="lang-selector">
+                    <i class="fa-solid fa-globe"></i>
+                    <select class="minimal-select">
+                        <option>English</option>
+                        <option>Hindi</option>
+                        <option>Kannada</option>
+                    </select>
+                </div>
+                <button class="btn btn-outline-primary btn-sm logout-btn" onclick="logout()">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Officer Dashboard Section -->
+    <section id="dashboard-section" class="officer-dashboard active">
+
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <div class="officer-profile">
+                <div class="avatar">
+                    <img src="https://ui-avatars.com/api/?name=Officer+Demo&background=0b3b60&color=fff" alt="Officer">
+                </div>
+                <div class="info">
+                    <h4>Officer Sharma</h4>
+                    <span>Zone 4 Field Agent</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-target="view-tasks" data-i18n="assigned_tasks"><i class="fa-solid fa-list-check"></i> Assigned
+                    Tasks</button>
+                <button class="nav-btn" data-target="view-map" data-i18n="territory_map"><i class="fa-solid fa-map-location-dot"></i> Territory
+                    Map</button>
+                <button class="nav-btn" data-target="view-metrics" data-i18n="command_center"><i class="fa-solid fa-desktop"></i> Command
+                    Center</button>
+            </nav>
+
+            <div class="escalation-alert mt-4"
+                style="padding:0.75rem; border-left:4px solid #e74c3c; background:#fdf3f2; border-radius:4px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <strong style="color:#e74c3c; font-size:0.85rem;"><i class="fa-solid fa-triangle-exclamation"></i> 1
+                        Urgent Escalation</strong>
+                    <button class="btn btn-danger btn-sm"
+                        style="padding:0.2rem 0.5rem; font-size:0.75rem;" onclick="viewEscalations()">View</button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+
+            <!-- View: Assigned Tasks -->
+            <div id="view-tasks" class="dashboard-view active">
+                <div class="view-header">
+                    <h2 data-i18n="task_mgmt">Task Management</h2>
+                    <div class="filters">
+                        <select class="styled-input" id="sort-tasks" onchange="sortTasks()">
+                            <option value="time" data-i18n="time_left">Sort by: Time Left to Start</option>
+                            <option value="urgency" data-i18n="urgency_level_sort">Sort by: Urgency Level</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="task-tabs mb-4">
+                    <button class="btn btn-primary task-tab-btn" onclick="filterTasks('assigned', this)" data-i18n="assigned_works">Assigned</button>
+                    <button class="btn btn-outline-primary task-tab-btn" onclick="filterTasks('started', this)" data-i18n="started_works">Started</button>
+                    <button class="btn btn-outline-primary task-tab-btn" onclick="filterTasks('resolved', this)" data-i18n="resolved_works">Resolved</button>
+                    <button class="btn btn-outline-danger task-tab-btn" onclick="filterTasks('escalated', this)" data-i18n="escalated_works">Escalated</button>
+                </div>
+
+                <!-- Task List -->
+                <div class="task-grid" id="main-task-grid">
+
+                    <!-- ========================================== -->
+                    <!-- ASSIGNED TASKS -->
+                    <!-- ========================================== -->
+
+                    <!-- Task JAN-5001 -->
+                    <div class="task-card border-warning task-item" data-status="assigned" data-urgency="65" data-time="4">
+                        <div class="task-header">
+                            <span class="badge badge-warning"><i class="fa-solid fa-clock"></i> Pending Assignment</span>
+                            <span class="ticket-id">#JAN-5001</span>
+                        </div>
+                        <h3 class="task-title">Pothole Repair</h3>
+                        <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Sector 14 Main Road</p>
+                        <p class="task-desc mb-2">Large pothole reported near the metro station. Requires immediate leveling and asphalt filling.</p>
+                        <div class="task-stats">
+                            <div>
+                                <small class="text-muted">Time Left to Start:</small>
+                                <strong class="time-left">4 Hours</strong>
+                            </div>
+                            <div>
+                                <small class="text-muted">Urgency Level:</small>
+                                <strong>65%</strong>
+                            </div>
+                        </div>
+                        <div class="task-timeline" id="timeline-JAN-5001">
+                            <div class="timeline-item active"><span class="time">1 hour ago</span><span class="status-text">Assigned to Officer Sharma</span></div>
+                        </div>
+                        <div class="task-actions" id="actions-JAN-5001">
+                            <button class="btn btn-primary btn-action" onclick="startWork('JAN-5001')"><i class="fa-solid fa-play"></i> Start Work</button>
+                            <button class="btn btn-outline-danger btn-action" onclick="openEscalateModal('JAN-5001')"><i class="fa-solid fa-triangle-exclamation"></i> Escalate</button>
+                        </div>
+                        <div class="proof-gallery hidden" id="proof-JAN-5001"></div>
+                    </div>
+
+                    <!-- Task JAN-5002 -->
+                    <div class="task-card border-warning task-item" data-status="assigned" data-urgency="40" data-time="12">
+                        <div class="task-header">
+                            <span class="badge badge-warning"><i class="fa-solid fa-clock"></i> Pending Assignment</span>
+                            <span class="ticket-id">#JAN-5002</span>
+                        </div>
+                        <h3 class="task-title">Stray Animal Control</h3>
+                        <p class="task-loc"><i class="fa-solid fa-location-dot"></i> HSR Layout Sector 1</p>
+                        <p class="task-desc mb-2">Pack of stray dogs causing issues for morning walkers. Forwarded for capture and relocation.</p>
+                        <div class="task-stats">
+                            <div>
+                                <small class="text-muted">Time Left to Start:</small>
+                                <strong class="time-left">12 Hours</strong>
+                            </div>
+                            <div>
+                                <small class="text-muted">Urgency Level:</small>
+                                <strong>40%</strong>
+                            </div>
+                        </div>
+                        <div class="task-timeline" id="timeline-JAN-5002">
+                            <div class="timeline-item active"><span class="time">2 hours ago</span><span class="status-text">Assigned to Officer Sharma</span></div>
+                        </div>
+                        <div class="task-actions" id="actions-JAN-5002">
+                            <button class="btn btn-primary btn-action" onclick="startWork('JAN-5002')"><i class="fa-solid fa-play"></i> Start Work</button>
+                            <button class="btn btn-outline-danger btn-action" onclick="openEscalateModal('JAN-5002')"><i class="fa-solid fa-triangle-exclamation"></i> Escalate</button>
+                        </div>
+                        <div class="proof-gallery hidden" id="proof-JAN-5002"></div>
+                    </div>
+
+                    <!-- Task JAN-5003 -->
+                    <div class="task-card border-warning task-item" data-status="assigned" data-urgency="75" data-time="2">
+                        <div class="task-header">
+                            <span class="badge badge-warning"><i class="fa-solid fa-clock"></i> Pending Assignment</span>
+                            <span class="ticket-id">#JAN-5003</span>
+                        </div>
+                        <h3 class="task-title">Broken Streetlight</h3>
+                        <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Koramangala 5th Block</p>
+                        <p class="task-desc mb-2">Streetlight near park entrance is flickering. Safety concern for residents at night.</p>
+                        <div class="task-stats">
+                            <div>
+                                <small class="text-muted">Time Left to Start:</small>
+                                <strong class="time-left">2 Hours</strong>
+                            </div>
+                            <div>
+                                <small class="text-muted">Urgency Level:</small>
+                                <strong style="color:#ef4444">75%</strong>
+                            </div>
+                        </div>
+                        <div class="task-timeline" id="timeline-JAN-5003">
+                            <div class="timeline-item active"><span class="time">30 mins ago</span><span class="status-text">Assigned to Officer Sharma</span></div>
+                        </div>
+                        <div class="task-actions" id="actions-JAN-5003">
+                            <button class="btn btn-primary btn-action" onclick="startWork('JAN-5003')"><i class="fa-solid fa-play"></i> Start Work</button>
+                            <button class="btn btn-outline-danger btn-action" onclick="openEscalateModal('JAN-5003')"><i class="fa-solid fa-triangle-exclamation"></i> Escalate</button>
+                        </div>
+                        <div class="proof-gallery hidden" id="proof-JAN-5003"></div>
+                    </div>
+
+                    <!-- ========================================== -->
+                    <!-- STARTED TASKS -->
+                    <!-- ========================================== -->
+
+                    <!-- Task JAN-5006 -->
+                    <div class="task-card border-primary task-item hidden" data-status="started" data-urgency="84" data-time="22">
+                        <div class="task-header">
+                            <span class="badge badge-info"><i class="fa-solid fa-spinner"></i> Work Started</span>
+                            <span class="ticket-id">#JAN-5006</span>
+                        </div>
+                        <h3 class="task-title">Water Pipeline Burst</h3>
+                        <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Sector 14 Main Road</p>
+                        <p class="task-desc mb-2">Underground pipe burst causing flooding. Team is on-site performing emergency repairs.</p>
+                        <div class="task-stats">
+                            <div>
+                                <small class="text-muted">Time Elapsed:</small>
+                                <strong class="time-left">3 Hours</strong>
+                            </div>
+                            <div>
+                                <small class="text-muted">Urgency Level:</small>
+                                <strong style="color:#ef4444">84%</strong>
+                            </div>
+                        </div>
+                        <div class="task-timeline" id="timeline-JAN-5006">
+                            <div class="timeline-item"><span class="time">5 hours ago</span><span class="status-text">Assigned to Officer Sharma</span></div>
+                            <div class="timeline-item active"><span class="time">3 hours ago</span><span class="status-text">Work Started</span></div>
+                        </div>
+                        <div class="task-actions" id="actions-JAN-5006">
+                            <button class="btn btn-primary btn-action" onclick="openResolveModal('JAN-5006')"><i class="fa-solid fa-check-circle"></i> Resolve Work</button>
+                            <button class="btn btn-outline-danger btn-action" onclick="openEscalateModal('JAN-5006')"><i class="fa-solid fa-triangle-exclamation"></i> Escalate</button>
+                        </div>
+                        <div class="proof-gallery hidden" id="proof-JAN-5006"></div>
+                    </div>
+
+                    <!-- Task JAN-5008 -->
+                    <div class="task-card border-primary task-item hidden" data-status="started" data-urgency="60" data-time="8">
+                        <div class="task-header">
+                            <span class="badge badge-info"><i class="fa-solid fa-spinner"></i> Work Started</span>
+                            <span class="ticket-id">#JAN-5008</span>
+                        </div>
+                        <h3 class="task-title">Garbage Pile Clearance</h3>
+                        <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Indiranagar Market</p>
+                        <p class="task-desc mb-2">Uncollected garbage blocking the sidewalk. Waste management truck dispatched.</p>
+                        <div class="task-stats">
+                            <div>
+                                <small class="text-muted">Time Elapsed:</small>
+                                <strong class="time-left">1 Hour</strong>
+                            </div>
+                            <div>
+                                <small class="text-muted">Urgency Level:</small>
+                                <strong>60%</strong>
+                            </div>
+                        </div>
+                        <div class="task-timeline" id="timeline-JAN-5008">
+                            <div class="timeline-item"><span class="time">4 hours ago</span><span class="status-text">Assigned to Officer Sharma</span></div>
+                            <div class="timeline-item active"><span class="time">1 hour ago</span><span class="status-text">Work Started</span></div>
+                        </div>
+                        <div class="task-actions" id="actions-JAN-5008">
+                            <button class="btn btn-primary btn-action" onclick="openResolveModal('JAN-5008')"><i class="fa-solid fa-check-circle"></i> Resolve Work</button>
+                            <button class="btn btn-outline-danger btn-action" onclick="openEscalateModal('JAN-5008')"><i class="fa-solid fa-triangle-exclamation"></i> Escalate</button>
+                        </div>
+                        <div class="proof-gallery hidden" id="proof-JAN-5008"></div>
+                    </div>
+
+                    <!-- ========================================== -->
+                    <!-- RESOLVED TASKS -->
+                    <!-- ========================================== -->
+
+                    <!-- Task JAN-5011 -->
+                    <div class="task-card border-success task-item hidden" data-status="resolved" data-urgency="40" data-time="0">
+                        <div class="task-header">
+                            <span class="badge badge-success"><i class="fa-solid fa-check-circle"></i> Resolved</span>
+                            <span class="ticket-id">#JAN-5011</span>
+                        </div>
+                        <h3 class="task-title">Broken Sidewalk Repair</h3>
+                        <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Sector 14 Main Road</p>
+                        <div class="task-stats">
+                            <div>
+                                <small class="text-muted">Resolution Time:</small>
+                                <strong>9 Hours</strong>
+                            </div>
+                            <div>
+                                <small class="text-muted">Urgency Level:</small>
+                                <strong>40%</strong>
+                            </div>
+                        </div>
+                        <div class="task-timeline" id="timeline-JAN-5011">
+                            <div class="timeline-item"><span class="time">1 day ago</span><span class="status-text">Work Started</span></div>
+                            <div class="timeline-item active"><span class="time">12 hours ago</span><span class="status-text">Resolved with Proof</span></div>
+                        </div>
+                        <div class="proof-gallery" id="proof-JAN-5011">
+                            <div class="proof-item"><img src="sidewalk_before.png" alt="Before"><span class="proof-label">Before Work</span></div>
+                            <div class="proof-item"><img src="sidewalk_after.png" alt="After"><span class="proof-label">After Work</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Task JAN-5012 -->
+                    <div class="task-card border-success task-item hidden" data-status="resolved" data-urgency="55" data-time="0">
+                        <div class="task-header">
+                            <span class="badge badge-success"><i class="fa-solid fa-check-circle"></i> Resolved</span>
+                            <span class="ticket-id">#JAN-5012</span>
+                        </div>
+                        <h3 class="task-title">Pothole Filling</h3>
+                        <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Koramangala 1st Block</p>
+                        <div class="task-stats">
+                            <div>
+                                <small class="text-muted">Resolution Time:</small>
+                                <strong>2 Hours</strong>
+                            </div>
+                            <div>
+                                <small class="text-muted">Urgency Level:</small>
+                                <strong>55%</strong>
+                            </div>
+                        </div>
+                        <div class="task-timeline" id="timeline-JAN-5012">
+                            <div class="timeline-item"><span class="time">5 hours ago</span><span class="status-text">Work Started</span></div>
+                            <div class="timeline-item active"><span class="time">3 hours ago</span><span class="status-text">Resolved with Proof</span></div>
+                        </div>
+                        <div class="proof-gallery" id="proof-JAN-5012">
+                            <div class="proof-item"><img src="pothole_before.png" alt="Before"><span class="proof-label">Before Work</span></div>
+                            <div class="proof-item"><img src="pothole_after.png" alt="After"><span class="proof-label">After Work</span></div>
+                        </div>
+                    </div>
+
+                    <!-- ========================================== -->
+                    <!-- ESCALATED TASKS -->
+                    <!-- ========================================== -->
+
+                    <!-- Task JAN-5015 -->
+                    <div class="task-card border-danger task-item hidden" data-status="escalated" data-urgency="95" data-time="0">
+                        <div class="task-header">
+                            <span class="badge badge-escalated"><i class="fa-solid fa-triangle-exclamation"></i> Escalated</span>
+                            <span class="ticket-id">#JAN-5015</span>
+                        </div>
+                        <h3 class="task-title">Hazardous Gas Leak</h3>
+                        <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Industrial Zone A</p>
+                        <p class="task-desc mb-2">Large scale gas leak detected. Requires specialized Hazmat team. Field officer cannot proceed safely.</p>
+                        <div class="task-stats">
+                            <div>
+                                <small class="text-muted">Status:</small>
+                                <strong style="color:#ef4444">ESCALATED</strong>
+                            </div>
+                            <div>
+                                <small class="text-muted">Urgency Level:</small>
+                                <strong style="color:#ef4444">95%</strong>
+                            </div>
+                        </div>
+                        <div class="task-timeline" id="timeline-JAN-5015">
+                            <div class="timeline-item"><span class="time">2 hours ago</span><span class="status-text">Assigned to Officer Sharma</span></div>
+                            <div class="timeline-item active"><span class="time">30 mins ago</span><span class="status-text">Escalated: Requires Specialized Equipment</span></div>
+                        </div>
+                        <div class="task-actions"><span class="text-danger font-weight-bold" style="font-size:0.85rem;">Locked: Case Escalated to Regional Supervisor</span></div>
+                    </div>
+
+                    <!-- Task JAN-5018 -->
+                    <div class="task-card border-danger task-item hidden" data-status="escalated" data-urgency="80" data-time="0">
+                        <div class="task-header">
+                            <span class="badge badge-escalated"><i class="fa-solid fa-triangle-exclamation"></i> Escalated</span>
+                            <span class="ticket-id">#JAN-5018</span>
+                        </div>
+                        <h3 class="task-title">Encroachment on Park Land</h3>
+                        <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Sector 7 Green Belt</p>
+                        <p class="task-desc mb-2">Legal dispute identified with local builders. Beyond field agent authority. Forwarded to Land Registry.</p>
+                        <div class="task-stats">
+                            <div>
+                                <small class="text-muted">Status:</small>
+                                <strong style="color:#ef4444">ESCALATED</strong>
+                            </div>
+                            <div>
+                                <small class="text-muted">Urgency Level:</small>
+                                <strong style="color:#ef4444">80%</strong>
+                            </div>
+                        </div>
+                        <div class="task-timeline" id="timeline-JAN-5018">
+                            <div class="timeline-item"><span class="time">1 day ago</span><span class="status-text">Assigned to Officer Sharma</span></div>
+                            <div class="timeline-item active"><span class="time">5 hours ago</span><span class="status-text">Escalated: Legal complications identified</span></div>
+                        </div>
+                        <div class="task-actions"><span class="text-danger font-weight-bold" style="font-size:0.85rem;">Locked: Case Escalated to Legal Department</span></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- View: Map -->
+            <div id="view-map" class="dashboard-view hidden">
+                <div class="view-header">
+                    <h2>Territory Map Overview</h2>
+                    <p class="text-muted">Visualizing open complaints in your assigned zones.</p>
+                </div>
+                <div class="map-container">
+                    <div id="real-map" style="width: 100%; height: 600px; border-radius: 8px;"></div>
+                </div>
+            </div>
+
+            <!-- View: Command Center -->
+            <div id="view-metrics" class="dashboard-view hidden">
+                <div class="view-header" style="margin-bottom: 1.5rem;">
+                    <h2>Operational Command Center</h2>
+                    <p class="text-muted">Real-time zone monitoring and performance metrics.</p>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon bg-primary text-white">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                        <div class="metric-data">
+                            <h3>42</h3>
+                            <p>Assigned Cases</p>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon bg-warning text-white">
+                            <i class="fa-solid fa-stopwatch"></i>
+                        </div>
+                        <div class="metric-data">
+                            <h3>18 hrs</h3>
+                            <p>Avg Resolution Time</p>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon bg-accent text-white">
+                            <i class="fa-solid fa-shield-heart"></i>
+                        </div>
+                        <div class="metric-data">
+                            <h3>94/100</h3>
+                            <p>Trust Score</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-center-layout" style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+                    <!-- Live Task Queue -->
+                    <div class="admin-panel glass-panel">
+                        <h3 class="panel-title"><i class="fa-solid fa-list-ul"></i> Live Task Queue</h3>
+                        <div class="table-responsive">
+                            <table class="premium-table">
+                                <thead>
+                                    <tr>
+                                        <th>Ticket ID</th>
+                                        <th>Location Area</th>
+                                        <th>Urgency</th>
+                                        <th>Resolution ETA</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>#JAN-5022</td>
+                                        <td>Sector 14 Main Road</td>
+                                        <td><span class="text-danger">92%</span></td>
+                                        <td><span class="badge badge-danger">2 hrs</span></td>
+                                        <td><span class="badge badge-warning">Assigned</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>#JAN-5025</td>
+                                        <td>HSR Layout Phase 2</td>
+                                        <td><span class="text-warning">74%</span></td>
+                                        <td>14 hrs</td>
+                                        <td><span class="badge badge-info">In Progress</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>#JAN-5011</td>
+                                        <td>Koramangala Block 5</td>
+                                        <td><span class="text-success">45%</span></td>
+                                        <td>28 hrs</td>
+                                        <td><span class="badge badge-warning">Assigned</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>#JAN-5009</td>
+                                        <td>Indiranagar 100ft Road</td>
+                                        <td><span class="text-success">30%</span></td>
+                                        <td>48 hrs</td>
+                                        <td><span class="badge badge-info">In Progress</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Side Panels -->
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <!-- Status Breakdown -->
+                        <div class="admin-panel"
+                            style="background: var(--white); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                            <h3 style="font-size: 1.1rem; margin-bottom: 1rem;"><i class="fa-solid fa-chart-pie"
+                                    style="color:var(--primary-color);"></i> Workload Breakdown</h3>
+                            <div style="display:flex; flex-direction:column; gap:0.85rem;">
+                                <div style="display:flex; justify-content:space-between; align-items:center;">
+                                    <span style="font-size:0.95rem;">Today's Active Tasks</span>
+                                    <strong style="color:var(--primary-color);">14</strong>
+                                </div>
+                                
+                                <div style="display:flex; justify-content:space-between; align-items:center;">
+                                    <span style="font-size:0.95rem;">Urgent Escalations</span>
+                                    <strong style="color:#e74c3c;">2</strong>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; align-items:center;">
+                                    <span style="font-size:0.95rem;">Completed This Week</span>
+                                    <strong style="color:#27ae60;">26</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Territory Zone Summary -->
+                        <div class="admin-panel"
+                            style="background: var(--white); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                            <h3 style="font-size: 1.1rem; margin-bottom: 1rem;"><i class="fa-solid fa-map-location-dot"
+                                    style="color:var(--primary-color);"></i> Zone Workload</h3>
+
+                            <div style="margin-bottom:1rem;">
+                                <div
+                                    style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:0.85rem;">
+                                    <span style="font-weight:500;">Sector 14</span>
+                                    <strong>45% (19 cases)</strong>
+                                </div>
+                                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px;">
+                                    <div style="width:45%; background:#e74c3c; height:100%; border-radius:4px;"></div>
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom:1rem;">
+                                <div
+                                    style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:0.85rem;">
+                                    <span style="font-weight:500;">HSR Layout</span>
+                                    <strong>30% (13 cases)</strong>
+                                </div>
+                                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px;">
+                                    <div style="width:30%; background:#f39c12; height:100%; border-radius:4px;"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div
+                                    style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:0.85rem;">
+                                    <span style="font-weight:500;">Koramangala</span>
+                                    <strong>25% (10 cases)</strong>
+                                </div>
+                                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px;">
+                                    <div
+                                        style="width:25%; background:var(--accent-color); height:100%; border-radius:4px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </section>
+
+    <!-- Resolution Proof Modal -->
+    <div class="modal-overlay hidden" id="resolve-modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+                <h3 style="margin:0;"><i class="fa-solid fa-camera" style="color:var(--primary-color);"></i> Submit Proof of Resolution</h3>
+                <button class="btn-close" onclick="closeResolveModal()" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+            </div>
+            
+            <p class="text-muted mb-4">Mandatory: Please upload 'Before' and 'After' images to mark this task as resolved.</p>
+            
+            <div class="upload-grid">
+                <div class="upload-box" id="box-before">
+                    <input type="file" id="upload-before" hidden accept="image/*" onchange="handleImagePreview(this, 'preview-before')">
+                    <div class="upload-placeholder" onclick="document.getElementById('upload-before').click()">
+                        <i class="fa-solid fa-cloud-arrow-up fa-2x"></i>
+                        <span>Before Work</span>
+                    </div>
+                    <img id="preview-before" class="hidden">
+                    <small>Before Work</small>
+                </div>
+                <div class="upload-box" id="box-after">
+                    <input type="file" id="upload-after" hidden accept="image/*" onchange="handleImagePreview(this, 'preview-after')">
+                    <div class="upload-placeholder" onclick="document.getElementById('upload-after').click()">
+                        <i class="fa-solid fa-cloud-arrow-up fa-2x"></i>
+                        <span>After Work</span>
+                    </div>
+                    <img id="preview-after" class="hidden">
+                    <small>After Work</small>
+                </div>
+            </div>
+
+            <input type="hidden" id="current-ticket-id">
+            
+            <button class="btn btn-primary w-100 mt-4" id="submit-resolution-btn" onclick="submitResolution()" disabled>
+                <i class="fa-solid fa-check-circle"></i> Submit & Mark Resolved
+            </button>
+        </div>
+    </div>
+
+    <!-- Escalate Modal -->
+    <div class="modal-overlay hidden" id="escalate-modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header" style="margin-bottom:1rem;">
+                <h3><i class="fa-solid fa-triangle-exclamation" style="color:#e74c3c;"></i> Escalate Task</h3>
+            </div>
+            <p>Are you sure you want to escalate this task? This will forward it to a higher authority.</p>
+            <textarea id="escalation-reason" class="styled-input w-100 mt-2" placeholder="Reason for escalation..." rows="3"></textarea>
+            <div style="display:flex; gap:1rem; margin-top:1.5rem;">
+                <button class="btn btn-outline-primary flex-1" onclick="closeEscalateModal()">Cancel</button>
+                <button class="btn btn-danger flex-1" onclick="confirmEscalate()">Confirm Escalation</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="officer.js"></script>
+</body>
+
+</html>
