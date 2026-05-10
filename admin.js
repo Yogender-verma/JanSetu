@@ -1,10 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     const loginForm = document.getElementById('admin-login-form');
     const loginSection = document.getElementById('admin-login-section');
     const dashboardSection = document.getElementById('admin-dashboard-section');
     const errorMsg = document.getElementById('login-error-msg');
     const logoutBtn = document.getElementById('admin-logout-btn');
+
+    // Translation Helper
+    function t(key) {
+        const lang = localStorage.getItem('janSetuLang') || 'en';
+        return (translations[lang] && translations[lang][key]) ? translations[lang][key] : key;
+    }
 
     // Check if already logged in
     if (localStorage.getItem('jansetu_admin_logged_in') === 'true') {
@@ -63,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const targetView = document.getElementById(targetId);
                 if (targetView) {
                     targetView.classList.remove('hidden');
-                    
+
                     // If switching back to overview, resize map
                     if (targetId === 'view-overview' && hotspotMap) {
                         setTimeout(() => hotspotMap.invalidateSize(), 100);
@@ -77,15 +83,23 @@ document.addEventListener('DOMContentLoaded', () => {
     let hotspotMap = null;
     function initHotspotMap() {
         if (hotspotMap !== null || !document.getElementById('admin-hotspot-map')) return;
-        
+
         // Default center
         hotspotMap = L.map('admin-hotspot-map').setView([28.6139, 77.2090], 12);
-        
-        // Add satellite tiles
-        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+
+        // Add satellite + labels (Hybrid)
+        const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             maxZoom: 18,
-            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-        }).addTo(hotspotMap);
+            attribution: 'Tiles &copy; Esri'
+        });
+        
+        const labels = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 18,
+            attribution: 'Labels &copy; Esri'
+        });
+
+        satellite.addTo(hotspotMap);
+        labels.addTo(hotspotMap);
 
         // Define Hotspot Areas (Density visualization via circles)
         const hotspots = [
@@ -105,14 +119,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 radius: spot.radius,
                 weight: 2
             }).addTo(hotspotMap).bindPopup(`
-                <div style="font-family: 'Inter', sans-serif;">
-                    <h4 style="margin:0 0 5px 0; color:var(--text-dark);">${spot.density} Density Zone</h4>
+                <div style="font-family: 'Inter', sans-serif; text-align: ${localStorage.getItem('janSetuLang') === 'ur' ? 'right' : 'left'};">
+                    <h4 style="margin:0 0 5px 0; color:var(--text-dark);">${spot.density} ${t('density_zone')}</h4>
                     <span style="font-size:1.5rem; font-weight:bold; color:${spot.color};">${spot.issues}</span> 
-                    <span style="color:var(--text-muted); font-size:0.9rem;">Active Complaints</span>
+                    <span style="color:var(--text-muted); font-size:0.9rem;">${t('active_complaints')}</span>
                 </div>
             `);
         });
-        
+
         // Force map to recalculate size after being unhidden
         setTimeout(() => hotspotMap.invalidateSize(), 500);
     }
@@ -121,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loginSection.classList.add('hidden');
         dashboardSection.classList.remove('hidden');
         if (logoutBtn) logoutBtn.classList.remove('hidden');
-        
+
         // Init map when dashboard is visible
         setTimeout(initHotspotMap, 100);
     }
@@ -173,14 +187,14 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             const dept = btn.getAttribute('data-dept');
             const data = deptHierarchy[dept];
-            
-            if(data) {
+
+            if (data) {
                 modalTitle.innerHTML = data.title;
-                
+
                 // Inject hierarchy HTML
                 let html = `
                     <div class="hierarchy-head" style="border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; background: #f8faff;">
-                        <p style="margin:0 0 0.5rem 0; font-size:0.8rem; font-weight:bold; color:var(--text-muted); text-transform:uppercase;">Department Head</p>
+                        <p style="margin:0 0 0.5rem 0; font-size:0.8rem; font-weight:bold; color:var(--text-muted); text-transform:uppercase;">${t('chief_admin')}</p>
                         <div style="display:flex; align-items:center; gap: 1rem;">
                             <img src="https://ui-avatars.com/api/?name=${data.head.img}&background=${data.head.bg}&color=fff&size=48" style="border-radius: 50%;">
                             <div>
@@ -190,9 +204,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                     </div>
                     <div class="hierarchy-team">
-                        <p style="margin:0 0 0.5rem 0; font-size:0.8rem; font-weight:bold; color:var(--text-muted); text-transform:uppercase;">Supporting Team</p>
+                        <p style="margin:0 0 0.5rem 0; font-size:0.8rem; font-weight:bold; color:var(--text-muted); text-transform:uppercase;">${t('supporting_team')}</p>
                 `;
-                
+
                 data.team.forEach(member => {
                     html += `
                         <div class="officer-item" style="padding: 0.5rem; margin-bottom: 0.5rem; border: 1px solid var(--border-color); border-radius: 6px;">
@@ -204,14 +218,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                     `;
                 });
-                
+
                 html += `</div>`;
-                
-                if(modalOfficerList) {
+
+                if (modalOfficerList) {
                     modalOfficerList.innerHTML = html;
                 }
             }
-            
+
             deptModal.classList.remove('hidden');
         });
     });

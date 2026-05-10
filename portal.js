@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const reportSection = document.getElementById('report-section');
     const loginForm = document.getElementById('login-form');
     const logoutBtn = document.getElementById('logout-btn');
-    
+
     // Main Tabs
     const mainTabBtns = document.querySelectorAll('.main-tab-btn');
     const mainTabPanes = document.querySelectorAll('.main-tab-pane');
@@ -12,13 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Sub Tabs (Report Mode)
     const subTabBtns = document.querySelectorAll('.sub-tab-btn');
     const subTabPanes = document.querySelectorAll('.sub-tab-pane');
-    
+
     // Quick Report Elements
     const quickLocationText = document.getElementById('quick-location-text');
     const quickCategoryCards = document.querySelectorAll('.quick-grid .category-card');
     const quickProcessing = document.getElementById('quick-processing');
     const quickGrid = document.querySelector('.quick-grid');
-    
+
     // Detailed Report Elements
     const detailedForm = document.getElementById('detailed-form');
     const uploadArea = document.getElementById('upload-area');
@@ -26,19 +26,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const filePreview = document.getElementById('file-preview');
     const fileName = document.getElementById('file-name');
     const removeFileBtn = document.getElementById('remove-file');
-    
+
     const issueTitle = document.getElementById('issue-title');
     const issueDescription = document.getElementById('issue-description');
     const voiceBtn = document.getElementById('voice-btn');
-    
+
     const analyzeBtn = document.getElementById('analyze-btn');
     const detailedProcessing = document.getElementById('detailed-processing');
     const aiResultsBox = document.getElementById('ai-results');
-    
+
     const aiCategory = document.getElementById('ai-category');
     const aiUrgency = document.getElementById('ai-urgency');
     const aiSummaryText = document.getElementById('ai-summary-text');
-    
+
     // Success Modal
     const successModal = document.getElementById('success-modal');
     const trackBtn = document.getElementById('track-btn');
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Location Data
     let currentLocation = "Detecting...";
-    
+
     // Civic Score State
     let civicScore = 150;
 
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
             roleOfficerBtn.classList.remove('btn-primary');
             roleOfficerBtn.style.background = 'transparent';
             roleOfficerBtn.style.color = 'var(--text-muted)';
-            
+
             demoCredsCitizen.classList.remove('hidden');
             demoCredsOfficer.classList.add('hidden');
         });
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         reportSection.classList.add('active');
         reportSection.classList.remove('hidden');
         logoutBtn.classList.remove('hidden');
-        
+
         // Auto-detect location for quick report using real Geolocation
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
@@ -142,12 +142,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         // Reverse geocoding using Nominatim (OpenStreetMap)
                         const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
                         const data = await response.json();
-                        
+
                         if (data && data.address) {
                             // Try to get a concise neighborhood/city name
                             const city = data.address.city || data.address.town || data.address.county || "";
                             const area = data.address.suburb || data.address.neighbourhood || data.address.residential || "";
-                            
+
                             if (area && city) {
                                 currentLocation = `${area}, ${city}`;
                             } else if (city || area) {
@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Tabs Logic ---
-    
+
     // Main Tabs (Dashboard Level)
     mainTabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 p.classList.remove('active');
                 p.classList.add('hidden');
             });
-            
+
             // Add active to clicked main tab
             btn.classList.add('active');
             const targetPane = document.getElementById(btn.getAttribute('data-tab'));
@@ -206,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 p.classList.remove('active');
                 p.classList.add('hidden');
             });
-            
+
             btn.classList.add('active');
             const targetPane = document.getElementById(btn.getAttribute('data-tab'));
             targetPane.classList.add('active');
@@ -218,11 +218,11 @@ document.addEventListener('DOMContentLoaded', () => {
     quickCategoryCards.forEach(card => {
         card.addEventListener('click', () => {
             const issueName = card.querySelector('span').textContent.trim();
-            
+
             // Hide grid, show processing
             quickGrid.classList.add('hidden');
             quickProcessing.classList.remove('hidden');
-            
+
             // Simulate AI processing and submission
             setTimeout(() => {
                 quickProcessing.classList.add('hidden');
@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
             voiceBtn.classList.add('recording');
             voiceBtn.innerHTML = '<i class="fa-solid fa-stop"></i>';
             issueDescription.placeholder = 'Listening... Speak your issue clearly.';
-            
+
             recordingTimer = setTimeout(() => {
                 stopRecording("There is a massive pothole causing severe traffic jams on the main road.");
             }, 4000);
@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const hasTitle = issueTitle.value.trim().length > 0;
         const hasDesc = issueDescription.value.trim().length > 0;
         const hasMedia = mediaUpload.files.length > 0;
-        
+
         if (!hasTitle && !hasDesc && !hasMedia) {
             alert('Please provide at least one detail (Title, Description, or Media) for the AI to analyze.');
             return;
@@ -311,13 +311,13 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             detailedProcessing.classList.add('hidden');
             aiResultsBox.classList.remove('hidden');
-            
+
             const combinedText = (issueTitle.value + " " + issueDescription.value).toLowerCase();
-            
+
             let cat = "General Infrastructure";
             let urg = "Medium";
             let urgClass = "medium-urgency";
-            
+
             if (combinedText.includes('water') || combinedText.includes('pipe')) {
                 cat = "Water Supply";
                 urg = "High";
@@ -331,11 +331,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 urg = "High";
                 urgClass = "high-urgency";
             }
-            
+
             aiCategory.innerHTML = `<i class="fa-solid fa-check"></i> ${cat}`;
             aiUrgency.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> ${urg}`;
             aiUrgency.className = urgClass;
-            
+
             aiSummaryText.textContent = `Official Report: Citizen has reported an issue related to ${cat.toLowerCase()}. Location identified near ${currentLocation}. Priority assigned as ${urg.toLowerCase()} based on impact assessment. Immediate assignment to respective department is recommended.`;
 
         }, 2500);
@@ -355,7 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Generate random ticket ID
         const ticketId = '#JAN-' + Math.floor(1000 + Math.random() * 9000);
         document.getElementById('new-ticket-id').textContent = ticketId;
-        
+
         // Add to My Reports Validation
         const myReportsContainer = document.getElementById('my-reports-validation');
         if (myReportsContainer) {
@@ -455,7 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             historyList.insertAdjacentHTML('afterbegin', historyHtml);
         }
-        
+
         // Update Civic Score for submitting a report
         updateCivicScore(15, `Submitted Valid Report: ${issueName}`);
     }
@@ -473,7 +473,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resetReportingForm();
         window.scrollTo(0, 0);
     });
-    
+
     function resetReportingForm() {
         detailedForm.reset();
         resetUpload();
@@ -484,10 +484,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function resetAllState() {
         resetReportingForm();
-        
+
         // Reset to first tab
         document.querySelector('[data-tab="tab-report"]').click();
-        
+
         // Reset quick report processing just in case
         quickGrid.classList.remove('hidden');
         quickProcessing.classList.add('hidden');
@@ -499,8 +499,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Clone to remove existing listeners and prevent duplicates
             const newBtn = btn.cloneNode(true);
             btn.parentNode.replaceChild(newBtn, btn);
-            
-            newBtn.addEventListener('click', function() {
+
+            newBtn.addEventListener('click', function () {
                 const card = this.closest('.validation-card');
                 card.innerHTML = `<div style="padding: 3rem; text-align: center; color: var(--accent-color);">
                     <i class="fa-solid fa-circle-check" style="font-size: 3rem; margin-bottom: 1rem;"></i>
@@ -511,7 +511,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
-    
+
     // Initial bind
     bindValidationButtons();
 
@@ -520,7 +520,7 @@ document.addEventListener('DOMContentLoaded', () => {
         civicScore += points;
         const scoreDisplay = document.getElementById('civic-score-display');
         if (scoreDisplay) scoreDisplay.textContent = civicScore;
-        
+
         const activityList = document.getElementById('score-activity-list');
         if (activityList) {
             const isPositive = points >= 0;
@@ -528,7 +528,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const iconClass = isPositive ? 'fa-plus' : 'fa-minus';
             const color = isPositive ? 'var(--accent-color)' : '#e74c3c';
             const bgLight = isPositive ? '#d4edda' : '#f8d7da';
-            
+
             const activityHtml = `
                 <div class="history-item" style="animation: fadeIn 0.5s ease;">
                     <div class="history-icon text-white" style="background:${color};"><i class="fa-solid ${iconClass}"></i></div>

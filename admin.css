@@ -9,7 +9,8 @@ body {
 .admin-dashboard {
     display: flex;
     min-height: 100vh;
-    padding-top: 70px; /* navbar height */
+    padding-top: 70px;
+    /* navbar height */
 }
 
 .dashboard-sidebar {
@@ -169,9 +170,17 @@ body {
     font-weight: 600;
 }
 
-.trend.positive { color: #27ae60; }
-.trend.negative { color: #e74c3c; }
-.trend.neutral { color: #7f8c8d; }
+.trend.positive {
+    color: #27ae60;
+}
+
+.trend.negative {
+    color: #e74c3c;
+}
+
+.trend.neutral {
+    color: #7f8c8d;
+}
 
 /* Dashboard Grid Layout */
 .dashboard-grid {
@@ -343,12 +352,13 @@ body {
     .dashboard-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .dashboard-sidebar {
         width: 80px;
     }
-    
-    .admin-profile, .sidebar-nav .nav-btn span {
+
+    .admin-profile,
+    .sidebar-nav .nav-btn span {
         display: none;
     }
 
@@ -362,7 +372,7 @@ body {
     .dashboard-sidebar {
         display: none;
     }
-    
+
     .dashboard-content {
         margin-left: 0;
         padding: 1rem;

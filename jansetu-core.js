@@ -1,7 +1,7 @@
 // 1. Theme Logic
 function applyTheme(theme) {
     localStorage.setItem('janSetuTheme', theme);
-    if(theme === 'dark') {
+    if (theme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
     } else {
         document.documentElement.removeAttribute('data-theme');
@@ -25,9 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     `;
 
-    const navActions = document.querySelector('.nav-actions'); 
-    const portalHeader = document.querySelector('.portal-header .header-user'); 
-    const adminHeader = document.querySelector('.admin-sidebar'); 
+    const navActions = document.querySelector('.nav-actions');
+    const portalHeader = document.querySelector('.portal-header .header-user');
+    const adminHeader = document.querySelector('.admin-sidebar');
 
     if (navActions && !document.querySelector('.control-panel')) {
         navActions.insertAdjacentHTML('afterbegin', controlHTML);
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         portalHeader.insertAdjacentHTML('beforebegin', controlHTML);
     } else if (adminHeader && !document.querySelector('.control-panel')) {
         const logo = adminHeader.querySelector('.sidebar-logo');
-        if(logo) logo.insertAdjacentHTML('afterend', controlHTML);
+        if (logo) logo.insertAdjacentHTML('afterend', controlHTML);
     }
 
     const savedTheme = localStorage.getItem('janSetuTheme') || 'light';

@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Officer Dashboard - JanSetu</title>
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Leaflet CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -20,7 +23,9 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="officer.css">
+    <script src="i18n.js" defer></script>
 </head>
+
 <body class="bg-light">
 
     <!-- Navbar -->
@@ -30,16 +35,16 @@
                 <i class="fa-solid fa-bridge-water"></i> Jan<span>Setu</span>
             </a>
             <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="portal.html">Citizen Portal</a>
-                <a href="#" class="btn btn-primary hidden" id="logout-btn">Sign Out</a>
+                <a href="index.html" data-i18n="nav_home">Home</a>
+                <a href="portal.html" data-i18n="citizen_portal">Citizen Portal</a>
+                <a href="#" class="btn btn-primary hidden" id="logout-btn" data-i18n="logout">Sign Out</a>
             </div>
         </div>
     </nav>
 
     <!-- Officer Dashboard Section -->
     <section id="dashboard-section" class="officer-dashboard active">
-        
+
         <!-- Sidebar -->
         <aside class="dashboard-sidebar">
             <div class="officer-profile">
@@ -53,15 +58,21 @@
             </div>
 
             <nav class="sidebar-nav">
-                <button class="nav-btn active" data-target="view-tasks"><i class="fa-solid fa-list-check"></i> Assigned Tasks</button>
-                <button class="nav-btn" data-target="view-map"><i class="fa-solid fa-map-location-dot"></i> Territory Map</button>
-                <button class="nav-btn" data-target="view-metrics"><i class="fa-solid fa-desktop"></i> Command Center</button>
+                <button class="nav-btn active" data-target="view-tasks" data-i18n="assigned_tasks"><i class="fa-solid fa-list-check"></i> Assigned
+                    Tasks</button>
+                <button class="nav-btn" data-target="view-map" data-i18n="territory_map"><i class="fa-solid fa-map-location-dot"></i> Territory
+                    Map</button>
+                <button class="nav-btn" data-target="view-metrics" data-i18n="command_center"><i class="fa-solid fa-desktop"></i> Command
+                    Center</button>
             </nav>
 
-            <div class="escalation-alert mt-4" style="padding:0.75rem; border-left:4px solid #e74c3c; background:#fdf3f2; border-radius:4px;">
+            <div class="escalation-alert mt-4"
+                style="padding:0.75rem; border-left:4px solid #e74c3c; background:#fdf3f2; border-radius:4px;">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <strong style="color:#e74c3c; font-size:0.85rem;"><i class="fa-solid fa-triangle-exclamation"></i> 1 Urgent Escalation</strong>
-                    <button class="btn btn-danger btn-sm" style="padding:0.2rem 0.5rem; font-size:0.75rem;">View</button>
+                    <strong style="color:#e74c3c; font-size:0.85rem;"><i class="fa-solid fa-triangle-exclamation"></i> 1
+                        Urgent Escalation</strong>
+                    <button class="btn btn-danger btn-sm"
+                        style="padding:0.2rem 0.5rem; font-size:0.75rem;">View</button>
                 </div>
             </div>
         </aside>
@@ -72,38 +83,48 @@
             <!-- View: Assigned Tasks -->
             <div id="view-tasks" class="dashboard-view active">
                 <div class="view-header">
-                    <h2>Task Management</h2>
+                    <h2 data-i18n="task_mgmt">Task Management</h2>
                     <div class="filters">
                         <select class="styled-input" id="sort-tasks" onchange="sortTasks()">
-                            <option value="time">Sort by: Time Left to Start</option>
-                            <option value="urgency">Sort by: Urgency Level</option>
+                            <option value="time" data-i18n="time_left">Sort by: Time Left to Start</option>
+                            <option value="urgency" data-i18n="urgency_level_sort">Sort by: Urgency Level</option>
                         </select>
                     </div>
                 </div>
 
-                <div class="task-tabs mb-4" style="display:flex; gap:1rem; border-bottom:1px solid var(--border-color); padding-bottom:1rem; flex-wrap:wrap;">
-                    <button class="btn btn-primary task-tab-btn" onclick="filterTasks('assigned', this)">Assigned Works</button>
-                    <button class="btn btn-outline-primary task-tab-btn" onclick="filterTasks('progress', this)">In Progress Works</button>
-                    <button class="btn btn-outline-primary task-tab-btn" onclick="filterTasks('completed', this)">Completed Works</button>
-                    <button class="btn btn-outline-danger task-tab-btn" onclick="filterTasks('escalated', this)">Escalated Works</button>
+                <div class="task-tabs mb-4"
+                    style="display:flex; gap:1rem; border-bottom:1px solid var(--border-color); padding-bottom:1rem; flex-wrap:wrap;">
+                    <button class="btn btn-primary task-tab-btn" onclick="filterTasks('assigned', this)" data-i18n="assigned_works">Assigned
+                        Works</button>
+                    <button class="btn btn-outline-primary task-tab-btn" onclick="filterTasks('progress', this)" data-i18n="progress_works">In
+                        Progress Works</button>
+                    <button class="btn btn-outline-primary task-tab-btn"
+                        onclick="filterTasks('completed', this)" data-i18n="completed_works">Completed Works</button>
+                    <button class="btn btn-outline-danger task-tab-btn"
+                        onclick="filterTasks('escalated', this)" data-i18n="escalated_works">Escalated Works</button>
                 </div>
 
                 <!-- Task List -->
                 <div class="task-grid" id="main-task-grid">
 
                     <!-- Task Card 5001 (assigned) -->
-                    <div class="task-card border-warning task-item hidden" data-status="assigned" data-urgency="65" data-time="4">
+                    <div class="task-card border-warning task-item hidden" data-status="assigned" data-urgency="65"
+                        data-time="4">
                         <div class="task-header">
-                            <span class="badge badge-warning"><i class="fa-solid fa-clock"></i> Pending Assignment</span>
+                            <span class="badge badge-warning"><i class="fa-solid fa-clock"></i> Pending
+                                Assignment</span>
                             <span class="ticket-id">#JAN-5001</span>
                         </div>
                         <h3 class="task-title">Pothole Repair</h3>
                         <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Sector 14 Main Road</p>
-                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.</p>
-                        
-                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.
+                        </p>
+
+                        <div class="task-stats"
+                            style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
                             <div>
-                                <small class="text-muted" style="display:block;" class="time-label">Time Left to Start:</small>
+                                <small class="text-muted" style="display:block;" class="time-label">Time Left to
+                                    Start:</small>
                                 <strong style="color:var(--text-dark); font-size:1.1rem;">4 Hours</strong>
                             </div>
                             <div>
@@ -112,47 +133,58 @@
                             </div>
                         </div>
 
-                        
-            <div style="margin-top: 1rem;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <small style="color:var(--text-muted); font-weight:600;">Crowd Validation Insights</small>
-                    <small style="color:var(--text-muted);">Total Votes: 172</small>
-                </div>
-                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
-                    <div style="width:95%; background:var(--accent-color);"></div>
-                    <div style="width:5%; background:#e74c3c;"></div>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
-                    <span style="color:var(--accent-color); font-weight:600;"><i class="fa-solid fa-thumbs-up"></i> 95% Valid (164)</span>
-                    <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 5% Invalid (8)</span>
-                </div>
-            </div>
-        
+
+                        <div style="margin-top: 1rem;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <small style="color:var(--text-muted); font-weight:600;">Crowd Validation
+                                    Insights</small>
+                                <small style="color:var(--text-muted);">Total Votes: 172</small>
+                            </div>
+                            <div
+                                style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
+                                <div style="width:95%; background:var(--accent-color);"></div>
+                                <div style="width:5%; background:#e74c3c;"></div>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
+                                <span style="color:var(--accent-color); font-weight:600;"><i
+                                        class="fa-solid fa-thumbs-up"></i> 95% Valid (164)</span>
+                                <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 5%
+                                    Invalid (8)</span>
+                            </div>
+                        </div>
+
 
                         <div class="task-status-control mt-3" style="padding-top:1rem; border-top:1px solid #eee;">
                             <label>Update Status:</label>
-                            <select class="styled-input status-select" data-ticket="JAN-5001" onchange="updateTaskStatus(this, 'JAN-5001')">
+                            <select class="styled-input status-select" data-ticket="JAN-5001"
+                                onchange="updateTaskStatus(this, 'JAN-5001')">
                                 <option value="assigned" selected>Assigned</option>
-                                <option value="progress" >In Progress</option>
-                                <option value="completed" >Mark as Resolved</option>
-                                <option value="escalated" >Escalated</option>
+                                <option value="progress">In Progress</option>
+                                <option value="completed">Mark as Resolved</option>
+                                <option value="escalated">Escalated</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Task Card 5002 (assigned) -->
-                    <div class="task-card border-warning task-item hidden" data-status="assigned" data-urgency="41" data-time="10">
+                    <div class="task-card border-warning task-item hidden" data-status="assigned" data-urgency="41"
+                        data-time="10">
                         <div class="task-header">
-                            <span class="badge badge-warning"><i class="fa-solid fa-clock"></i> Pending Assignment</span>
+                            <span class="badge badge-warning"><i class="fa-solid fa-clock"></i> Pending
+                                Assignment</span>
                             <span class="ticket-id">#JAN-5002</span>
                         </div>
                         <h3 class="task-title">Stray Animals</h3>
                         <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Sector 14 Main Road</p>
-                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.</p>
-                        
-                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.
+                        </p>
+
+                        <div class="task-stats"
+                            style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
                             <div>
-                                <small class="text-muted" style="display:block;" class="time-label">Time Left to Start:</small>
+                                <small class="text-muted" style="display:block;" class="time-label">Time Left to
+                                    Start:</small>
                                 <strong style="color:var(--text-dark); font-size:1.1rem;">10 Hours</strong>
                             </div>
                             <div>
@@ -161,47 +193,58 @@
                             </div>
                         </div>
 
-                        
-            <div style="margin-top: 1rem;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <small style="color:var(--text-muted); font-weight:600;">Crowd Validation Insights</small>
-                    <small style="color:var(--text-muted);">Total Votes: 270</small>
-                </div>
-                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
-                    <div style="width:98%; background:var(--accent-color);"></div>
-                    <div style="width:2%; background:#e74c3c;"></div>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
-                    <span style="color:var(--accent-color); font-weight:600;"><i class="fa-solid fa-thumbs-up"></i> 98% Valid (266)</span>
-                    <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 2% Invalid (4)</span>
-                </div>
-            </div>
-        
+
+                        <div style="margin-top: 1rem;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <small style="color:var(--text-muted); font-weight:600;">Crowd Validation
+                                    Insights</small>
+                                <small style="color:var(--text-muted);">Total Votes: 270</small>
+                            </div>
+                            <div
+                                style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
+                                <div style="width:98%; background:var(--accent-color);"></div>
+                                <div style="width:2%; background:#e74c3c;"></div>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
+                                <span style="color:var(--accent-color); font-weight:600;"><i
+                                        class="fa-solid fa-thumbs-up"></i> 98% Valid (266)</span>
+                                <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 2%
+                                    Invalid (4)</span>
+                            </div>
+                        </div>
+
 
                         <div class="task-status-control mt-3" style="padding-top:1rem; border-top:1px solid #eee;">
                             <label>Update Status:</label>
-                            <select class="styled-input status-select" data-ticket="JAN-5002" onchange="updateTaskStatus(this, 'JAN-5002')">
+                            <select class="styled-input status-select" data-ticket="JAN-5002"
+                                onchange="updateTaskStatus(this, 'JAN-5002')">
                                 <option value="assigned" selected>Assigned</option>
-                                <option value="progress" >In Progress</option>
-                                <option value="completed" >Mark as Resolved</option>
-                                <option value="escalated" >Escalated</option>
+                                <option value="progress">In Progress</option>
+                                <option value="completed">Mark as Resolved</option>
+                                <option value="escalated">Escalated</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Task Card 5003 (assigned) -->
-                    <div class="task-card border-warning task-item hidden" data-status="assigned" data-urgency="57" data-time="4">
+                    <div class="task-card border-warning task-item hidden" data-status="assigned" data-urgency="57"
+                        data-time="4">
                         <div class="task-header">
-                            <span class="badge badge-warning"><i class="fa-solid fa-clock"></i> Pending Assignment</span>
+                            <span class="badge badge-warning"><i class="fa-solid fa-clock"></i> Pending
+                                Assignment</span>
                             <span class="ticket-id">#JAN-5003</span>
                         </div>
                         <h3 class="task-title">Streetlight Outage</h3>
                         <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Sector 14 Main Road</p>
-                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.</p>
-                        
-                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.
+                        </p>
+
+                        <div class="task-stats"
+                            style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
                             <div>
-                                <small class="text-muted" style="display:block;" class="time-label">Time Left to Start:</small>
+                                <small class="text-muted" style="display:block;" class="time-label">Time Left to
+                                    Start:</small>
                                 <strong style="color:var(--text-dark); font-size:1.1rem;">4 Hours</strong>
                             </div>
                             <div>
@@ -210,47 +253,58 @@
                             </div>
                         </div>
 
-                        
-            <div style="margin-top: 1rem;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <small style="color:var(--text-muted); font-weight:600;">Crowd Validation Insights</small>
-                    <small style="color:var(--text-muted);">Total Votes: 385</small>
-                </div>
-                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
-                    <div style="width:80%; background:var(--accent-color);"></div>
-                    <div style="width:20%; background:#e74c3c;"></div>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
-                    <span style="color:var(--accent-color); font-weight:600;"><i class="fa-solid fa-thumbs-up"></i> 80% Valid (308)</span>
-                    <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 20% Invalid (77)</span>
-                </div>
-            </div>
-        
+
+                        <div style="margin-top: 1rem;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <small style="color:var(--text-muted); font-weight:600;">Crowd Validation
+                                    Insights</small>
+                                <small style="color:var(--text-muted);">Total Votes: 385</small>
+                            </div>
+                            <div
+                                style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
+                                <div style="width:80%; background:var(--accent-color);"></div>
+                                <div style="width:20%; background:#e74c3c;"></div>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
+                                <span style="color:var(--accent-color); font-weight:600;"><i
+                                        class="fa-solid fa-thumbs-up"></i> 80% Valid (308)</span>
+                                <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i>
+                                    20% Invalid (77)</span>
+                            </div>
+                        </div>
+
 
                         <div class="task-status-control mt-3" style="padding-top:1rem; border-top:1px solid #eee;">
                             <label>Update Status:</label>
-                            <select class="styled-input status-select" data-ticket="JAN-5003" onchange="updateTaskStatus(this, 'JAN-5003')">
+                            <select class="styled-input status-select" data-ticket="JAN-5003"
+                                onchange="updateTaskStatus(this, 'JAN-5003')">
                                 <option value="assigned" selected>Assigned</option>
-                                <option value="progress" >In Progress</option>
-                                <option value="completed" >Mark as Resolved</option>
-                                <option value="escalated" >Escalated</option>
+                                <option value="progress">In Progress</option>
+                                <option value="completed">Mark as Resolved</option>
+                                <option value="escalated">Escalated</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Task Card 5004 (assigned) -->
-                    <div class="task-card border-warning task-item hidden" data-status="assigned" data-urgency="55" data-time="12">
+                    <div class="task-card border-warning task-item hidden" data-status="assigned" data-urgency="55"
+                        data-time="12">
                         <div class="task-header">
-                            <span class="badge badge-warning"><i class="fa-solid fa-clock"></i> Pending Assignment</span>
+                            <span class="badge badge-warning"><i class="fa-solid fa-clock"></i> Pending
+                                Assignment</span>
                             <span class="ticket-id">#JAN-5004</span>
                         </div>
                         <h3 class="task-title">Stray Animals</h3>
                         <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Sector 14 Main Road</p>
-                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.</p>
-                        
-                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.
+                        </p>
+
+                        <div class="task-stats"
+                            style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
                             <div>
-                                <small class="text-muted" style="display:block;" class="time-label">Time Left to Start:</small>
+                                <small class="text-muted" style="display:block;" class="time-label">Time Left to
+                                    Start:</small>
                                 <strong style="color:var(--text-dark); font-size:1.1rem;">12 Hours</strong>
                             </div>
                             <div>
@@ -259,47 +313,58 @@
                             </div>
                         </div>
 
-                        
-            <div style="margin-top: 1rem;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <small style="color:var(--text-muted); font-weight:600;">Crowd Validation Insights</small>
-                    <small style="color:var(--text-muted);">Total Votes: 471</small>
-                </div>
-                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
-                    <div style="width:81%; background:var(--accent-color);"></div>
-                    <div style="width:19%; background:#e74c3c;"></div>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
-                    <span style="color:var(--accent-color); font-weight:600;"><i class="fa-solid fa-thumbs-up"></i> 81% Valid (382)</span>
-                    <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 19% Invalid (89)</span>
-                </div>
-            </div>
-        
+
+                        <div style="margin-top: 1rem;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <small style="color:var(--text-muted); font-weight:600;">Crowd Validation
+                                    Insights</small>
+                                <small style="color:var(--text-muted);">Total Votes: 471</small>
+                            </div>
+                            <div
+                                style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
+                                <div style="width:81%; background:var(--accent-color);"></div>
+                                <div style="width:19%; background:#e74c3c;"></div>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
+                                <span style="color:var(--accent-color); font-weight:600;"><i
+                                        class="fa-solid fa-thumbs-up"></i> 81% Valid (382)</span>
+                                <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i>
+                                    19% Invalid (89)</span>
+                            </div>
+                        </div>
+
 
                         <div class="task-status-control mt-3" style="padding-top:1rem; border-top:1px solid #eee;">
                             <label>Update Status:</label>
-                            <select class="styled-input status-select" data-ticket="JAN-5004" onchange="updateTaskStatus(this, 'JAN-5004')">
+                            <select class="styled-input status-select" data-ticket="JAN-5004"
+                                onchange="updateTaskStatus(this, 'JAN-5004')">
                                 <option value="assigned" selected>Assigned</option>
-                                <option value="progress" >In Progress</option>
-                                <option value="completed" >Mark as Resolved</option>
-                                <option value="escalated" >Escalated</option>
+                                <option value="progress">In Progress</option>
+                                <option value="completed">Mark as Resolved</option>
+                                <option value="escalated">Escalated</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Task Card 5005 (assigned) -->
-                    <div class="task-card border-warning task-item hidden" data-status="assigned" data-urgency="58" data-time="8">
+                    <div class="task-card border-warning task-item hidden" data-status="assigned" data-urgency="58"
+                        data-time="8">
                         <div class="task-header">
-                            <span class="badge badge-warning"><i class="fa-solid fa-clock"></i> Pending Assignment</span>
+                            <span class="badge badge-warning"><i class="fa-solid fa-clock"></i> Pending
+                                Assignment</span>
                             <span class="ticket-id">#JAN-5005</span>
                         </div>
                         <h3 class="task-title">Traffic Light Broken</h3>
                         <p class="task-loc"><i class="fa-solid fa-location-dot"></i> HSR Layout Sector 1</p>
-                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.</p>
-                        
-                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.
+                        </p>
+
+                        <div class="task-stats"
+                            style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
                             <div>
-                                <small class="text-muted" style="display:block;" class="time-label">Time Left to Start:</small>
+                                <small class="text-muted" style="display:block;" class="time-label">Time Left to
+                                    Start:</small>
                                 <strong style="color:var(--text-dark); font-size:1.1rem;">8 Hours</strong>
                             </div>
                             <div>
@@ -308,47 +373,58 @@
                             </div>
                         </div>
 
-                        
-            <div style="margin-top: 1rem;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <small style="color:var(--text-muted); font-weight:600;">Crowd Validation Insights</small>
-                    <small style="color:var(--text-muted);">Total Votes: 386</small>
-                </div>
-                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
-                    <div style="width:90%; background:var(--accent-color);"></div>
-                    <div style="width:10%; background:#e74c3c;"></div>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
-                    <span style="color:var(--accent-color); font-weight:600;"><i class="fa-solid fa-thumbs-up"></i> 90% Valid (351)</span>
-                    <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 10% Invalid (35)</span>
-                </div>
-            </div>
-        
+
+                        <div style="margin-top: 1rem;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <small style="color:var(--text-muted); font-weight:600;">Crowd Validation
+                                    Insights</small>
+                                <small style="color:var(--text-muted);">Total Votes: 386</small>
+                            </div>
+                            <div
+                                style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
+                                <div style="width:90%; background:var(--accent-color);"></div>
+                                <div style="width:10%; background:#e74c3c;"></div>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
+                                <span style="color:var(--accent-color); font-weight:600;"><i
+                                        class="fa-solid fa-thumbs-up"></i> 90% Valid (351)</span>
+                                <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i>
+                                    10% Invalid (35)</span>
+                            </div>
+                        </div>
+
 
                         <div class="task-status-control mt-3" style="padding-top:1rem; border-top:1px solid #eee;">
                             <label>Update Status:</label>
-                            <select class="styled-input status-select" data-ticket="JAN-5005" onchange="updateTaskStatus(this, 'JAN-5005')">
+                            <select class="styled-input status-select" data-ticket="JAN-5005"
+                                onchange="updateTaskStatus(this, 'JAN-5005')">
                                 <option value="assigned" selected>Assigned</option>
-                                <option value="progress" >In Progress</option>
-                                <option value="completed" >Mark as Resolved</option>
-                                <option value="escalated" >Escalated</option>
+                                <option value="progress">In Progress</option>
+                                <option value="completed">Mark as Resolved</option>
+                                <option value="escalated">Escalated</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Task Card 5006 (progress) -->
-                    <div class="task-card border-primary task-item hidden" data-status="progress" data-urgency="84" data-time="22">
+                    <div class="task-card border-primary task-item hidden" data-status="progress" data-urgency="84"
+                        data-time="22">
                         <div class="task-header">
-                            <span class="badge badge-primary" style="background:#d0e1f9; color:#0b3b60;"><i class="fa-solid fa-spinner"></i> In Progress</span>
+                            <span class="badge badge-primary" style="background:#d0e1f9; color:#0b3b60;"><i
+                                    class="fa-solid fa-spinner"></i> In Progress</span>
                             <span class="ticket-id">#JAN-5006</span>
                         </div>
                         <h3 class="task-title">Water Leakage</h3>
                         <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Sector 14 Main Road</p>
-                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.</p>
-                        
-                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.
+                        </p>
+
+                        <div class="task-stats"
+                            style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
                             <div>
-                                <small class="text-muted" style="display:block;" class="time-label">Time Left to Complete:</small>
+                                <small class="text-muted" style="display:block;" class="time-label">Time Left to
+                                    Complete:</small>
                                 <strong style="color:var(--text-dark); font-size:1.1rem;">22 Hours</strong>
                             </div>
                             <div>
@@ -357,47 +433,58 @@
                             </div>
                         </div>
 
-                        
-            <div style="margin-top: 1rem;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <small style="color:var(--text-muted); font-weight:600;">Crowd Validation Insights</small>
-                    <small style="color:var(--text-muted);">Total Votes: 201</small>
-                </div>
-                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
-                    <div style="width:95%; background:var(--accent-color);"></div>
-                    <div style="width:5%; background:#e74c3c;"></div>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
-                    <span style="color:var(--accent-color); font-weight:600;"><i class="fa-solid fa-thumbs-up"></i> 95% Valid (192)</span>
-                    <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 5% Invalid (9)</span>
-                </div>
-            </div>
-        
+
+                        <div style="margin-top: 1rem;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <small style="color:var(--text-muted); font-weight:600;">Crowd Validation
+                                    Insights</small>
+                                <small style="color:var(--text-muted);">Total Votes: 201</small>
+                            </div>
+                            <div
+                                style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
+                                <div style="width:95%; background:var(--accent-color);"></div>
+                                <div style="width:5%; background:#e74c3c;"></div>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
+                                <span style="color:var(--accent-color); font-weight:600;"><i
+                                        class="fa-solid fa-thumbs-up"></i> 95% Valid (192)</span>
+                                <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 5%
+                                    Invalid (9)</span>
+                            </div>
+                        </div>
+
 
                         <div class="task-status-control mt-3" style="padding-top:1rem; border-top:1px solid #eee;">
                             <label>Update Status:</label>
-                            <select class="styled-input status-select" data-ticket="JAN-5006" onchange="updateTaskStatus(this, 'JAN-5006')">
-                                <option value="assigned" >Assigned</option>
+                            <select class="styled-input status-select" data-ticket="JAN-5006"
+                                onchange="updateTaskStatus(this, 'JAN-5006')">
+                                <option value="assigned">Assigned</option>
                                 <option value="progress" selected>In Progress</option>
-                                <option value="completed" >Mark as Resolved</option>
-                                <option value="escalated" >Escalated</option>
+                                <option value="completed">Mark as Resolved</option>
+                                <option value="escalated">Escalated</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Task Card 5007 (progress) -->
-                    <div class="task-card border-primary task-item hidden" data-status="progress" data-urgency="43" data-time="6">
+                    <div class="task-card border-primary task-item hidden" data-status="progress" data-urgency="43"
+                        data-time="6">
                         <div class="task-header">
-                            <span class="badge badge-primary" style="background:#d0e1f9; color:#0b3b60;"><i class="fa-solid fa-spinner"></i> In Progress</span>
+                            <span class="badge badge-primary" style="background:#d0e1f9; color:#0b3b60;"><i
+                                    class="fa-solid fa-spinner"></i> In Progress</span>
                             <span class="ticket-id">#JAN-5007</span>
                         </div>
                         <h3 class="task-title">Fallen Tree</h3>
                         <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Indiranagar, Market Area</p>
-                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.</p>
-                        
-                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.
+                        </p>
+
+                        <div class="task-stats"
+                            style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
                             <div>
-                                <small class="text-muted" style="display:block;" class="time-label">Time Left to Complete:</small>
+                                <small class="text-muted" style="display:block;" class="time-label">Time Left to
+                                    Complete:</small>
                                 <strong style="color:var(--text-dark); font-size:1.1rem;">6 Hours</strong>
                             </div>
                             <div>
@@ -406,47 +493,58 @@
                             </div>
                         </div>
 
-                        
-            <div style="margin-top: 1rem;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <small style="color:var(--text-muted); font-weight:600;">Crowd Validation Insights</small>
-                    <small style="color:var(--text-muted);">Total Votes: 256</small>
-                </div>
-                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
-                    <div style="width:95%; background:var(--accent-color);"></div>
-                    <div style="width:5%; background:#e74c3c;"></div>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
-                    <span style="color:var(--accent-color); font-weight:600;"><i class="fa-solid fa-thumbs-up"></i> 95% Valid (244)</span>
-                    <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 5% Invalid (12)</span>
-                </div>
-            </div>
-        
+
+                        <div style="margin-top: 1rem;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <small style="color:var(--text-muted); font-weight:600;">Crowd Validation
+                                    Insights</small>
+                                <small style="color:var(--text-muted);">Total Votes: 256</small>
+                            </div>
+                            <div
+                                style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
+                                <div style="width:95%; background:var(--accent-color);"></div>
+                                <div style="width:5%; background:#e74c3c;"></div>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
+                                <span style="color:var(--accent-color); font-weight:600;"><i
+                                        class="fa-solid fa-thumbs-up"></i> 95% Valid (244)</span>
+                                <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 5%
+                                    Invalid (12)</span>
+                            </div>
+                        </div>
+
 
                         <div class="task-status-control mt-3" style="padding-top:1rem; border-top:1px solid #eee;">
                             <label>Update Status:</label>
-                            <select class="styled-input status-select" data-ticket="JAN-5007" onchange="updateTaskStatus(this, 'JAN-5007')">
-                                <option value="assigned" >Assigned</option>
+                            <select class="styled-input status-select" data-ticket="JAN-5007"
+                                onchange="updateTaskStatus(this, 'JAN-5007')">
+                                <option value="assigned">Assigned</option>
                                 <option value="progress" selected>In Progress</option>
-                                <option value="completed" >Mark as Resolved</option>
-                                <option value="escalated" >Escalated</option>
+                                <option value="completed">Mark as Resolved</option>
+                                <option value="escalated">Escalated</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Task Card 5008 (progress) -->
-                    <div class="task-card border-primary task-item hidden" data-status="progress" data-urgency="63" data-time="3">
+                    <div class="task-card border-primary task-item hidden" data-status="progress" data-urgency="63"
+                        data-time="3">
                         <div class="task-header">
-                            <span class="badge badge-primary" style="background:#d0e1f9; color:#0b3b60;"><i class="fa-solid fa-spinner"></i> In Progress</span>
+                            <span class="badge badge-primary" style="background:#d0e1f9; color:#0b3b60;"><i
+                                    class="fa-solid fa-spinner"></i> In Progress</span>
                             <span class="ticket-id">#JAN-5008</span>
                         </div>
                         <h3 class="task-title">Fallen Tree</h3>
                         <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Koramangala 1st Block</p>
-                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.</p>
-                        
-                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.
+                        </p>
+
+                        <div class="task-stats"
+                            style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
                             <div>
-                                <small class="text-muted" style="display:block;" class="time-label">Time Left to Complete:</small>
+                                <small class="text-muted" style="display:block;" class="time-label">Time Left to
+                                    Complete:</small>
                                 <strong style="color:var(--text-dark); font-size:1.1rem;">3 Hours</strong>
                             </div>
                             <div>
@@ -455,47 +553,58 @@
                             </div>
                         </div>
 
-                        
-            <div style="margin-top: 1rem;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <small style="color:var(--text-muted); font-weight:600;">Crowd Validation Insights</small>
-                    <small style="color:var(--text-muted);">Total Votes: 481</small>
-                </div>
-                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
-                    <div style="width:87%; background:var(--accent-color);"></div>
-                    <div style="width:13%; background:#e74c3c;"></div>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
-                    <span style="color:var(--accent-color); font-weight:600;"><i class="fa-solid fa-thumbs-up"></i> 87% Valid (423)</span>
-                    <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 13% Invalid (58)</span>
-                </div>
-            </div>
-        
+
+                        <div style="margin-top: 1rem;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <small style="color:var(--text-muted); font-weight:600;">Crowd Validation
+                                    Insights</small>
+                                <small style="color:var(--text-muted);">Total Votes: 481</small>
+                            </div>
+                            <div
+                                style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
+                                <div style="width:87%; background:var(--accent-color);"></div>
+                                <div style="width:13%; background:#e74c3c;"></div>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
+                                <span style="color:var(--accent-color); font-weight:600;"><i
+                                        class="fa-solid fa-thumbs-up"></i> 87% Valid (423)</span>
+                                <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i>
+                                    13% Invalid (58)</span>
+                            </div>
+                        </div>
+
 
                         <div class="task-status-control mt-3" style="padding-top:1rem; border-top:1px solid #eee;">
                             <label>Update Status:</label>
-                            <select class="styled-input status-select" data-ticket="JAN-5008" onchange="updateTaskStatus(this, 'JAN-5008')">
-                                <option value="assigned" >Assigned</option>
+                            <select class="styled-input status-select" data-ticket="JAN-5008"
+                                onchange="updateTaskStatus(this, 'JAN-5008')">
+                                <option value="assigned">Assigned</option>
                                 <option value="progress" selected>In Progress</option>
-                                <option value="completed" >Mark as Resolved</option>
-                                <option value="escalated" >Escalated</option>
+                                <option value="completed">Mark as Resolved</option>
+                                <option value="escalated">Escalated</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Task Card 5009 (progress) -->
-                    <div class="task-card border-primary task-item hidden" data-status="progress" data-urgency="78" data-time="6">
+                    <div class="task-card border-primary task-item hidden" data-status="progress" data-urgency="78"
+                        data-time="6">
                         <div class="task-header">
-                            <span class="badge badge-primary" style="background:#d0e1f9; color:#0b3b60;"><i class="fa-solid fa-spinner"></i> In Progress</span>
+                            <span class="badge badge-primary" style="background:#d0e1f9; color:#0b3b60;"><i
+                                    class="fa-solid fa-spinner"></i> In Progress</span>
                             <span class="ticket-id">#JAN-5009</span>
                         </div>
                         <h3 class="task-title">Streetlight Outage</h3>
                         <p class="task-loc"><i class="fa-solid fa-location-dot"></i> HSR Layout Sector 1</p>
-                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.</p>
-                        
-                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.
+                        </p>
+
+                        <div class="task-stats"
+                            style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
                             <div>
-                                <small class="text-muted" style="display:block;" class="time-label">Time Left to Complete:</small>
+                                <small class="text-muted" style="display:block;" class="time-label">Time Left to
+                                    Complete:</small>
                                 <strong style="color:var(--text-dark); font-size:1.1rem;">6 Hours</strong>
                             </div>
                             <div>
@@ -504,47 +613,58 @@
                             </div>
                         </div>
 
-                        
-            <div style="margin-top: 1rem;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <small style="color:var(--text-muted); font-weight:600;">Crowd Validation Insights</small>
-                    <small style="color:var(--text-muted);">Total Votes: 369</small>
-                </div>
-                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
-                    <div style="width:89%; background:var(--accent-color);"></div>
-                    <div style="width:11%; background:#e74c3c;"></div>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
-                    <span style="color:var(--accent-color); font-weight:600;"><i class="fa-solid fa-thumbs-up"></i> 89% Valid (332)</span>
-                    <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 11% Invalid (37)</span>
-                </div>
-            </div>
-        
+
+                        <div style="margin-top: 1rem;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <small style="color:var(--text-muted); font-weight:600;">Crowd Validation
+                                    Insights</small>
+                                <small style="color:var(--text-muted);">Total Votes: 369</small>
+                            </div>
+                            <div
+                                style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
+                                <div style="width:89%; background:var(--accent-color);"></div>
+                                <div style="width:11%; background:#e74c3c;"></div>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
+                                <span style="color:var(--accent-color); font-weight:600;"><i
+                                        class="fa-solid fa-thumbs-up"></i> 89% Valid (332)</span>
+                                <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i>
+                                    11% Invalid (37)</span>
+                            </div>
+                        </div>
+
 
                         <div class="task-status-control mt-3" style="padding-top:1rem; border-top:1px solid #eee;">
                             <label>Update Status:</label>
-                            <select class="styled-input status-select" data-ticket="JAN-5009" onchange="updateTaskStatus(this, 'JAN-5009')">
-                                <option value="assigned" >Assigned</option>
+                            <select class="styled-input status-select" data-ticket="JAN-5009"
+                                onchange="updateTaskStatus(this, 'JAN-5009')">
+                                <option value="assigned">Assigned</option>
                                 <option value="progress" selected>In Progress</option>
-                                <option value="completed" >Mark as Resolved</option>
-                                <option value="escalated" >Escalated</option>
+                                <option value="completed">Mark as Resolved</option>
+                                <option value="escalated">Escalated</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Task Card 5010 (progress) -->
-                    <div class="task-card border-primary task-item hidden" data-status="progress" data-urgency="54" data-time="46">
+                    <div class="task-card border-primary task-item hidden" data-status="progress" data-urgency="54"
+                        data-time="46">
                         <div class="task-header">
-                            <span class="badge badge-primary" style="background:#d0e1f9; color:#0b3b60;"><i class="fa-solid fa-spinner"></i> In Progress</span>
+                            <span class="badge badge-primary" style="background:#d0e1f9; color:#0b3b60;"><i
+                                    class="fa-solid fa-spinner"></i> In Progress</span>
                             <span class="ticket-id">#JAN-5010</span>
                         </div>
                         <h3 class="task-title">Fallen Tree</h3>
                         <p class="task-loc"><i class="fa-solid fa-location-dot"></i> HSR Layout Sector 1</p>
-                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.</p>
-                        
-                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.
+                        </p>
+
+                        <div class="task-stats"
+                            style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
                             <div>
-                                <small class="text-muted" style="display:block;" class="time-label">Time Left to Complete:</small>
+                                <small class="text-muted" style="display:block;" class="time-label">Time Left to
+                                    Complete:</small>
                                 <strong style="color:var(--text-dark); font-size:1.1rem;">46 Hours</strong>
                             </div>
                             <div>
@@ -553,47 +673,58 @@
                             </div>
                         </div>
 
-                        
-            <div style="margin-top: 1rem;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <small style="color:var(--text-muted); font-weight:600;">Crowd Validation Insights</small>
-                    <small style="color:var(--text-muted);">Total Votes: 86</small>
-                </div>
-                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
-                    <div style="width:98%; background:var(--accent-color);"></div>
-                    <div style="width:2%; background:#e74c3c;"></div>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
-                    <span style="color:var(--accent-color); font-weight:600;"><i class="fa-solid fa-thumbs-up"></i> 98% Valid (85)</span>
-                    <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 2% Invalid (1)</span>
-                </div>
-            </div>
-        
+
+                        <div style="margin-top: 1rem;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <small style="color:var(--text-muted); font-weight:600;">Crowd Validation
+                                    Insights</small>
+                                <small style="color:var(--text-muted);">Total Votes: 86</small>
+                            </div>
+                            <div
+                                style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
+                                <div style="width:98%; background:var(--accent-color);"></div>
+                                <div style="width:2%; background:#e74c3c;"></div>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
+                                <span style="color:var(--accent-color); font-weight:600;"><i
+                                        class="fa-solid fa-thumbs-up"></i> 98% Valid (85)</span>
+                                <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 2%
+                                    Invalid (1)</span>
+                            </div>
+                        </div>
+
 
                         <div class="task-status-control mt-3" style="padding-top:1rem; border-top:1px solid #eee;">
                             <label>Update Status:</label>
-                            <select class="styled-input status-select" data-ticket="JAN-5010" onchange="updateTaskStatus(this, 'JAN-5010')">
-                                <option value="assigned" >Assigned</option>
+                            <select class="styled-input status-select" data-ticket="JAN-5010"
+                                onchange="updateTaskStatus(this, 'JAN-5010')">
+                                <option value="assigned">Assigned</option>
                                 <option value="progress" selected>In Progress</option>
-                                <option value="completed" >Mark as Resolved</option>
-                                <option value="escalated" >Escalated</option>
+                                <option value="completed">Mark as Resolved</option>
+                                <option value="escalated">Escalated</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Task Card 5011 (completed) -->
-                    <div class="task-card border-success task-item hidden" data-status="completed" data-urgency="40" data-time="0">
+                    <div class="task-card border-success task-item hidden" data-status="completed" data-urgency="40"
+                        data-time="0">
                         <div class="task-header">
-                            <span class="badge" style="background:#e8f8f5; color:#27ae60;"><i class="fa-solid fa-check-circle"></i> Resolved</span>
+                            <span class="badge" style="background:#e8f8f5; color:#27ae60;"><i
+                                    class="fa-solid fa-check-circle"></i> Resolved</span>
                             <span class="ticket-id">#JAN-5011</span>
                         </div>
                         <h3 class="task-title">Broken Sidewalk</h3>
                         <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Indiranagar, Market Area</p>
-                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.</p>
-                        
-                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.
+                        </p>
+
+                        <div class="task-stats"
+                            style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
                             <div>
-                                <small class="text-muted" style="display:block;" class="time-label">Resolution Time:</small>
+                                <small class="text-muted" style="display:block;" class="time-label">Resolution
+                                    Time:</small>
                                 <strong style="color:var(--text-dark); font-size:1.1rem;">Completed in 9 Hours</strong>
                             </div>
                             <div>
@@ -602,47 +733,58 @@
                             </div>
                         </div>
 
-                        
-            <div style="margin-top: 1rem;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <small style="color:var(--text-muted); font-weight:600;">Crowd Validation Insights</small>
-                    <small style="color:var(--text-muted);">Total Votes: 518</small>
-                </div>
-                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
-                    <div style="width:95%; background:var(--accent-color);"></div>
-                    <div style="width:5%; background:#e74c3c;"></div>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
-                    <span style="color:var(--accent-color); font-weight:600;"><i class="fa-solid fa-thumbs-up"></i> 95% Valid (493)</span>
-                    <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 5% Invalid (25)</span>
-                </div>
-            </div>
-        
+
+                        <div style="margin-top: 1rem;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <small style="color:var(--text-muted); font-weight:600;">Crowd Validation
+                                    Insights</small>
+                                <small style="color:var(--text-muted);">Total Votes: 518</small>
+                            </div>
+                            <div
+                                style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
+                                <div style="width:95%; background:var(--accent-color);"></div>
+                                <div style="width:5%; background:#e74c3c;"></div>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
+                                <span style="color:var(--accent-color); font-weight:600;"><i
+                                        class="fa-solid fa-thumbs-up"></i> 95% Valid (493)</span>
+                                <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 5%
+                                    Invalid (25)</span>
+                            </div>
+                        </div>
+
 
                         <div class="task-status-control mt-3" style="padding-top:1rem; border-top:1px solid #eee;">
                             <label>Update Status:</label>
-                            <select class="styled-input status-select" data-ticket="JAN-5011" onchange="updateTaskStatus(this, 'JAN-5011')">
-                                <option value="assigned" >Assigned</option>
-                                <option value="progress" >In Progress</option>
+                            <select class="styled-input status-select" data-ticket="JAN-5011"
+                                onchange="updateTaskStatus(this, 'JAN-5011')">
+                                <option value="assigned">Assigned</option>
+                                <option value="progress">In Progress</option>
                                 <option value="completed" selected>Mark as Resolved</option>
-                                <option value="escalated" >Escalated</option>
+                                <option value="escalated">Escalated</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Task Card 5012 (completed) -->
-                    <div class="task-card border-success task-item hidden" data-status="completed" data-urgency="88" data-time="0">
+                    <div class="task-card border-success task-item hidden" data-status="completed" data-urgency="88"
+                        data-time="0">
                         <div class="task-header">
-                            <span class="badge" style="background:#e8f8f5; color:#27ae60;"><i class="fa-solid fa-check-circle"></i> Resolved</span>
+                            <span class="badge" style="background:#e8f8f5; color:#27ae60;"><i
+                                    class="fa-solid fa-check-circle"></i> Resolved</span>
                             <span class="ticket-id">#JAN-5012</span>
                         </div>
                         <h3 class="task-title">Broken Sidewalk</h3>
                         <p class="task-loc"><i class="fa-solid fa-location-dot"></i> MG Road Metro Station</p>
-                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.</p>
-                        
-                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.
+                        </p>
+
+                        <div class="task-stats"
+                            style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
                             <div>
-                                <small class="text-muted" style="display:block;" class="time-label">Resolution Time:</small>
+                                <small class="text-muted" style="display:block;" class="time-label">Resolution
+                                    Time:</small>
                                 <strong style="color:var(--text-dark); font-size:1.1rem;">Completed in 22 Hours</strong>
                             </div>
                             <div>
@@ -651,47 +793,58 @@
                             </div>
                         </div>
 
-                        
-            <div style="margin-top: 1rem;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <small style="color:var(--text-muted); font-weight:600;">Crowd Validation Insights</small>
-                    <small style="color:var(--text-muted);">Total Votes: 570</small>
-                </div>
-                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
-                    <div style="width:83%; background:var(--accent-color);"></div>
-                    <div style="width:17%; background:#e74c3c;"></div>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
-                    <span style="color:var(--accent-color); font-weight:600;"><i class="fa-solid fa-thumbs-up"></i> 83% Valid (477)</span>
-                    <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 17% Invalid (93)</span>
-                </div>
-            </div>
-        
+
+                        <div style="margin-top: 1rem;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <small style="color:var(--text-muted); font-weight:600;">Crowd Validation
+                                    Insights</small>
+                                <small style="color:var(--text-muted);">Total Votes: 570</small>
+                            </div>
+                            <div
+                                style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
+                                <div style="width:83%; background:var(--accent-color);"></div>
+                                <div style="width:17%; background:#e74c3c;"></div>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
+                                <span style="color:var(--accent-color); font-weight:600;"><i
+                                        class="fa-solid fa-thumbs-up"></i> 83% Valid (477)</span>
+                                <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i>
+                                    17% Invalid (93)</span>
+                            </div>
+                        </div>
+
 
                         <div class="task-status-control mt-3" style="padding-top:1rem; border-top:1px solid #eee;">
                             <label>Update Status:</label>
-                            <select class="styled-input status-select" data-ticket="JAN-5012" onchange="updateTaskStatus(this, 'JAN-5012')">
-                                <option value="assigned" >Assigned</option>
-                                <option value="progress" >In Progress</option>
+                            <select class="styled-input status-select" data-ticket="JAN-5012"
+                                onchange="updateTaskStatus(this, 'JAN-5012')">
+                                <option value="assigned">Assigned</option>
+                                <option value="progress">In Progress</option>
                                 <option value="completed" selected>Mark as Resolved</option>
-                                <option value="escalated" >Escalated</option>
+                                <option value="escalated">Escalated</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Task Card 5013 (completed) -->
-                    <div class="task-card border-success task-item hidden" data-status="completed" data-urgency="75" data-time="0">
+                    <div class="task-card border-success task-item hidden" data-status="completed" data-urgency="75"
+                        data-time="0">
                         <div class="task-header">
-                            <span class="badge" style="background:#e8f8f5; color:#27ae60;"><i class="fa-solid fa-check-circle"></i> Resolved</span>
+                            <span class="badge" style="background:#e8f8f5; color:#27ae60;"><i
+                                    class="fa-solid fa-check-circle"></i> Resolved</span>
                             <span class="ticket-id">#JAN-5013</span>
                         </div>
                         <h3 class="task-title">Fallen Tree</h3>
                         <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Indiranagar, Market Area</p>
-                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.</p>
-                        
-                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.
+                        </p>
+
+                        <div class="task-stats"
+                            style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
                             <div>
-                                <small class="text-muted" style="display:block;" class="time-label">Resolution Time:</small>
+                                <small class="text-muted" style="display:block;" class="time-label">Resolution
+                                    Time:</small>
                                 <strong style="color:var(--text-dark); font-size:1.1rem;">Completed in 8 Hours</strong>
                             </div>
                             <div>
@@ -700,47 +853,58 @@
                             </div>
                         </div>
 
-                        
-            <div style="margin-top: 1rem;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <small style="color:var(--text-muted); font-weight:600;">Crowd Validation Insights</small>
-                    <small style="color:var(--text-muted);">Total Votes: 427</small>
-                </div>
-                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
-                    <div style="width:92%; background:var(--accent-color);"></div>
-                    <div style="width:8%; background:#e74c3c;"></div>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
-                    <span style="color:var(--accent-color); font-weight:600;"><i class="fa-solid fa-thumbs-up"></i> 92% Valid (393)</span>
-                    <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 8% Invalid (34)</span>
-                </div>
-            </div>
-        
+
+                        <div style="margin-top: 1rem;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <small style="color:var(--text-muted); font-weight:600;">Crowd Validation
+                                    Insights</small>
+                                <small style="color:var(--text-muted);">Total Votes: 427</small>
+                            </div>
+                            <div
+                                style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
+                                <div style="width:92%; background:var(--accent-color);"></div>
+                                <div style="width:8%; background:#e74c3c;"></div>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
+                                <span style="color:var(--accent-color); font-weight:600;"><i
+                                        class="fa-solid fa-thumbs-up"></i> 92% Valid (393)</span>
+                                <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 8%
+                                    Invalid (34)</span>
+                            </div>
+                        </div>
+
 
                         <div class="task-status-control mt-3" style="padding-top:1rem; border-top:1px solid #eee;">
                             <label>Update Status:</label>
-                            <select class="styled-input status-select" data-ticket="JAN-5013" onchange="updateTaskStatus(this, 'JAN-5013')">
-                                <option value="assigned" >Assigned</option>
-                                <option value="progress" >In Progress</option>
+                            <select class="styled-input status-select" data-ticket="JAN-5013"
+                                onchange="updateTaskStatus(this, 'JAN-5013')">
+                                <option value="assigned">Assigned</option>
+                                <option value="progress">In Progress</option>
                                 <option value="completed" selected>Mark as Resolved</option>
-                                <option value="escalated" >Escalated</option>
+                                <option value="escalated">Escalated</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Task Card 5014 (completed) -->
-                    <div class="task-card border-success task-item hidden" data-status="completed" data-urgency="51" data-time="0">
+                    <div class="task-card border-success task-item hidden" data-status="completed" data-urgency="51"
+                        data-time="0">
                         <div class="task-header">
-                            <span class="badge" style="background:#e8f8f5; color:#27ae60;"><i class="fa-solid fa-check-circle"></i> Resolved</span>
+                            <span class="badge" style="background:#e8f8f5; color:#27ae60;"><i
+                                    class="fa-solid fa-check-circle"></i> Resolved</span>
                             <span class="ticket-id">#JAN-5014</span>
                         </div>
                         <h3 class="task-title">Illegal Parking</h3>
                         <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Sector 14 Main Road</p>
-                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.</p>
-                        
-                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.
+                        </p>
+
+                        <div class="task-stats"
+                            style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
                             <div>
-                                <small class="text-muted" style="display:block;" class="time-label">Resolution Time:</small>
+                                <small class="text-muted" style="display:block;" class="time-label">Resolution
+                                    Time:</small>
                                 <strong style="color:var(--text-dark); font-size:1.1rem;">Completed in 19 Hours</strong>
                             </div>
                             <div>
@@ -749,47 +913,58 @@
                             </div>
                         </div>
 
-                        
-            <div style="margin-top: 1rem;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <small style="color:var(--text-muted); font-weight:600;">Crowd Validation Insights</small>
-                    <small style="color:var(--text-muted);">Total Votes: 454</small>
-                </div>
-                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
-                    <div style="width:93%; background:var(--accent-color);"></div>
-                    <div style="width:7%; background:#e74c3c;"></div>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
-                    <span style="color:var(--accent-color); font-weight:600;"><i class="fa-solid fa-thumbs-up"></i> 93% Valid (423)</span>
-                    <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 7% Invalid (31)</span>
-                </div>
-            </div>
-        
+
+                        <div style="margin-top: 1rem;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <small style="color:var(--text-muted); font-weight:600;">Crowd Validation
+                                    Insights</small>
+                                <small style="color:var(--text-muted);">Total Votes: 454</small>
+                            </div>
+                            <div
+                                style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
+                                <div style="width:93%; background:var(--accent-color);"></div>
+                                <div style="width:7%; background:#e74c3c;"></div>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
+                                <span style="color:var(--accent-color); font-weight:600;"><i
+                                        class="fa-solid fa-thumbs-up"></i> 93% Valid (423)</span>
+                                <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 7%
+                                    Invalid (31)</span>
+                            </div>
+                        </div>
+
 
                         <div class="task-status-control mt-3" style="padding-top:1rem; border-top:1px solid #eee;">
                             <label>Update Status:</label>
-                            <select class="styled-input status-select" data-ticket="JAN-5014" onchange="updateTaskStatus(this, 'JAN-5014')">
-                                <option value="assigned" >Assigned</option>
-                                <option value="progress" >In Progress</option>
+                            <select class="styled-input status-select" data-ticket="JAN-5014"
+                                onchange="updateTaskStatus(this, 'JAN-5014')">
+                                <option value="assigned">Assigned</option>
+                                <option value="progress">In Progress</option>
                                 <option value="completed" selected>Mark as Resolved</option>
-                                <option value="escalated" >Escalated</option>
+                                <option value="escalated">Escalated</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Task Card 5015 (completed) -->
-                    <div class="task-card border-success task-item hidden" data-status="completed" data-urgency="78" data-time="0">
+                    <div class="task-card border-success task-item hidden" data-status="completed" data-urgency="78"
+                        data-time="0">
                         <div class="task-header">
-                            <span class="badge" style="background:#e8f8f5; color:#27ae60;"><i class="fa-solid fa-check-circle"></i> Resolved</span>
+                            <span class="badge" style="background:#e8f8f5; color:#27ae60;"><i
+                                    class="fa-solid fa-check-circle"></i> Resolved</span>
                             <span class="ticket-id">#JAN-5015</span>
                         </div>
                         <h3 class="task-title">Open Manhole</h3>
                         <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Indiranagar, Market Area</p>
-                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.</p>
-                        
-                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.
+                        </p>
+
+                        <div class="task-stats"
+                            style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
                             <div>
-                                <small class="text-muted" style="display:block;" class="time-label">Resolution Time:</small>
+                                <small class="text-muted" style="display:block;" class="time-label">Resolution
+                                    Time:</small>
                                 <strong style="color:var(--text-dark); font-size:1.1rem;">Completed in 10 Hours</strong>
                             </div>
                             <div>
@@ -798,48 +973,61 @@
                             </div>
                         </div>
 
-                        
-            <div style="margin-top: 1rem;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <small style="color:var(--text-muted); font-weight:600;">Crowd Validation Insights</small>
-                    <small style="color:var(--text-muted);">Total Votes: 465</small>
-                </div>
-                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
-                    <div style="width:81%; background:var(--accent-color);"></div>
-                    <div style="width:19%; background:#e74c3c;"></div>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
-                    <span style="color:var(--accent-color); font-weight:600;"><i class="fa-solid fa-thumbs-up"></i> 81% Valid (377)</span>
-                    <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 19% Invalid (88)</span>
-                </div>
-            </div>
-        
+
+                        <div style="margin-top: 1rem;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <small style="color:var(--text-muted); font-weight:600;">Crowd Validation
+                                    Insights</small>
+                                <small style="color:var(--text-muted);">Total Votes: 465</small>
+                            </div>
+                            <div
+                                style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
+                                <div style="width:81%; background:var(--accent-color);"></div>
+                                <div style="width:19%; background:#e74c3c;"></div>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
+                                <span style="color:var(--accent-color); font-weight:600;"><i
+                                        class="fa-solid fa-thumbs-up"></i> 81% Valid (377)</span>
+                                <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i>
+                                    19% Invalid (88)</span>
+                            </div>
+                        </div>
+
 
                         <div class="task-status-control mt-3" style="padding-top:1rem; border-top:1px solid #eee;">
                             <label>Update Status:</label>
-                            <select class="styled-input status-select" data-ticket="JAN-5015" onchange="updateTaskStatus(this, 'JAN-5015')">
-                                <option value="assigned" >Assigned</option>
-                                <option value="progress" >In Progress</option>
+                            <select class="styled-input status-select" data-ticket="JAN-5015"
+                                onchange="updateTaskStatus(this, 'JAN-5015')">
+                                <option value="assigned">Assigned</option>
+                                <option value="progress">In Progress</option>
                                 <option value="completed" selected>Mark as Resolved</option>
-                                <option value="escalated" >Escalated</option>
+                                <option value="escalated">Escalated</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Task Card 5016 (escalated) -->
-                    <div class="task-card border-danger task-item hidden" data-status="escalated" data-urgency="90" data-time="-15">
+                    <div class="task-card border-danger task-item hidden" data-status="escalated" data-urgency="90"
+                        data-time="-15">
                         <div class="task-header">
-                            <span class="badge badge-danger"><i class="fa-solid fa-triangle-exclamation"></i> Escalated (Forwarded to Higher Officials)</span>
+                            <span class="badge badge-danger"><i class="fa-solid fa-triangle-exclamation"></i> Escalated
+                                (Forwarded to Higher Officials)</span>
                             <span class="ticket-id">#JAN-5016</span>
                         </div>
                         <h3 class="task-title">Garbage Pile</h3>
                         <p class="task-loc"><i class="fa-solid fa-location-dot"></i> HSR Layout Sector 1</p>
-                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.<strong style="color:#e74c3c; display:block; margin-top:8px;">Escalation Reason: Exceeded SLA Time Limit. Case forwarded to Regional Supervisor.</strong></p>
-                        
-                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and
+                            action.<strong style="color:#e74c3c; display:block; margin-top:8px;">Escalation Reason:
+                                Exceeded SLA Time Limit. Case forwarded to Regional Supervisor.</strong></p>
+
+                        <div class="task-stats"
+                            style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
                             <div>
-                                <small class="text-muted" style="display:block;" class="time-label">Overdue Duration:</small>
-                                <strong style="color:var(--text-dark); font-size:1.1rem;"><span style='color:#e74c3c;'>15 Hours Overdue</span></strong>
+                                <small class="text-muted" style="display:block;" class="time-label">Overdue
+                                    Duration:</small>
+                                <strong style="color:var(--text-dark); font-size:1.1rem;"><span
+                                        style='color:#e74c3c;'>15 Hours Overdue</span></strong>
                             </div>
                             <div>
                                 <small class="text-muted" style="display:block;">Urgency Level:</small>
@@ -847,48 +1035,61 @@
                             </div>
                         </div>
 
-                        
-            <div style="margin-top: 1rem;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <small style="color:var(--text-muted); font-weight:600;">Crowd Validation Insights</small>
-                    <small style="color:var(--text-muted);">Total Votes: 478</small>
-                </div>
-                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
-                    <div style="width:98%; background:var(--accent-color);"></div>
-                    <div style="width:2%; background:#e74c3c;"></div>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
-                    <span style="color:var(--accent-color); font-weight:600;"><i class="fa-solid fa-thumbs-up"></i> 98% Valid (470)</span>
-                    <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 2% Invalid (8)</span>
-                </div>
-            </div>
-        
+
+                        <div style="margin-top: 1rem;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <small style="color:var(--text-muted); font-weight:600;">Crowd Validation
+                                    Insights</small>
+                                <small style="color:var(--text-muted);">Total Votes: 478</small>
+                            </div>
+                            <div
+                                style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
+                                <div style="width:98%; background:var(--accent-color);"></div>
+                                <div style="width:2%; background:#e74c3c;"></div>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
+                                <span style="color:var(--accent-color); font-weight:600;"><i
+                                        class="fa-solid fa-thumbs-up"></i> 98% Valid (470)</span>
+                                <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 2%
+                                    Invalid (8)</span>
+                            </div>
+                        </div>
+
 
                         <div class="task-status-control mt-3" style="padding-top:1rem; border-top:1px solid #eee;">
                             <label>Update Status:</label>
-                            <select class="styled-input status-select" data-ticket="JAN-5016" onchange="updateTaskStatus(this, 'JAN-5016')">
-                                <option value="assigned" >Assigned</option>
-                                <option value="progress" >In Progress</option>
-                                <option value="completed" >Mark as Resolved</option>
+                            <select class="styled-input status-select" data-ticket="JAN-5016"
+                                onchange="updateTaskStatus(this, 'JAN-5016')">
+                                <option value="assigned">Assigned</option>
+                                <option value="progress">In Progress</option>
+                                <option value="completed">Mark as Resolved</option>
                                 <option value="escalated" selected>Escalated</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Task Card 5017 (escalated) -->
-                    <div class="task-card border-danger task-item hidden" data-status="escalated" data-urgency="91" data-time="-14">
+                    <div class="task-card border-danger task-item hidden" data-status="escalated" data-urgency="91"
+                        data-time="-14">
                         <div class="task-header">
-                            <span class="badge badge-danger"><i class="fa-solid fa-triangle-exclamation"></i> Escalated (Forwarded to Higher Officials)</span>
+                            <span class="badge badge-danger"><i class="fa-solid fa-triangle-exclamation"></i> Escalated
+                                (Forwarded to Higher Officials)</span>
                             <span class="ticket-id">#JAN-5017</span>
                         </div>
                         <h3 class="task-title">Traffic Light Broken</h3>
                         <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Koramangala 1st Block</p>
-                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.<strong style="color:#e74c3c; display:block; margin-top:8px;">Escalation Reason: Exceeded SLA Time Limit. Case forwarded to Regional Supervisor.</strong></p>
-                        
-                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and
+                            action.<strong style="color:#e74c3c; display:block; margin-top:8px;">Escalation Reason:
+                                Exceeded SLA Time Limit. Case forwarded to Regional Supervisor.</strong></p>
+
+                        <div class="task-stats"
+                            style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
                             <div>
-                                <small class="text-muted" style="display:block;" class="time-label">Overdue Duration:</small>
-                                <strong style="color:var(--text-dark); font-size:1.1rem;"><span style='color:#e74c3c;'>14 Hours Overdue</span></strong>
+                                <small class="text-muted" style="display:block;" class="time-label">Overdue
+                                    Duration:</small>
+                                <strong style="color:var(--text-dark); font-size:1.1rem;"><span
+                                        style='color:#e74c3c;'>14 Hours Overdue</span></strong>
                             </div>
                             <div>
                                 <small class="text-muted" style="display:block;">Urgency Level:</small>
@@ -896,48 +1097,61 @@
                             </div>
                         </div>
 
-                        
-            <div style="margin-top: 1rem;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <small style="color:var(--text-muted); font-weight:600;">Crowd Validation Insights</small>
-                    <small style="color:var(--text-muted);">Total Votes: 431</small>
-                </div>
-                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
-                    <div style="width:78%; background:var(--accent-color);"></div>
-                    <div style="width:22%; background:#e74c3c;"></div>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
-                    <span style="color:var(--accent-color); font-weight:600;"><i class="fa-solid fa-thumbs-up"></i> 78% Valid (340)</span>
-                    <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 22% Invalid (91)</span>
-                </div>
-            </div>
-        
+
+                        <div style="margin-top: 1rem;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <small style="color:var(--text-muted); font-weight:600;">Crowd Validation
+                                    Insights</small>
+                                <small style="color:var(--text-muted);">Total Votes: 431</small>
+                            </div>
+                            <div
+                                style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
+                                <div style="width:78%; background:var(--accent-color);"></div>
+                                <div style="width:22%; background:#e74c3c;"></div>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
+                                <span style="color:var(--accent-color); font-weight:600;"><i
+                                        class="fa-solid fa-thumbs-up"></i> 78% Valid (340)</span>
+                                <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i>
+                                    22% Invalid (91)</span>
+                            </div>
+                        </div>
+
 
                         <div class="task-status-control mt-3" style="padding-top:1rem; border-top:1px solid #eee;">
                             <label>Update Status:</label>
-                            <select class="styled-input status-select" data-ticket="JAN-5017" onchange="updateTaskStatus(this, 'JAN-5017')">
-                                <option value="assigned" >Assigned</option>
-                                <option value="progress" >In Progress</option>
-                                <option value="completed" >Mark as Resolved</option>
+                            <select class="styled-input status-select" data-ticket="JAN-5017"
+                                onchange="updateTaskStatus(this, 'JAN-5017')">
+                                <option value="assigned">Assigned</option>
+                                <option value="progress">In Progress</option>
+                                <option value="completed">Mark as Resolved</option>
                                 <option value="escalated" selected>Escalated</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Task Card 5018 (escalated) -->
-                    <div class="task-card border-danger task-item hidden" data-status="escalated" data-urgency="96" data-time="-42">
+                    <div class="task-card border-danger task-item hidden" data-status="escalated" data-urgency="96"
+                        data-time="-42">
                         <div class="task-header">
-                            <span class="badge badge-danger"><i class="fa-solid fa-triangle-exclamation"></i> Escalated (Forwarded to Higher Officials)</span>
+                            <span class="badge badge-danger"><i class="fa-solid fa-triangle-exclamation"></i> Escalated
+                                (Forwarded to Higher Officials)</span>
                             <span class="ticket-id">#JAN-5018</span>
                         </div>
                         <h3 class="task-title">Garbage Pile</h3>
                         <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Koramangala 1st Block</p>
-                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.<strong style="color:#e74c3c; display:block; margin-top:8px;">Escalation Reason: Exceeded SLA Time Limit. Case forwarded to Regional Supervisor.</strong></p>
-                        
-                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and
+                            action.<strong style="color:#e74c3c; display:block; margin-top:8px;">Escalation Reason:
+                                Exceeded SLA Time Limit. Case forwarded to Regional Supervisor.</strong></p>
+
+                        <div class="task-stats"
+                            style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
                             <div>
-                                <small class="text-muted" style="display:block;" class="time-label">Overdue Duration:</small>
-                                <strong style="color:var(--text-dark); font-size:1.1rem;"><span style='color:#e74c3c;'>42 Hours Overdue</span></strong>
+                                <small class="text-muted" style="display:block;" class="time-label">Overdue
+                                    Duration:</small>
+                                <strong style="color:var(--text-dark); font-size:1.1rem;"><span
+                                        style='color:#e74c3c;'>42 Hours Overdue</span></strong>
                             </div>
                             <div>
                                 <small class="text-muted" style="display:block;">Urgency Level:</small>
@@ -945,48 +1159,61 @@
                             </div>
                         </div>
 
-                        
-            <div style="margin-top: 1rem;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <small style="color:var(--text-muted); font-weight:600;">Crowd Validation Insights</small>
-                    <small style="color:var(--text-muted);">Total Votes: 302</small>
-                </div>
-                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
-                    <div style="width:94%; background:var(--accent-color);"></div>
-                    <div style="width:6%; background:#e74c3c;"></div>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
-                    <span style="color:var(--accent-color); font-weight:600;"><i class="fa-solid fa-thumbs-up"></i> 94% Valid (284)</span>
-                    <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 6% Invalid (18)</span>
-                </div>
-            </div>
-        
+
+                        <div style="margin-top: 1rem;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <small style="color:var(--text-muted); font-weight:600;">Crowd Validation
+                                    Insights</small>
+                                <small style="color:var(--text-muted);">Total Votes: 302</small>
+                            </div>
+                            <div
+                                style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
+                                <div style="width:94%; background:var(--accent-color);"></div>
+                                <div style="width:6%; background:#e74c3c;"></div>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
+                                <span style="color:var(--accent-color); font-weight:600;"><i
+                                        class="fa-solid fa-thumbs-up"></i> 94% Valid (284)</span>
+                                <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 6%
+                                    Invalid (18)</span>
+                            </div>
+                        </div>
+
 
                         <div class="task-status-control mt-3" style="padding-top:1rem; border-top:1px solid #eee;">
                             <label>Update Status:</label>
-                            <select class="styled-input status-select" data-ticket="JAN-5018" onchange="updateTaskStatus(this, 'JAN-5018')">
-                                <option value="assigned" >Assigned</option>
-                                <option value="progress" >In Progress</option>
-                                <option value="completed" >Mark as Resolved</option>
+                            <select class="styled-input status-select" data-ticket="JAN-5018"
+                                onchange="updateTaskStatus(this, 'JAN-5018')">
+                                <option value="assigned">Assigned</option>
+                                <option value="progress">In Progress</option>
+                                <option value="completed">Mark as Resolved</option>
                                 <option value="escalated" selected>Escalated</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Task Card 5019 (escalated) -->
-                    <div class="task-card border-danger task-item hidden" data-status="escalated" data-urgency="98" data-time="-35">
+                    <div class="task-card border-danger task-item hidden" data-status="escalated" data-urgency="98"
+                        data-time="-35">
                         <div class="task-header">
-                            <span class="badge badge-danger"><i class="fa-solid fa-triangle-exclamation"></i> Escalated (Forwarded to Higher Officials)</span>
+                            <span class="badge badge-danger"><i class="fa-solid fa-triangle-exclamation"></i> Escalated
+                                (Forwarded to Higher Officials)</span>
                             <span class="ticket-id">#JAN-5019</span>
                         </div>
                         <h3 class="task-title">Water Leakage</h3>
                         <p class="task-loc"><i class="fa-solid fa-location-dot"></i> Koramangala 1st Block</p>
-                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.<strong style="color:#e74c3c; display:block; margin-top:8px;">Escalation Reason: Exceeded SLA Time Limit. Case forwarded to Regional Supervisor.</strong></p>
-                        
-                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and
+                            action.<strong style="color:#e74c3c; display:block; margin-top:8px;">Escalation Reason:
+                                Exceeded SLA Time Limit. Case forwarded to Regional Supervisor.</strong></p>
+
+                        <div class="task-stats"
+                            style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
                             <div>
-                                <small class="text-muted" style="display:block;" class="time-label">Overdue Duration:</small>
-                                <strong style="color:var(--text-dark); font-size:1.1rem;"><span style='color:#e74c3c;'>35 Hours Overdue</span></strong>
+                                <small class="text-muted" style="display:block;" class="time-label">Overdue
+                                    Duration:</small>
+                                <strong style="color:var(--text-dark); font-size:1.1rem;"><span
+                                        style='color:#e74c3c;'>35 Hours Overdue</span></strong>
                             </div>
                             <div>
                                 <small class="text-muted" style="display:block;">Urgency Level:</small>
@@ -994,48 +1221,61 @@
                             </div>
                         </div>
 
-                        
-            <div style="margin-top: 1rem;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <small style="color:var(--text-muted); font-weight:600;">Crowd Validation Insights</small>
-                    <small style="color:var(--text-muted);">Total Votes: 231</small>
-                </div>
-                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
-                    <div style="width:79%; background:var(--accent-color);"></div>
-                    <div style="width:21%; background:#e74c3c;"></div>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
-                    <span style="color:var(--accent-color); font-weight:600;"><i class="fa-solid fa-thumbs-up"></i> 79% Valid (184)</span>
-                    <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 21% Invalid (47)</span>
-                </div>
-            </div>
-        
+
+                        <div style="margin-top: 1rem;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <small style="color:var(--text-muted); font-weight:600;">Crowd Validation
+                                    Insights</small>
+                                <small style="color:var(--text-muted);">Total Votes: 231</small>
+                            </div>
+                            <div
+                                style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
+                                <div style="width:79%; background:var(--accent-color);"></div>
+                                <div style="width:21%; background:#e74c3c;"></div>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
+                                <span style="color:var(--accent-color); font-weight:600;"><i
+                                        class="fa-solid fa-thumbs-up"></i> 79% Valid (184)</span>
+                                <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i>
+                                    21% Invalid (47)</span>
+                            </div>
+                        </div>
+
 
                         <div class="task-status-control mt-3" style="padding-top:1rem; border-top:1px solid #eee;">
                             <label>Update Status:</label>
-                            <select class="styled-input status-select" data-ticket="JAN-5019" onchange="updateTaskStatus(this, 'JAN-5019')">
-                                <option value="assigned" >Assigned</option>
-                                <option value="progress" >In Progress</option>
-                                <option value="completed" >Mark as Resolved</option>
+                            <select class="styled-input status-select" data-ticket="JAN-5019"
+                                onchange="updateTaskStatus(this, 'JAN-5019')">
+                                <option value="assigned">Assigned</option>
+                                <option value="progress">In Progress</option>
+                                <option value="completed">Mark as Resolved</option>
                                 <option value="escalated" selected>Escalated</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Task Card 5020 (escalated) -->
-                    <div class="task-card border-danger task-item hidden" data-status="escalated" data-urgency="95" data-time="-15">
+                    <div class="task-card border-danger task-item hidden" data-status="escalated" data-urgency="95"
+                        data-time="-15">
                         <div class="task-header">
-                            <span class="badge badge-danger"><i class="fa-solid fa-triangle-exclamation"></i> Escalated (Forwarded to Higher Officials)</span>
+                            <span class="badge badge-danger"><i class="fa-solid fa-triangle-exclamation"></i> Escalated
+                                (Forwarded to Higher Officials)</span>
                             <span class="ticket-id">#JAN-5020</span>
                         </div>
                         <h3 class="task-title">Traffic Light Broken</h3>
                         <p class="task-loc"><i class="fa-solid fa-location-dot"></i> HSR Layout Sector 1</p>
-                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and action.<strong style="color:#e74c3c; display:block; margin-top:8px;">Escalation Reason: Exceeded SLA Time Limit. Case forwarded to Regional Supervisor.</strong></p>
-                        
-                        <div class="task-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
+                        <p class="task-desc mb-2">Automated report mapped to this zone for officer review and
+                            action.<strong style="color:#e74c3c; display:block; margin-top:8px;">Escalation Reason:
+                                Exceeded SLA Time Limit. Case forwarded to Regional Supervisor.</strong></p>
+
+                        <div class="task-stats"
+                            style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; background:#f8faff; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #d0e1f9;">
                             <div>
-                                <small class="text-muted" style="display:block;" class="time-label">Overdue Duration:</small>
-                                <strong style="color:var(--text-dark); font-size:1.1rem;"><span style='color:#e74c3c;'>15 Hours Overdue</span></strong>
+                                <small class="text-muted" style="display:block;" class="time-label">Overdue
+                                    Duration:</small>
+                                <strong style="color:var(--text-dark); font-size:1.1rem;"><span
+                                        style='color:#e74c3c;'>15 Hours Overdue</span></strong>
                             </div>
                             <div>
                                 <small class="text-muted" style="display:block;">Urgency Level:</small>
@@ -1043,29 +1283,35 @@
                             </div>
                         </div>
 
-                        
-            <div style="margin-top: 1rem;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <small style="color:var(--text-muted); font-weight:600;">Crowd Validation Insights</small>
-                    <small style="color:var(--text-muted);">Total Votes: 152</small>
-                </div>
-                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
-                    <div style="width:78%; background:var(--accent-color);"></div>
-                    <div style="width:22%; background:#e74c3c;"></div>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
-                    <span style="color:var(--accent-color); font-weight:600;"><i class="fa-solid fa-thumbs-up"></i> 78% Valid (120)</span>
-                    <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i> 22% Invalid (32)</span>
-                </div>
-            </div>
-        
+
+                        <div style="margin-top: 1rem;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <small style="color:var(--text-muted); font-weight:600;">Crowd Validation
+                                    Insights</small>
+                                <small style="color:var(--text-muted);">Total Votes: 152</small>
+                            </div>
+                            <div
+                                style="width:100%; background:#f1f1f1; border-radius:4px; height:8px; display:flex; overflow:hidden;">
+                                <div style="width:78%; background:var(--accent-color);"></div>
+                                <div style="width:22%; background:#e74c3c;"></div>
+                            </div>
+                            <div
+                                style="display:flex; justify-content:space-between; margin-top:4px; font-size:0.85rem;">
+                                <span style="color:var(--accent-color); font-weight:600;"><i
+                                        class="fa-solid fa-thumbs-up"></i> 78% Valid (120)</span>
+                                <span style="color:#e74c3c; font-weight:600;"><i class="fa-solid fa-thumbs-down"></i>
+                                    22% Invalid (32)</span>
+                            </div>
+                        </div>
+
 
                         <div class="task-status-control mt-3" style="padding-top:1rem; border-top:1px solid #eee;">
                             <label>Update Status:</label>
-                            <select class="styled-input status-select" data-ticket="JAN-5020" onchange="updateTaskStatus(this, 'JAN-5020')">
-                                <option value="assigned" >Assigned</option>
-                                <option value="progress" >In Progress</option>
-                                <option value="completed" >Mark as Resolved</option>
+                            <select class="styled-input status-select" data-ticket="JAN-5020"
+                                onchange="updateTaskStatus(this, 'JAN-5020')">
+                                <option value="assigned">Assigned</option>
+                                <option value="progress">In Progress</option>
+                                <option value="completed">Mark as Resolved</option>
                                 <option value="escalated" selected>Escalated</option>
                             </select>
                         </div>
@@ -1091,32 +1337,41 @@
                     <h2>Operational Command Center</h2>
                     <p class="text-muted">Real-time zone monitoring and performance metrics.</p>
                 </div>
-                
+
                 <!-- Performance Stats -->
-                <div class="metrics-grid" style="grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
+                <div class="metrics-grid"
+                    style="grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
                     <div class="metric-card" style="padding: 1.25rem;">
-                        <div class="metric-icon bg-primary text-white" style="width:45px; height:45px; font-size:1.1rem;"><i class="fa-solid fa-briefcase"></i></div>
+                        <div class="metric-icon bg-primary text-white"
+                            style="width:45px; height:45px; font-size:1.1rem;"><i class="fa-solid fa-briefcase"></i>
+                        </div>
                         <div class="metric-data">
                             <h3>42</h3>
                             <p style="font-size:0.85rem;">Assigned Cases</p>
                         </div>
                     </div>
                     <div class="metric-card" style="padding: 1.25rem;">
-                        <div class="metric-icon bg-warning text-white" style="width:45px; height:45px; font-size:1.1rem;"><i class="fa-solid fa-stopwatch"></i></div>
+                        <div class="metric-icon bg-warning text-white"
+                            style="width:45px; height:45px; font-size:1.1rem;"><i class="fa-solid fa-stopwatch"></i>
+                        </div>
                         <div class="metric-data">
                             <h3>18 hrs</h3>
                             <p style="font-size:0.85rem;">Avg Resolution Time</p>
                         </div>
                     </div>
                     <div class="metric-card" style="padding: 1.25rem;">
-                        <div class="metric-icon bg-accent text-white" style="width:45px; height:45px; font-size:1.1rem;"><i class="fa-solid fa-shield-heart"></i></div>
+                        <div class="metric-icon bg-accent text-white"
+                            style="width:45px; height:45px; font-size:1.1rem;"><i class="fa-solid fa-shield-heart"></i>
+                        </div>
                         <div class="metric-data">
                             <h3>94/100</h3>
                             <p style="font-size:0.85rem;">Trust Score</p>
                         </div>
                     </div>
                     <div class="metric-card" style="padding: 1.25rem;">
-                        <div class="metric-icon text-white" style="background:#8e44ad; width:45px; height:45px; font-size:1.1rem;"><i class="fa-solid fa-check-double"></i></div>
+                        <div class="metric-icon text-white"
+                            style="background:#8e44ad; width:45px; height:45px; font-size:1.1rem;"><i
+                                class="fa-solid fa-check-double"></i></div>
                         <div class="metric-data">
                             <h3>89%</h3>
                             <p style="font-size:0.85rem;">Validation Success %</p>
@@ -1126,8 +1381,10 @@
 
                 <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;">
                     <!-- Live Task Queue -->
-                    <div class="admin-panel" style="background: var(--white); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden;">
-                        <h3 style="font-size: 1.1rem; margin-bottom: 1rem;"><i class="fa-solid fa-list-ul" style="color:var(--primary-color);"></i> Live Task Queue</h3>
+                    <div class="admin-panel"
+                        style="background: var(--white); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden;">
+                        <h3 style="font-size: 1.1rem; margin-bottom: 1rem;"><i class="fa-solid fa-list-ul"
+                                style="color:var(--primary-color);"></i> Live Task Queue</h3>
                         <div style="overflow-x: auto;">
                             <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
                                 <thead>
@@ -1135,7 +1392,8 @@
                                         <th style="padding: 0.75rem 0.5rem; color:var(--text-muted);">Complaint ID</th>
                                         <th style="padding: 0.75rem 0.5rem; color:var(--text-muted);">Area</th>
                                         <th style="padding: 0.75rem 0.5rem; color:var(--text-muted);">Priority %</th>
-                                        <th style="padding: 0.75rem 0.5rem; color:var(--text-muted);">Time Remaining</th>
+                                        <th style="padding: 0.75rem 0.5rem; color:var(--text-muted);">Time Remaining
+                                        </th>
                                         <th style="padding: 0.75rem 0.5rem; color:var(--text-muted);">Status</th>
                                     </tr>
                                 </thead>
@@ -1143,30 +1401,41 @@
                                     <tr style="border-bottom: 1px solid var(--border-color);">
                                         <td style="padding: 1rem 0.5rem; font-weight:600;">#JAN-5022</td>
                                         <td style="padding: 1rem 0.5rem;">Sector 14 Main Road</td>
-                                        <td style="padding: 1rem 0.5rem;"><span style="color:#e74c3c; font-weight:700;">92%</span></td>
-                                        <td style="padding: 1rem 0.5rem;"><span class="badge badge-danger">2 hrs</span></td>
-                                        <td style="padding: 1rem 0.5rem;"><span class="badge badge-warning">Assigned</span></td>
+                                        <td style="padding: 1rem 0.5rem;"><span
+                                                style="color:#e74c3c; font-weight:700;">92%</span></td>
+                                        <td style="padding: 1rem 0.5rem;"><span class="badge badge-danger">2 hrs</span>
+                                        </td>
+                                        <td style="padding: 1rem 0.5rem;"><span
+                                                class="badge badge-warning">Assigned</span></td>
                                     </tr>
                                     <tr style="border-bottom: 1px solid var(--border-color);">
                                         <td style="padding: 1rem 0.5rem; font-weight:600;">#JAN-5025</td>
                                         <td style="padding: 1rem 0.5rem;">HSR Layout Phase 2</td>
-                                        <td style="padding: 1rem 0.5rem;"><span style="color:#f39c12; font-weight:700;">74%</span></td>
+                                        <td style="padding: 1rem 0.5rem;"><span
+                                                style="color:#f39c12; font-weight:700;">74%</span></td>
                                         <td style="padding: 1rem 0.5rem;">14 hrs</td>
-                                        <td style="padding: 1rem 0.5rem;"><span class="badge" style="background:#eef5ff; color:var(--primary-color);">In Progress</span></td>
+                                        <td style="padding: 1rem 0.5rem;"><span class="badge"
+                                                style="background:#eef5ff; color:var(--primary-color);">In
+                                                Progress</span></td>
                                     </tr>
                                     <tr style="border-bottom: 1px solid var(--border-color);">
                                         <td style="padding: 1rem 0.5rem; font-weight:600;">#JAN-5011</td>
                                         <td style="padding: 1rem 0.5rem;">Koramangala Block 5</td>
-                                        <td style="padding: 1rem 0.5rem;"><span style="color:#27ae60; font-weight:700;">45%</span></td>
+                                        <td style="padding: 1rem 0.5rem;"><span
+                                                style="color:#27ae60; font-weight:700;">45%</span></td>
                                         <td style="padding: 1rem 0.5rem;">28 hrs</td>
-                                        <td style="padding: 1rem 0.5rem;"><span class="badge badge-warning">Assigned</span></td>
+                                        <td style="padding: 1rem 0.5rem;"><span
+                                                class="badge badge-warning">Assigned</span></td>
                                     </tr>
                                     <tr>
                                         <td style="padding: 1rem 0.5rem; font-weight:600;">#JAN-5009</td>
                                         <td style="padding: 1rem 0.5rem;">Indiranagar 100ft Road</td>
-                                        <td style="padding: 1rem 0.5rem;"><span style="color:#27ae60; font-weight:700;">30%</span></td>
+                                        <td style="padding: 1rem 0.5rem;"><span
+                                                style="color:#27ae60; font-weight:700;">30%</span></td>
                                         <td style="padding: 1rem 0.5rem;">48 hrs</td>
-                                        <td style="padding: 1rem 0.5rem;"><span class="badge" style="background:#eef5ff; color:var(--primary-color);">In Progress</span></td>
+                                        <td style="padding: 1rem 0.5rem;"><span class="badge"
+                                                style="background:#eef5ff; color:var(--primary-color);">In
+                                                Progress</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1176,8 +1445,10 @@
                     <!-- Side Panels -->
                     <div style="display: flex; flex-direction: column; gap: 1.5rem;">
                         <!-- Status Breakdown -->
-                        <div class="admin-panel" style="background: var(--white); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color);">
-                            <h3 style="font-size: 1.1rem; margin-bottom: 1rem;"><i class="fa-solid fa-chart-pie" style="color:var(--primary-color);"></i> Workload Breakdown</h3>
+                        <div class="admin-panel"
+                            style="background: var(--white); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                            <h3 style="font-size: 1.1rem; margin-bottom: 1rem;"><i class="fa-solid fa-chart-pie"
+                                    style="color:var(--primary-color);"></i> Workload Breakdown</h3>
                             <div style="display:flex; flex-direction:column; gap:0.85rem;">
                                 <div style="display:flex; justify-content:space-between; align-items:center;">
                                     <span style="font-size:0.95rem;">Today's Active Tasks</span>
@@ -1199,31 +1470,44 @@
                         </div>
 
                         <!-- Territory Zone Summary -->
-                        <div class="admin-panel" style="background: var(--white); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color);">
-                            <h3 style="font-size: 1.1rem; margin-bottom: 1rem;"><i class="fa-solid fa-map-location-dot" style="color:var(--primary-color);"></i> Zone Workload</h3>
-                            
+                        <div class="admin-panel"
+                            style="background: var(--white); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                            <h3 style="font-size: 1.1rem; margin-bottom: 1rem;"><i class="fa-solid fa-map-location-dot"
+                                    style="color:var(--primary-color);"></i> Zone Workload</h3>
+
                             <div style="margin-bottom:1rem;">
-                                <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:0.85rem;">
+                                <div
+                                    style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:0.85rem;">
                                     <span style="font-weight:500;">Sector 14</span>
                                     <strong>45% (19 cases)</strong>
                                 </div>
-                                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px;"><div style="width:45%; background:#e74c3c; height:100%; border-radius:4px;"></div></div>
+                                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px;">
+                                    <div style="width:45%; background:#e74c3c; height:100%; border-radius:4px;"></div>
+                                </div>
                             </div>
-                            
+
                             <div style="margin-bottom:1rem;">
-                                <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:0.85rem;">
+                                <div
+                                    style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:0.85rem;">
                                     <span style="font-weight:500;">HSR Layout</span>
                                     <strong>30% (13 cases)</strong>
                                 </div>
-                                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px;"><div style="width:30%; background:#f39c12; height:100%; border-radius:4px;"></div></div>
+                                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px;">
+                                    <div style="width:30%; background:#f39c12; height:100%; border-radius:4px;"></div>
+                                </div>
                             </div>
 
                             <div>
-                                <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:0.85rem;">
+                                <div
+                                    style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:0.85rem;">
                                     <span style="font-weight:500;">Koramangala</span>
                                     <strong>25% (10 cases)</strong>
                                 </div>
-                                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px;"><div style="width:25%; background:var(--accent-color); height:100%; border-radius:4px;"></div></div>
+                                <div style="width:100%; background:#f1f1f1; border-radius:4px; height:8px;">
+                                    <div
+                                        style="width:25%; background:var(--accent-color); height:100%; border-radius:4px;">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1246,5 +1530,8 @@
     </div>
 
     <script src="officer.js"></script>
+    <script src="i18n.js"></script>
+    <script src="chatbot.js"></script>
 </body>
+
 </html>

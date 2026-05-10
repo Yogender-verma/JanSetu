@@ -1,266 +1,357 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>JanSetu | Bridging Citizens and Governance</title>
-<meta content="JanSetu is a civic-tech platform using smart technology to connect citizens with governance for effective issue reporting and resolution." name="description"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<link href="styles.css" rel="stylesheet"/>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>JanSetu | Bridging Citizens and Governance</title>
+    <meta
+        content="JanSetu is a civic-tech platform using smart technology to connect citizens with governance for effective issue reporting and resolution."
+        name="description" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="styles.css" rel="stylesheet" />
 </head>
+
 <body>
-<!-- Navbar -->
-<nav class="navbar" id="navbar">
-<div class="nav-container">
-<div class="logo">
-<span class="logo-icon"><i class="fa-solid fa-bridge-water"></i></span>
-<span class="logo-text">Jan<span class="logo-highlight">Setu</span></span>
-</div>
-<ul class="nav-links">
-<li><a class="active" href="#home">Home</a></li>
-<li><a href="#problem">The Problem</a></li>
-<li><a href="#features">Features</a></li>
-<li><a href="#workflow">Workflow</a></li>
-<li><a href="#impact">Impact</a></li>
-<li><a href="#contact">Contact</a></li>
-</ul>
-<div class="nav-actions">
-<a class="btn btn-outline-primary login-btn" href="portal.html">Login</a>
-<a class="btn btn-primary" href="admin.html" style="margin-left: 0.5rem;"><i class="fa-solid fa-shield-halved"></i> Admin</a>
-<button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
-</div>
-</div>
-</nav>
-<!-- Hero Section -->
-<header class="hero" id="home">
-<div class="hero-overlay"></div>
-<div class="hero-content">
-<div class="hero-badge">A Smart Civic-Tech Platform</div>
-<h1 class="hero-title">Welcome to <span>JanSetu</span></h1>
-<p class="hero-subtitle">Bridging Citizens and Governance with Smart Technology. Report, track, and resolve community issues with AI-powered efficiency.</p>
-<div class="hero-buttons">
-<a class="btn btn-primary btn-lg" href="portal.html"><i class="fa-solid fa-bullhorn"></i> Report an Issue</a>
-<a class="btn btn-secondary btn-lg" href="portal.html"><i class="fa-solid fa-magnifying-glass-location"></i> Track Complaint</a>
-</div>
-<div class="hero-stats">
-<div class="stat-item">
-<span class="stat-number">24/7</span>
-<span class="stat-label">Support</span>
-</div>
-<div class="stat-item">
-<span class="stat-number">100%</span>
-<span class="stat-label">Transparent</span>
-</div>
-<div class="stat-item">
-<span class="stat-number">Fast</span>
-<span class="stat-label">Resolution</span>
-</div>
-</div>
-</div>
-<div class="hero-shape-divider">
-<svg data-name="Layer 1" preserveaspectratio="none" viewbox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg">
-<path class="shape-fill" d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"></path>
-</svg>
-</div>
-</header>
-<!-- Problem Statement Section -->
-<section class="problem-section section" id="problem">
-<div class="container">
-<div class="section-header text-center">
-<h2 class="section-title">The Challenges We Face</h2>
-<p class="section-desc">Every day, citizens encounter infrastructure issues that disrupt daily life. The reporting process is often tedious and lacks transparency.</p>
-</div>
-<div class="problem-grid">
-<div class="problem-card">
-<div class="problem-icon"><i class="fa-solid fa-road-spikes"></i></div>
-<h3>Potholes &amp; Roads</h3>
-<p>Damaged streets causing accidents and traffic jams.</p>
-</div>
-<div class="problem-card">
-<div class="problem-icon"><i class="fa-solid fa-droplet-slash"></i></div>
-<h3>Water Supply</h3>
-<p>Irregular water supply and pipeline leakages.</p>
-</div>
-<div class="problem-card">
-<div class="problem-icon"><i class="fa-solid fa-trash-can"></i></div>
-<h3>Waste Management</h3>
-<p>Uncollected garbage and overflowing public bins.</p>
-</div>
-<div class="problem-card">
-<div class="problem-icon"><i class="fa-solid fa-lightbulb"></i></div>
-<h3>Street Lighting</h3>
-<p>Non-functional streetlights compromising public safety.</p>
-</div>
-</div>
-</div>
-</section>
-<!-- Features Section -->
-<section class="features-section section bg-light" id="features">
-<div class="container">
-<div class="section-header text-center">
-<h2 class="section-title">Why Choose JanSetu?</h2>
-<p class="section-desc">Empowering both citizens and authorities with state-of-the-art tools to build better cities together.</p>
-</div>
-<div class="features-grid">
-<div class="feature-box">
-<div class="feature-icon-wrapper">
-<i class="fa-solid fa-brain"></i>
-</div>
-<div class="feature-content">
-<h3>AI-Powered Reporting</h3>
-<p>Our smart system automatically categorizes your issues and identifies duplicates to streamline the resolution process.</p>
-</div>
-</div>
-<div class="feature-box">
-<div class="feature-icon-wrapper">
-<i class="fa-solid fa-language"></i>
-</div>
-<div class="feature-content">
-<h3>Multilingual Support</h3>
-<p>Report issues in your regional language. We break down the language barrier between citizens and government.</p>
-</div>
-</div>
-<div class="feature-box">
-<div class="feature-icon-wrapper">
-<i class="fa-solid fa-eye"></i>
-</div>
-<div class="feature-content">
-<h3>Total Transparency</h3>
-<p>Track your complaint status in real-time. Know exactly which department and officer is handling your request.</p>
-</div>
-</div>
-<div class="feature-box">
-<div class="feature-icon-wrapper">
-<i class="fa-solid fa-scale-balanced"></i>
-</div>
-<div class="feature-content">
-<h3>Accountability</h3>
-<p>SLAs (Service Level Agreements) ensure that authorities resolve complaints within a designated timeframe.</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Workflow Section -->
-<section class="workflow-section section" id="workflow">
-<div class="container">
-<div class="section-header text-center">
-<h2 class="section-title">How It Works</h2>
-<p class="section-desc">A seamless journey from identifying an issue to its final resolution.</p>
-</div>
-<div class="workflow-timeline">
-<div class="timeline-item">
-<div class="timeline-icon">1</div>
-<div class="timeline-content">
-<h4>Report</h4>
-<p>Citizen captures a photo, adds details, and submits the complaint easily.</p>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-icon">2</div>
-<div class="timeline-content">
-<h4>Analyze</h4>
-<p>AI categorizes the issue and routes it to the correct government department.</p>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-icon">3</div>
-<div class="timeline-content">
-<h4>Assign</h4>
-<p>Officers receive the ticket, assess the situation, and plan the intervention.</p>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-icon">4</div>
-<div class="timeline-content">
-<h4>Resolve</h4>
-<p>The issue is fixed, and the citizen gets notified with a completion proof.</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Impact Metrics Section -->
-<section class="impact-section section bg-primary" id="impact">
-<div class="container">
-<div class="impact-grid">
-<div class="impact-stat">
-<i class="fa-solid fa-check-circle"></i>
-<h2 class="counter" data-target="25400">0</h2>
-<p>Complaints Resolved</p>
-</div>
-<div class="impact-stat">
-<i class="fa-solid fa-users"></i>
-<h2 class="counter" data-target="85000">0</h2>
-<p>Active Citizens</p>
-</div>
-<div class="impact-stat">
-<i class="fa-solid fa-stopwatch"></i>
-<h2><span class="counter" data-target="48">0</span> hrs</h2>
-<p>Avg. Resolution Time</p>
-</div>
-<div class="impact-stat">
-<i class="fa-solid fa-city"></i>
-<h2 class="counter" data-target="15">0</h2>
-<p>Cities Connected</p>
-</div>
-</div>
-</div>
-</section>
-<!-- Footer -->
-<footer class="footer" id="contact">
-<div class="container">
-<div class="footer-grid">
-<div class="footer-about">
-<div class="logo">
-<span class="logo-icon"><i class="fa-solid fa-bridge-water"></i></span>
-<span class="logo-text text-white">Jan<span class="logo-highlight">Setu</span></span>
-</div>
-<p class="footer-desc">Bridging the gap between citizens and governance. Leveraging smart technology to create better, safer, and cleaner cities.</p>
-<div class="social-links">
-<a href="#"><i class="fa-brands fa-twitter"></i></a>
-<a href="#"><i class="fa-brands fa-facebook"></i></a>
-<a href="#"><i class="fa-brands fa-instagram"></i></a>
-<a href="#"><i class="fa-brands fa-linkedin"></i></a>
-</div>
-</div>
-<div class="footer-links">
-<h3>Quick Links</h3>
-<ul>
-<li><a href="#home">Home</a></li>
-<li><a href="#features">Features</a></li>
-<li><a href="#workflow">How it works</a></li>
-<li><a href="portal.html">Report Issue</a></li>
-</ul>
-</div>
-<div class="footer-links">
-<h3>Legal</h3>
-<ul>
-<li><a href="#">Privacy Policy</a></li>
-<li><a href="#">Terms of Service</a></li>
-<li><a href="#">Citizen Guidelines</a></li>
-<li><a href="#">Accessibility</a></li>
-</ul>
-</div>
-<div class="footer-contact">
-<h3>Contact Us</h3>
-<ul>
-<li><i class="fa-solid fa-envelope"></i> support@jansetu.gov.in</li>
-<li><i class="fa-solid fa-phone"></i> 1800-123-4567 (Toll Free)</li>
-<li><i class="fa-solid fa-location-dot"></i> Smart City Command Center, India</li>
-</ul>
-</div>
-</div>
-<div class="footer-bottom">
-<p>© 2026 JanSetu. All rights reserved. A civic-tech initiative.</p>
-</div>
-</div>
-</footer>
-<script src="script.js"></script>
-<script src="jansetu-core.js"></script>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon"><i class="fa-solid fa-bridge-water"></i></span>
+                <span class="logo-text">Jan<span class="logo-highlight">Setu</span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a class="active" href="#home" data-i18n="nav_home">Home</a></li>
+                <li><a href="#problem" data-i18n="nav_problem">The Problem</a></li>
+                <li><a href="#features" data-i18n="nav_features">Features</a></li>
+                <li><a href="#workflow" data-i18n="nav_workflow">Workflow</a></li>
+                <li><a href="#impact" data-i18n="nav_impact">Impact</a></li>
+                <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a class="btn btn-outline-primary login-btn" href="portal.html" data-i18n="nav_login">Login</a>
+                <a class="btn btn-primary" href="admin.html" style="margin-left: 0.5rem;" data-i18n="nav_admin"><i
+                        class="fa-solid fa-shield-halved"></i> Admin</a>
+                <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
+    <!-- Hero Section -->
+    <header class="hero" id="home">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge" data-i18n="hero_badge">A Smart Civic-Tech Platform</div>
+            <h1 class="hero-title" data-i18n="hero_title">Welcome to <span>JanSetu</span></h1>
+            <p class="hero-subtitle" data-i18n="hero_subtitle">Bridging Citizens and Governance with Smart Technology. Report, track, and resolve
+                community issues with AI-powered efficiency.</p>
+            <div class="hero-buttons">
+                <a class="btn btn-primary btn-lg" href="portal.html" data-i18n="btn_report"><i class="fa-solid fa-bullhorn"></i> Report an
+                    Issue</a>
+                <a class="btn btn-secondary btn-lg" href="portal.html" data-i18n="btn_track"><i
+                        class="fa-solid fa-magnifying-glass-location"></i> Track Complaint</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label" data-i18n="stat_support">Support</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label" data-i18n="stat_transparent">Transparent</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">Fast</span>
+                    <span class="stat-label" data-i18n="stat_resolution">Resolution</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-shape-divider">
+            <svg data-name="Layer 1" preserveaspectratio="none" viewbox="0 0 1200 120"
+                xmlns="http://www.w3.org/2000/svg">
+                <path class="shape-fill"
+                    d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z">
+                </path>
+            </svg>
+        </div>
+    </header>
+    <!-- ===== Scroll Hint Arrow ===== -->
+    <div class="scroll-hint" id="scrollHint" aria-hidden="true">
+        <span data-i18n="scroll_hint">Tap to Report Instantly</span>
+        <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+
+    <!-- ===== One-Tap Report Section ===== -->
+    <section class="onetap-section section" id="problem">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title" data-i18n="section_report_title">Report an Issue Instantly</h2>
+                <p class="section-desc" data-i18n="section_report_desc">
+                    <i class="fa-solid fa-location-dot" style="color:var(--accent-color);"></i>
+                    Location auto-detected &nbsp;·&nbsp; One tap to report &nbsp;·&nbsp; No login needed
+                </p>
+                <div class="onetap-location-badge" id="otLocationBadge" data-i18n="detecting_location">
+                    <i class="fa-solid fa-circle-notch fa-spin"></i> Detecting your location…
+                </div>
+            </div>
+
+            <div class="onetap-grid">
+                <!-- Roads -->
+                <button class="onetap-card" data-category="Roads" data-icon="🛣️"
+                    aria-label="Report Road Issue" id="otRoads">
+                    <div class="onetap-image-wrap">
+                        <img src="pothole.png" alt="Pothole" />
+                    </div>
+                    <h3 data-i18n="cat_roads">Potholes &amp; Roads</h3>
+                    <p data-i18n="cat_roads_desc">Damaged streets &amp; traffic hazards</p>
+                    <span class="onetap-cta" data-i18n="tap_to_report">Tap to Report</span>
+                </button>
+
+                <!-- Water -->
+                <button class="onetap-card" data-category="Water" data-icon="💧"
+                    aria-label="Report Water Issue" id="otWater">
+                    <div class="onetap-image-wrap">
+                        <img src="water.png" alt="Water Leakage" />
+                    </div>
+                    <h3 data-i18n="cat_water">Water Supply</h3>
+                    <p data-i18n="cat_water_desc">Leakages &amp; irregular supply</p>
+                    <span class="onetap-cta" data-i18n="tap_to_report">Tap to Report</span>
+                </button>
+
+                <!-- Garbage -->
+                <button class="onetap-card" data-category="Garbage" data-icon="🗑️"
+                    aria-label="Report Garbage Issue" id="otGarbage">
+                    <div class="onetap-image-wrap">
+                        <img src="garbage.png" alt="Garbage" />
+                    </div>
+                    <h3 data-i18n="cat_garbage">Waste Management</h3>
+                    <p data-i18n="cat_garbage_desc">Overflowing bins &amp; dumping</p>
+                    <span class="onetap-cta" data-i18n="tap_to_report">Tap to Report</span>
+                </button>
+
+                <!-- Electricity -->
+                <button class="onetap-card" data-category="Electricity" data-icon="⚡"
+                    aria-label="Report Electricity Issue" id="otElectricity">
+                    <div class="onetap-image-wrap">
+                        <img src="electricity.png" alt="Electricity" />
+                    </div>
+                    <h3 data-i18n="cat_electricity">Electricity</h3>
+                    <p data-i18n="cat_electricity_desc">Power outages &amp; faulty lines</p>
+                    <span class="onetap-cta" data-i18n="tap_to_report">Tap to Report</span>
+                </button>
+
+                <!-- Street Lighting -->
+                <button class="onetap-card" data-category="Street Lighting" data-icon="💡"
+                    aria-label="Report Street Light Issue" id="otStreetLight">
+                    <div class="onetap-image-wrap">
+                        <img src="street_light.png" alt="Street Light" />
+                    </div>
+                    <h3 data-i18n="cat_light">Street Lighting</h3>
+                    <p data-i18n="cat_light_desc">Dark streets &amp; broken lamps</p>
+                    <span class="onetap-cta" data-i18n="tap_to_report">Tap to Report</span>
+                </button>
+
+                <!-- Upload Photo -->
+                <button class="onetap-card onetap-card--photo" data-category="Photo Report" data-icon="📷"
+                    aria-label="Upload Photo Report" id="otPhoto">
+                    <input type="file" accept="image/*" capture="environment" id="otPhotoInput"
+                        style="display:none;" aria-hidden="true" />
+                    <div class="onetap-image-wrap">
+                        <img src="camera.png" alt="Upload Photo" />
+                    </div>
+                    <h3 data-i18n="cat_photo">Upload Photo</h3>
+                    <p data-i18n="cat_photo_desc">Snap &amp; auto-report any issue</p>
+                    <span class="onetap-cta" data-i18n="tap_to_upload">Tap to Upload</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Toast Notification ===== -->
+    <div class="ot-toast" id="otToast" aria-live="assertive" role="alert">
+        <span class="ot-toast-icon" id="otToastIcon">✅</span>
+        <div class="ot-toast-body">
+            <strong id="otToastTitle" data-i18n="toast_success">Report Sent!</strong>
+            <span id="otToastMsg" data-i18n="toast_msg">Your issue has been logged.</span>
+        </div>
+    </div>
+    <!-- Features Section -->
+    <section class="features-section section bg-light" id="features">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title" data-i18n="why_title">Why Choose JanSetu?</h2>
+                <p class="section-desc" data-i18n="why_desc">Empowering both citizens and authorities with state-of-the-art tools to build
+                    better cities together.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-box">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3 data-i18n="feat_ai_title">AI-Powered Reporting</h3>
+                        <p data-i18n="feat_ai_desc">Our smart system automatically categorizes your issues and identifies duplicates to
+                            streamline the resolution process.</p>
+                    </div>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-language"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3 data-i18n="feat_lang_title">Multilingual Support</h3>
+                        <p data-i18n="feat_lang_desc">Report issues in your regional language. We break down the language barrier between citizens
+                            and government.</p>
+                    </div>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-eye"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3 data-i18n="feat_trans_title">Total Transparency</h3>
+                        <p data-i18n="feat_trans_desc">Track your complaint status in real-time. Know exactly which department and officer is
+                            handling your request.</p>
+                    </div>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3 data-i18n="feat_acc_title">Accountability</h3>
+                        <p data-i18n="feat_acc_desc">SLAs (Service Level Agreements) ensure that authorities resolve complaints within a
+                            designated timeframe.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Workflow Section -->
+    <section class="workflow-section section" id="workflow">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title" data-i18n="how_title">How It Works</h2>
+                <p class="section-desc" data-i18n="how_desc">A seamless journey from identifying an issue to its final resolution.</p>
+            </div>
+            <div class="workflow-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-icon">1</div>
+                    <div class="timeline-content">
+                        <h4 data-i18n="step_report">Report</h4>
+                        <p data-i18n="step_report_desc">Citizen captures a photo, adds details, and submits the complaint easily.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon">2</div>
+                    <div class="timeline-content">
+                        <h4 data-i18n="step_analyze">Analyze</h4>
+                        <p data-i18n="step_analyze_desc">AI categorizes the issue and routes it to the correct government department.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon">3</div>
+                    <div class="timeline-content">
+                        <h4 data-i18n="step_assign">Assign</h4>
+                        <p data-i18n="step_assign_desc">Officers receive the ticket, assess the situation, and plan the intervention.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon">4</div>
+                    <div class="timeline-content">
+                        <h4 data-i18n="step_resolve">Resolve</h4>
+                        <p data-i18n="step_resolve_desc">The issue is fixed, and the citizen gets notified with a completion proof.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Impact Metrics Section -->
+    <section class="impact-section section bg-primary" id="impact">
+        <div class="container">
+            <div class="impact-grid">
+                <div class="impact-stat">
+                    <i class="fa-solid fa-check-circle"></i>
+                    <h2 class="counter" data-target="25400">0</h2>
+                    <p data-i18n="impact_resolved">Complaints Resolved</p>
+                </div>
+                <div class="impact-stat">
+                    <i class="fa-solid fa-users"></i>
+                    <h2 class="counter" data-target="85000">0</h2>
+                    <p data-i18n="impact_active">Active Citizens</p>
+                </div>
+                <div class="impact-stat">
+                    <i class="fa-solid fa-stopwatch"></i>
+                    <h2><span class="counter" data-target="48">0</span> hrs</h2>
+                    <p data-i18n="impact_time">Avg. Resolution Time</p>
+                </div>
+                <div class="impact-stat">
+                    <i class="fa-solid fa-city"></i>
+                    <h2 class="counter" data-target="15">0</h2>
+                    <p data-i18n="impact_cities">Cities Connected</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="logo">
+                        <span class="logo-icon"><i class="fa-solid fa-bridge-water"></i></span>
+                        <span class="logo-text text-white">Jan<span class="logo-highlight">Setu</span></span>
+                    </div>
+                    <p class="footer-desc" data-i18n="footer_desc">Bridging the gap between citizens and governance. Leveraging smart technology
+                        to create better, safer, and cleaner cities.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3 data-i18n="quick_links">Quick Links</h3>
+                    <ul>
+                        <li><a href="#home" data-i18n="nav_home">Home</a></li>
+                        <li><a href="#features" data-i18n="nav_features">Features</a></li>
+                        <li><a href="#workflow" data-i18n="nav_workflow">How it works</a></li>
+                        <li><a href="portal.html" data-i18n="btn_report">Report Issue</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3 data-i18n="legal">Legal</h3>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Citizen Guidelines</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3 data-i18n="contact_us">Contact Us</h3>
+                    <ul>
+                        <li><i class="fa-solid fa-envelope"></i> support@jansetu.gov.in</li>
+                        <li><i class="fa-solid fa-phone"></i> 1800-123-4567 (Toll Free)</li>
+                        <li><i class="fa-solid fa-location-dot"></i> Smart City Command Center, India</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="rights_reserved">© 2026 JanSetu. All rights reserved. A civic-tech initiative.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+    <script src="i18n.js"></script>
+    <script src="jansetu-core.js"></script>
+    <script src="chatbot.js"></script>
 </body>
+
 </html>

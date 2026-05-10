@@ -1,1102 +1,1453 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Admin Dashboard - JanSetu</title>
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Outfit:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<!-- FontAwesome -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<!-- Leaflet CSS & JS -->
-<link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
-<!-- Custom CSS -->
-<link href="styles.css" rel="stylesheet"/>
-<link href="portal.css" rel="stylesheet"/>
-<link href="admin.css" rel="stylesheet"/>
-</link></head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Admin Dashboard - JanSetu</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Outfit:wght@500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <!-- Leaflet CSS & JS -->
+    <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet" />
+    <link href="portal.css" rel="stylesheet" />
+    <link href="admin.css" rel="stylesheet" />
+    <script src="i18n.js" defer></script>
+</head>
+
 <body class="bg-light">
-<!-- Navbar -->
-<nav class="navbar" style="position: fixed; width: 100%; top: 0; z-index: 1000; background: rgba(255, 255, 255, 0.95); box-shadow: 0 4px 6px rgba(0,0,0,0.05); padding: 0.8rem 0;">
-<div class="nav-container">
-<a class="logo" href="index.html">
-<i class="fa-solid fa-bridge-water"></i> Jan<span>Setu</span> <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: 5px; font-weight: 500;">ADMIN</span>
-</a>
-<div class="nav-links">
-<a href="index.html" style="color: var(--text-dark);">Home</a>
-<a href="portal.html" style="color: var(--text-dark);">Citizen</a>
-<a href="officer.html" style="color: var(--text-dark);">Officer</a>
-<a class="btn btn-outline-danger hidden" href="#" id="admin-logout-btn" style="padding: 0.4rem 1rem;">Sign Out</a>
-</div>
-</div>
-</nav>
-<!-- Admin Login Section -->
-<main class="portal-main" id="admin-login-section">
-<section class="portal-section active" style="margin-top: 2rem;">
-<div class="login-container">
-<div class="login-header">
-<h2>Admin Center</h2>
-<p>Central Command &amp; Control Login</p>
-</div>
-<div class="demo-credentials" style="border-color:#e74c3c; background:#fbe3e4;">
-<div class="demo-badge" style="color:#e74c3c;"><i class="fa-solid fa-shield-halved"></i> Admin Demo Credentials</div>
-<div class="demo-grid">
-<div class="demo-item">
-<span>Username:</span>
-<strong>admin_demo</strong>
-</div>
-<div class="demo-item">
-<span>Password:</span>
-<strong>jan123</strong>
-</div>
-</div>
-</div>
-<form class="portal-form" id="admin-login-form">
-<div class="form-group">
-<label>Username / ID</label>
-<div class="input-with-icon">
-<i class="fa-solid fa-user"></i>
-<input id="admin-user" placeholder="Enter admin ID" type="text"/>
-</div>
-</div>
-<div class="form-group mt-3">
-<label>Password</label>
-<div class="input-with-icon">
-<i class="fa-solid fa-lock"></i>
-<input id="admin-pass" placeholder="Enter password" type="password"/>
-</div>
-</div>
-<button class="btn btn-primary btn-block mt-4" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Authenticate</button>
-<div class="login-error hidden" id="login-error-msg" style="background:#fdeaea; color:#e74c3c; padding:0.8rem; border-radius:6px; margin-top:1rem; text-align:center; border:1px solid #f5c6c6;"><i class="fa-solid fa-triangle-exclamation"></i> Invalid credentials.</div>
-</form>
-</div>
-</section>
-</main>
-<!-- Admin Dashboard Section -->
-<section class="admin-dashboard hidden" id="admin-dashboard-section">
-<!-- Sidebar -->
-<aside class="dashboard-sidebar">
-<div class="admin-profile">
-<div class="avatar">
-<i class="fa-solid fa-user-shield"></i>
-</div>
-<div class="info">
-<h4>Chief Administrator</h4>
-<span>Central Command</span>
-</div>
-</div>
-<nav class="sidebar-nav">
-<button class="nav-btn active" data-target="view-overview"><i class="fa-solid fa-chart-pie"></i> System Overview</button>
-<button class="nav-btn" data-target="view-departments"><i class="fa-solid fa-building-user"></i> Departments</button>
-<button class="nav-btn" data-target="view-officers"><i class="fa-solid fa-id-badge"></i> Officer Directory</button>
-<button class="nav-btn" data-target="view-audits"><i class="fa-solid fa-file-invoice"></i> Accountability Center</button>
-<button class="nav-btn" data-target="view-settings"><i class="fa-solid fa-gear"></i> System Settings</button>
-</nav>
-</aside>
-<!-- Main Content -->
-<main class="dashboard-content">
-<div class="admin-view active" id="view-overview">
-<div class="view-header">
-<div>
-<h2>Command Overview</h2>
-<p class="text-muted">Real-time civic performance metrics across all zones.</p>
-</div>
-<div class="header-actions">
-<button class="btn btn-outline-primary"><i class="fa-solid fa-download"></i> Export Data</button>
-<button class="btn btn-primary"><i class="fa-solid fa-bullhorn"></i> Broadcast Alert</button>
-</div>
-</div>
-<!-- Overview Cards -->
-<div class="admin-stats-grid">
-<div class="stat-card">
-<div class="stat-icon" style="background: rgba(11, 59, 96, 0.1); color: var(--primary-color);">
-<i class="fa-solid fa-layer-group"></i>
-</div>
-<div class="stat-details">
-<p>Total Complaints</p>
-<h3>24,592</h3>
-<span class="trend positive"><i class="fa-solid fa-arrow-trend-up"></i> +12% this month</span>
-</div>
-</div>
-<div class="stat-card">
-<div class="stat-icon" style="background: rgba(52, 152, 219, 0.1); color: #3498db;">
-<i class="fa-solid fa-spinner"></i>
-</div>
-<div class="stat-details">
-<p>Active Complaints</p>
-<h3>1,204</h3>
-<span class="trend neutral"><i class="fa-solid fa-minus"></i> Stable</span>
-</div>
-</div>
-<div class="stat-card">
-<div class="stat-icon" style="background: rgba(39, 174, 96, 0.1); color: var(--accent-color);">
-<i class="fa-solid fa-check-double"></i>
-</div>
-<div class="stat-details">
-<p>Resolved</p>
-<h3>22,890</h3>
-<span class="trend positive"><i class="fa-solid fa-arrow-trend-up"></i> +8% completion rate</span>
-</div>
-</div>
-<div class="stat-card border-left-danger">
-<div class="stat-icon" style="background: rgba(231, 76, 60, 0.1); color: #e74c3c;">
-<i class="fa-solid fa-fire"></i>
-</div>
-<div class="stat-details">
-<p>Escalated Critical</p>
-<h3>498</h3>
-<span class="trend negative"><i class="fa-solid fa-arrow-trend-up"></i> Requires attention</span>
-</div>
-</div>
-</div>
-<!-- Area Hotspot Analysis Map -->
-<div class="admin-panel mb-4">
-<div class="panel-header" style="margin-bottom: 1rem;">
-<div>
-<h3><i class="fa-solid fa-map-location-dot text-primary"></i> Area Hotspot Analysis</h3>
-<p class="text-muted" style="font-size: 0.9rem; margin-top: 0.25rem;">Interactive map displaying critical complaint density and issue-prone zones.</p>
-</div>
-<div class="header-actions">
-<span class="badge" style="background:#e74c3c; color:#fff;">High Density</span>
-<span class="badge" style="background:#f39c12; color:#fff;">Medium</span>
-<span class="badge" style="background:#3498db; color:#fff;">Low</span>
-</div>
-</div>
-<div class="map-container" style="border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; padding: 0;">
-<div id="admin-hotspot-map" style="width: 100%; height: 400px; background: #eaf2f8;"></div>
-</div>
-</div>
-<!-- Layout Grid -->
-<div class="dashboard-grid">
-<!-- Left Column -->
-<div class="grid-left">
-<!-- Complaint Trends Visualization -->
-<div class="admin-panel">
-<div class="panel-header">
-<h3>Complaint Trends (Last 6 Months)</h3>
-<select class="styled-input-sm"><option>All Regions</option></select>
-</div>
-<div class="chart-wrapper">
-<div class="css-line-chart">
-<svg class="chart-svg" viewbox="0 0 500 200">
-<!-- Grid lines -->
-<line stroke="#eee" stroke-width="1" x1="0" x2="500" y1="50" y2="50"></line>
-<line stroke="#eee" stroke-width="1" x1="0" x2="500" y1="100" y2="100"></line>
-<line stroke="#eee" stroke-width="1" x1="0" x2="500" y1="150" y2="150"></line>
-<!-- Data Path -->
-<path d="M0,150 C50,130 100,160 150,110 C200,60 250,90 300,50 C350,10 400,60 450,20 L500,20" fill="none" stroke="var(--primary-color)" stroke-width="4"></path>
-<!-- Gradient Fill under path -->
-<path d="M0,150 C50,130 100,160 150,110 C200,60 250,90 300,50 C350,10 400,60 450,20 L500,20 L500,200 L0,200 Z" fill="url(#gradient)" opacity="0.2"></path>
-<!-- Gradient Def -->
-<defs>
-<lineargradient id="gradient" x1="0%" x2="0%" y1="0%" y2="100%">
-<stop offset="0%" stop-color="var(--primary-color)"></stop>
-<stop offset="100%" stop-color="var(--white)" stop-opacity="0"></stop>
-</lineargradient>
-</defs>
-<!-- Points -->
-<circle cx="150" cy="110" fill="var(--accent-color)" r="5"></circle>
-<circle cx="300" cy="50" fill="var(--accent-color)" r="5"></circle>
-<circle cx="450" cy="20" fill="var(--accent-color)" r="5"></circle>
-</svg>
-<div class="chart-labels">
-<span>Nov</span><span>Dec</span><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Department Performance -->
-<div class="admin-panel mt-4">
-<div class="panel-header">
-<h3>Department Performance SLA</h3>
-<button class="btn-link">View Detailed <i class="fa-solid fa-arrow-right"></i></button>
-</div>
-<div class="dept-list">
-<div class="dept-item">
-<div class="dept-info">
-<span><i class="fa-solid fa-bolt" style="color:#f39c12; width:20px;"></i> Electricity Board</span>
-<strong>94% Resolution</strong>
-</div>
-<div class="progress-bar-container"><div class="progress-fill" style="width: 94%; background: #27ae60;"></div></div>
-</div>
-<div class="dept-item">
-<div class="dept-info">
-<span><i class="fa-solid fa-faucet-drip" style="color:#3498db; width:20px;"></i> Water Supply &amp; Sanitation</span>
-<strong>88% Resolution</strong>
-</div>
-<div class="progress-bar-container"><div class="progress-fill" style="width: 88%; background: #3498db;"></div></div>
-</div>
-<div class="dept-item">
-<div class="dept-info">
-<span><i class="fa-solid fa-road" style="color:#7f8c8d; width:20px;"></i> Public Works (Roads)</span>
-<strong>72% Resolution</strong>
-</div>
-<div class="progress-bar-container"><div class="progress-fill" style="width: 72%; background: #f39c12;"></div></div>
-</div>
-<div class="dept-item">
-<div class="dept-info">
-<span><i class="fa-solid fa-dumpster" style="color:#8e44ad; width:20px;"></i> Solid Waste Management</span>
-<strong style="color:#e74c3c;">58% Resolution</strong>
-</div>
-<div class="progress-bar-container"><div class="progress-fill" style="width: 58%; background: #e74c3c;"></div></div>
-</div>
-</div>
-</div>
-</div>
-<!-- Right Column -->
-<div class="grid-right">
-<!-- Advanced Analytics: Common Categories -->
-<div class="admin-panel mb-4">
-<div class="panel-header">
-<h3>Most Common Categories</h3>
-<i class="fa-solid fa-chart-bar text-muted"></i>
-</div>
-<div class="dept-list">
-<div class="dept-item">
-<div class="dept-info">
-<span>Roads &amp; Potholes</span>
-<strong>42%</strong>
-</div>
-<div class="progress-bar-container"><div class="progress-fill" style="width: 42%; background: var(--primary-color);"></div></div>
-</div>
-<div class="dept-item">
-<div class="dept-info">
-<span>Water Supply</span>
-<strong>28%</strong>
-</div>
-<div class="progress-bar-container"><div class="progress-fill" style="width: 28%; background: #3498db;"></div></div>
-</div>
-<div class="dept-item">
-<div class="dept-info">
-<span>Garbage &amp; Waste</span>
-<strong>18%</strong>
-</div>
-<div class="progress-bar-container"><div class="progress-fill" style="width: 18%; background: #8e44ad;"></div></div>
-</div>
-<div class="dept-item">
-<div class="dept-info">
-<span>Electricity</span>
-<strong>12%</strong>
-</div>
-<div class="progress-bar-container"><div class="progress-fill" style="width: 12%; background: #f39c12;"></div></div>
-</div>
-</div>
-</div>
-<!-- Accountability Tracking -->
-<div class="admin-panel mb-4">
-<div class="panel-header">
-<h3>Accountability &amp; Performance</h3>
-<i class="fa-solid fa-users-gear text-primary"></i>
-</div>
-<div class="officer-list">
-<!-- Top Performer -->
-<div class="officer-item">
-<img alt="Officer" src="https://ui-avatars.com/api/?name=Sneha+Reddy&amp;background=27ae60&amp;color=fff"/>
-<div class="officer-details">
-<h4>Sneha Reddy <i class="fa-solid fa-circle-check text-success" title="High Efficiency"></i></h4>
-<p>Public Works  98% Validation Success</p>
-</div>
-<div class="officer-score">
-<span class="score-badge">98.5</span>
-</div>
-</div>
-<!-- Average Performer -->
-<div class="officer-item">
-<img alt="Officer" src="https://ui-avatars.com/api/?name=Anjali+Gupta&amp;background=3498db&amp;color=fff"/>
-<div class="officer-details">
-<h4>Anjali Gupta</h4>
-<p>Electricity Board  92% Validation Success</p>
-</div>
-<div class="officer-score">
-<span class="score-badge" style="background:rgba(52, 152, 219, 0.1); color:#3498db;">97.2</span>
-</div>
-</div>
-<!-- Flagged Performer -->
-<div class="officer-item" style="border-left: 3px solid #e74c3c; background: #fdf3f2;">
-<img alt="Officer" src="https://ui-avatars.com/api/?name=Vikram+Singh&amp;background=e74c3c&amp;color=fff"/>
-<div class="officer-details">
-<h4>Vikram Singh <i class="fa-solid fa-triangle-exclamation text-danger" title="Flagged for delays"></i></h4>
-<p style="color:#e74c3c; font-weight:500;">Repeated Delays (3 Escalations)</p>
-</div>
-<div class="officer-score">
-<span class="score-badge" style="background:rgba(231, 76, 60, 0.1); color:#e74c3c;">64.2</span>
-</div>
-</div>
-</div>
-<button class="btn btn-outline-primary w-100 mt-3">View Full Accountability Report</button>
-</div>
-<!-- Data-driven Insights -->
-<div class="admin-panel ai-insight-panel">
-<div class="panel-header" style="border-bottom: none; margin-bottom:0;">
-<h3><i class="fa-solid fa-lightbulb" style="color:#f39c12;"></i> Data-Driven Insights</h3>
-</div>
-<div class="insight-box mb-2" style="border-left-color: #f39c12;">
-<p><strong>Recurring Issue:</strong> 65% of pothole complaints are reported from Sector 14. Recommend immediate structural assessment.</p>
-<button class="btn btn-outline-primary btn-sm mt-2"><i class="fa-solid fa-file-contract"></i> Draft Priority Order</button>
-</div>
-<div class="insight-box" style="border-left-color: #e74c3c;">
-<p><strong>Priority Action Zone:</strong> The East Zone is experiencing a 30% drop in solid waste clearance times. Shift reserve trucks to this route.</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Escalation Command Center -->
-<div class="admin-panel mt-4" style="border: 2px solid #e74c3c; box-shadow: 0 4px 15px rgba(231, 76, 60, 0.15);">
-<div class="panel-header" style="border-bottom: 1px solid #fbe3e4;">
-<div>
-<h3 style="color: #e74c3c;"><i class="fa-solid fa-triangle-exclamation"></i> Escalation Command Center</h3>
-<p class="text-muted" style="font-size: 0.9rem; margin-top: 0.25rem;">Immediate administrative oversight required for overdue and critical complaints.</p>
-</div>
-<div class="header-actions">
-<button class="btn btn-outline-danger"><i class="fa-solid fa-shield"></i> Override All Priorities</button>
-</div>
-</div>
-<div style="overflow-x: auto;">
-<table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
-<thead>
-<tr style="background: #f8faff; border-bottom: 2px solid var(--border-color); text-align: left;">
-<th style="padding: 1rem; color: var(--text-muted); font-weight: 600;">Complaint ID</th>
-<th style="padding: 1rem; color: var(--text-muted); font-weight: 600;">Issue</th>
-<th style="padding: 1rem; color: var(--text-muted); font-weight: 600;">Responsible Party</th>
-<th style="padding: 1rem; color: var(--text-muted); font-weight: 600;">Escalation Level</th>
-<th style="padding: 1rem; color: var(--text-muted); font-weight: 600;">Status</th>
-<th style="padding: 1rem; color: var(--text-muted); font-weight: 600; text-align: right;">Administrative Actions</th>
-</tr>
-</thead>
-<tbody>
-<tr style="border-bottom: 1px solid var(--border-color);">
-<td style="padding: 1rem; font-family: monospace; font-weight: bold;">#JAN-9012</td>
-<td style="padding: 1rem;">
-<strong>Major Water Pipe Burst</strong><br/>
-<span style="font-size: 0.85rem; color: var(--text-muted);">Sector 42 Main Road</span>
-</td>
-<td style="padding: 1rem;">
-<div style="display:flex; align-items:center; gap:0.5rem;">
-<img src="https://ui-avatars.com/api/?name=Vikram+Singh&amp;background=e74c3c&amp;color=fff" style="width:24px; border-radius:50%;"/>
-<span style="font-size: 0.9rem; font-weight: 500;">Vikram Singh</span>
-</div>
-</td>
-<td style="padding: 1rem;"><span class="badge" style="background:#e74c3c;">Level 3 Critical</span></td>
-<td style="padding: 1rem; color: #e74c3c; font-weight: 600;"><i class="fa-solid fa-clock"></i> 48 Hrs Overdue</td>
-<td style="padding: 1rem; text-align: right; display: flex; justify-content: flex-end; gap: 0.5rem;">
-<button class="btn btn-outline-primary btn-sm" title="Reassign to another officer"><i class="fa-solid fa-user-plus"></i> Reassign</button>
-<button class="btn btn-danger btn-sm" title="Override Priority &amp; Dispatch Reserve"><i class="fa-solid fa-bolt"></i> Override</button>
-</td>
-</tr>
-<tr style="border-bottom: 1px solid var(--border-color);">
-<td style="padding: 1rem; font-family: monospace; font-weight: bold;">#JAN-8834</td>
-<td style="padding: 1rem;">
-<strong>Fallen Tree on Power Line</strong><br/>
-<span style="font-size: 0.85rem; color: var(--text-muted);">Green Park Extension</span>
-</td>
-<td style="padding: 1rem;">
-<div style="display:flex; align-items:center; gap:0.5rem;">
-<div style="width:24px; height:24px; background:#f39c12; color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.7rem;"><i class="fa-solid fa-bolt"></i></div>
-<span style="font-size: 0.9rem; font-weight: 500;">Electricity Board</span>
-</div>
-</td>
-<td style="padding: 1rem;"><span class="badge" style="background:#f39c12;">Level 2 Warning</span></td>
-<td style="padding: 1rem; color: #f39c12; font-weight: 600;"><i class="fa-solid fa-clock"></i> 12 Hrs Overdue</td>
-<td style="padding: 1rem; text-align: right; display: flex; justify-content: flex-end; gap: 0.5rem;">
-<button class="btn btn-outline-success btn-sm" title="Approve Request for Extension"><i class="fa-solid fa-check"></i> Approve Ext.</button>
-<button class="btn btn-outline-danger btn-sm" title="Reject Ext. &amp; Demand Update"><i class="fa-solid fa-xmark"></i> Reject Ext.</button>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<!-- View: Departments -->
-<div class="admin-view hidden" id="view-departments">
-<div class="view-header" style="margin-bottom: 1.5rem;">
-<div>
-<h2>Department Control Center</h2>
-<p class="text-muted">Interactive management interface for departmental oversight, efficiency tracking, and resource allocation.</p>
-</div>
-<div class="header-actions">
-<button class="btn btn-primary" id="btn-resource-realloc"><i class="fa-solid fa-people-arrows"></i> Reallocate Resources</button>
-</div>
-</div>
-<!-- Department Status Panels -->
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
-<!-- Water Supply -->
-<div class="admin-panel" style="border-top: 4px solid #3498db;">
-<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
-<h3 style="margin: 0; color: #3498db;"><i class="fa-solid fa-faucet-drip"></i> Water Supply</h3>
-<span class="badge" style="background: rgba(52, 152, 219, 0.1); color: #3498db;">High Load</span>
-</div>
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.9rem; margin-bottom: 1rem;">
-<div><span style="color: var(--text-muted);">Active:</span> <strong style="color: var(--text-dark);">42</strong></div>
-<div><span style="color: var(--text-muted);">Resolved:</span> <strong style="color: var(--text-dark);">128</strong></div>
-<div><span style="color: var(--text-muted);">Pending:</span> <strong style="color: #e74c3c;">16</strong></div>
-<div><span style="color: var(--text-muted);">Avg Time:</span> <strong>2.4 days</strong></div>
-<div style="grid-column: span 2;"><span style="color: var(--text-muted);">Head:</span> <strong>Priya Sharma</strong> (Chief Water Ops)</div>
-<div><span style="color: var(--text-muted);">Escalation:</span> <strong style="color: #e74c3c;">8%</strong></div>
-</div>
-<button class="btn btn-outline-primary w-100 btn-dept-details" data-dept="water">View Details <i class="fa-solid fa-arrow-right"></i></button>
-</div>
-<!-- Electricity -->
-<div class="admin-panel" style="border-top: 4px solid #f39c12;">
-<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
-<h3 style="margin: 0; color: #f39c12;"><i class="fa-solid fa-bolt"></i> Electricity Board</h3>
-<span class="badge" style="background: rgba(39, 174, 96, 0.1); color: #27ae60;">Optimal</span>
-</div>
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.9rem; margin-bottom: 1rem;">
-<div><span style="color: var(--text-muted);">Active:</span> <strong style="color: var(--text-dark);">18</strong></div>
-<div><span style="color: var(--text-muted);">Resolved:</span> <strong style="color: var(--text-dark);">215</strong></div>
-<div><span style="color: var(--text-muted);">Pending:</span> <strong>4</strong></div>
-<div><span style="color: var(--text-muted);">Avg Time:</span> <strong>1.1 days</strong></div>
-<div style="grid-column: span 2;"><span style="color: var(--text-muted);">Head:</span> <strong>Rajiv Menon</strong> (Chief Grid Engineer)</div>
-<div><span style="color: var(--text-muted);">Escalation:</span> <strong style="color: #27ae60;">2%</strong></div>
-</div>
-<button class="btn btn-outline-primary w-100 btn-dept-details" data-dept="electricity">View Details <i class="fa-solid fa-arrow-right"></i></button>
-</div>
-<!-- Waste Management -->
-<div class="admin-panel" style="border-top: 4px solid #8e44ad;">
-<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
-<h3 style="margin: 0; color: #8e44ad;"><i class="fa-solid fa-dumpster"></i> Waste Mgmt</h3>
-<span class="badge" style="background: rgba(231, 76, 60, 0.1); color: #e74c3c;">Critical Delay</span>
-</div>
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.9rem; margin-bottom: 1rem;">
-<div><span style="color: var(--text-muted);">Active:</span> <strong style="color: var(--text-dark);">56</strong></div>
-<div><span style="color: var(--text-muted);">Resolved:</span> <strong style="color: var(--text-dark);">89</strong></div>
-<div><span style="color: var(--text-muted);">Pending:</span> <strong style="color: #e74c3c;">32</strong></div>
-<div><span style="color: var(--text-muted);">Avg Time:</span> <strong style="color: #e74c3c;">5.2 days</strong></div>
-<div style="grid-column: span 2;"><span style="color: var(--text-muted);">Head:</span> <strong>Amit Desai</strong> (Director of Sanitation)</div>
-<div><span style="color: var(--text-muted);">Escalation:</span> <strong style="color: #e74c3c;">15%</strong></div>
-</div>
-<button class="btn btn-outline-primary w-100 btn-dept-details" data-dept="waste">View Details <i class="fa-solid fa-arrow-right"></i></button>
-</div>
-<!-- Public Works -->
-<div class="admin-panel" style="border-top: 4px solid #7f8c8d;">
-<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
-<h3 style="margin: 0; color: #7f8c8d;"><i class="fa-solid fa-road"></i> Public Works</h3>
-<span class="badge" style="background: rgba(243, 156, 18, 0.1); color: #f39c12;">Warning</span>
-</div>
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.9rem; margin-bottom: 1rem;">
-<div><span style="color: var(--text-muted);">Active:</span> <strong style="color: var(--text-dark);">24</strong></div>
-<div><span style="color: var(--text-muted);">Resolved:</span> <strong style="color: var(--text-dark);">105</strong></div>
-<div><span style="color: var(--text-muted);">Pending:</span> <strong>12</strong></div>
-<div><span style="color: var(--text-muted);">Avg Time:</span> <strong>3.8 days</strong></div>
-<div style="grid-column: span 2;"><span style="color: var(--text-muted);">Head:</span> <strong>Ravi Kumar</strong> (Chief Civil Engineer)</div>
-<div><span style="color: var(--text-muted);">Escalation:</span> <strong style="color: #f39c12;">11%</strong></div>
-</div>
-<button class="btn btn-outline-primary w-100 btn-dept-details" data-dept="public">View Details <i class="fa-solid fa-arrow-right"></i></button>
-</div>
-</div>
-<div class="dashboard-grid" style="margin-bottom: 2rem;">
-<!-- Table Section -->
-<div class="grid-left" style="grid-column: span 2;">
-<div class="admin-panel">
-<div class="panel-header" style="flex-wrap: wrap; gap: 1rem;">
-<h3>Department Comparison</h3>
-<div class="header-actions" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-<span style="font-size: 0.9rem; color: var(--text-muted); align-self: center; margin-right: 0.5rem;">Sort by:</span>
-<button class="btn btn-outline-primary btn-sm sort-btn active">Highest Workload</button>
-<button class="btn btn-outline-primary btn-sm sort-btn">Lowest Efficiency</button>
-<button class="btn btn-outline-primary btn-sm sort-btn">Most Escalations</button>
-</div>
-</div>
-<div style="overflow-x: auto;">
-<table style="width: 100%; border-collapse: collapse; margin-top: 0.5rem;">
-<thead>
-<tr style="background: #f8faff; border-bottom: 2px solid var(--border-color); text-align: left;">
-<th style="padding: 1rem; color: var(--text-muted); font-weight: 600;">Department</th>
-<th style="padding: 1rem; color: var(--text-muted); font-weight: 600;">Total Cases</th>
-<th style="padding: 1rem; color: var(--text-muted); font-weight: 600;">Avg Time</th>
-<th style="padding: 1rem; color: var(--text-muted); font-weight: 600;">Satisfaction</th>
-<th style="padding: 1rem; color: var(--text-muted); font-weight: 600;">Escalation %</th>
-<th style="padding: 1rem; color: var(--text-muted); font-weight: 600;">Status</th>
-</tr>
-</thead>
-<tbody>
-<tr style="border-bottom: 1px solid var(--border-color);">
-<td style="padding: 1rem; font-weight: 500;">Waste Management</td>
-<td style="padding: 1rem;">177</td>
-<td style="padding: 1rem; color: #e74c3c; font-weight: 600;">5.2 days</td>
-<td style="padding: 1rem;">64%</td>
-<td style="padding: 1rem; color: #e74c3c; font-weight: 600;">15%</td>
-<td style="padding: 1rem;"><span class="badge" style="background:#fbe3e4; color:#e74c3c;">Critical Focus</span></td>
-</tr>
-<tr style="border-bottom: 1px solid var(--border-color);">
-<td style="padding: 1rem; font-weight: 500;">Water Supply</td>
-<td style="padding: 1rem;">186</td>
-<td style="padding: 1rem;">2.4 days</td>
-<td style="padding: 1rem;">82%</td>
-<td style="padding: 1rem;">8%</td>
-<td style="padding: 1rem;"><span class="badge" style="background:#eaf2f8; color:#3498db;">Stable</span></td>
-</tr>
-<tr style="border-bottom: 1px solid var(--border-color);">
-<td style="padding: 1rem; font-weight: 500;">Public Works</td>
-<td style="padding: 1rem;">141</td>
-<td style="padding: 1rem;">3.8 days</td>
-<td style="padding: 1rem;">76%</td>
-<td style="padding: 1rem; color: #f39c12; font-weight: 600;">11%</td>
-<td style="padding: 1rem;"><span class="badge" style="background:rgba(243, 156, 18, 0.1); color:#f39c12;">Monitoring</span></td>
-</tr>
-<tr style="border-bottom: 1px solid var(--border-color);">
-<td style="padding: 1rem; font-weight: 500;">Electricity Board</td>
-<td style="padding: 1rem;">237</td>
-<td style="padding: 1rem; color: #27ae60; font-weight: 600;">1.1 days</td>
-<td style="padding: 1rem; color: #27ae60; font-weight: 600;">94%</td>
-<td style="padding: 1rem;">2%</td>
-<td style="padding: 1rem;"><span class="badge" style="background:rgba(39, 174, 96, 0.1); color:#27ae60;">Optimized</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<!-- Resource Recommendations -->
-<div class="admin-panel ai-insight-panel">
-<div class="panel-header" style="border-bottom: none; margin-bottom: 0;">
-<h3><i class="fa-solid fa-microchip text-primary"></i> Resource Recommendations</h3>
-</div>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-top: 1rem;">
-<div class="insight-box" style="border-left-color: #e74c3c;">
-<p style="margin: 0; font-size: 0.95rem;"><strong>Critical Shortage:</strong> Waste Management requires <strong>3 additional officers</strong> to clear the pending 32 escalations before weekend surge.</p>
-<button class="btn btn-outline-danger btn-sm mt-2">Approve Overtime</button>
-</div>
-<div class="insight-box" style="border-left-color: #f39c12;">
-<p style="margin: 0; font-size: 0.95rem;"><strong>Trend Warning:</strong> Public Works has a rising escalation trend (+4% this week) in Zone 4. Review material supply chains.</p>
-<button class="btn btn-outline-warning btn-sm mt-2">Open Audit Report</button>
-</div>
-<div class="insight-box" style="border-left-color: #27ae60; background: #f4fdf8;">
-<p style="margin: 0; font-size: 0.95rem;"><strong>Benchmark Success:</strong> Electricity Department is performing 18% above benchmark. Consider rotating their top officers to train others.</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Drill Down Modal -->
-<div class="modal-overlay hidden" id="dept-drill-modal" style="z-index: 2000;">
-<div class="modal-content" style="max-width: 800px; width: 90%; text-align: left; padding: 2rem;">
-<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem;">
-<h2 id="modal-dept-title" style="margin: 0;"><i class="fa-solid fa-building"></i> Department Details</h2>
-<button class="btn-icon" id="close-dept-modal"><i class="fa-solid fa-xmark" style="font-size: 1.5rem;"></i></button>
-</div>
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-<!-- Left: Current Tasks & Bottlenecks -->
-<div>
-<h4 style="margin-bottom: 1rem; color: var(--primary-color);">Current Priorities &amp; Bottlenecks</h4>
-<div class="insight-box mb-3" style="border-left-color: #e74c3c;">
-<strong style="color: #e74c3c;">Primary Bottleneck:</strong>
-<p style="margin-top: 0.25rem;">Lack of heavy machinery allocation delaying 14 active tasks in East Zone.</p>
-</div>
-<h5 style="margin-bottom: 0.5rem; color: var(--text-dark);">Top Delayed Tasks:</h5>
-<ul style="padding-left: 1.2rem; color: var(--text-muted); font-size: 0.9rem;">
-<li>#JAN-8832: Sector 14 Structural Repair (Overdue 4 days)</li>
-<li>#JAN-8911: Route 2 Clearing (Overdue 2 days)</li>
-<li>#JAN-8945: Block C Assessment (Overdue 1 day)</li>
-</ul>
-</div>
-<!-- Right: Officer List & Performance -->
-<div>
-<h4 style="margin-bottom: 1rem; color: var(--primary-color);">Assigned Officers (Active Roster)</h4>
-<div class="officer-list" style="max-height: 200px; overflow-y: auto;">
-<div class="officer-item" style="padding: 0.5rem; margin-bottom: 0.5rem;">
-<img src="https://ui-avatars.com/api/?name=Karan+Verma&amp;background=27ae60&amp;color=fff" style="width: 32px; height: 32px;"/>
-<div class="officer-details">
-<h5 style="margin:0;">Karan Verma</h5>
-<p style="font-size:0.8rem;">Field Agent  12 Active</p>
-</div>
-</div>
-<div class="officer-item" style="padding: 0.5rem; margin-bottom: 0.5rem;">
-<img src="https://ui-avatars.com/api/?name=Neha+Joshi&amp;background=3498db&amp;color=fff" style="width: 32px; height: 32px;"/>
-<div class="officer-details">
-<h5 style="margin:0;">Neha Joshi</h5>
-<p style="font-size:0.8rem;">Supervisor  4 Active</p>
-</div>
-</div>
-<div class="officer-item" style="padding: 0.5rem; margin-bottom: 0.5rem;">
-<img src="https://ui-avatars.com/api/?name=Vikram+Singh&amp;background=e74c3c&amp;color=fff" style="width: 32px; height: 32px;"/>
-<div class="officer-details">
-<h5 style="margin:0;">Vikram Singh</h5>
-<p style="font-size:0.8rem;">Field Agent  28 Active (Overloaded)</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem; text-align: right;">
-<button class="btn btn-primary"><i class="fa-solid fa-file-export"></i> Download Full Report</button>
-</div>
-</div>
-</div>
-<!-- View: Officer Directory -->
-<div class="admin-view hidden" id="view-officers">
-<div class="view-header" style="margin-bottom: 2rem;">
-<div>
-<h2>Organizational Command Directory</h2>
-<p class="text-muted">Structured oversight of department hierarchies and civic response personnel.</p>
-</div>
-<div class="header-actions">
-<button class="btn btn-outline-primary"><i class="fa-solid fa-filter"></i> Filter</button>
-<button class="btn btn-primary"><i class="fa-solid fa-user-plus"></i> Add Personnel</button>
-</div>
-</div>
-<!-- Department 1: Water Supply -->
-<div class="admin-panel" style="border-top: 4px solid #3498db; margin-bottom: 2rem;">
-<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
-<h3 style="margin: 0; color: #3498db;"><i class="fa-solid fa-faucet-drip"></i> Water Supply</h3>
-<button class="btn btn-outline-primary btn-sm">View Full Team <i class="fa-solid fa-angle-down"></i></button>
-</div>
-<div style="display: flex; flex-direction: column; gap: 1rem;">
-<!-- Head -->
-<div style="background: #f8faff; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
-<p style="margin:0 0 0.5rem 0; font-size:0.8rem; font-weight:bold; color:var(--text-muted); text-transform:uppercase;">Department Head</p>
-<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-<div style="display:flex; align-items:center; gap: 1rem;">
-<img src="https://ui-avatars.com/api/?name=Priya+Sharma&amp;background=3498db&amp;color=fff&amp;size=48" style="border-radius: 50%;"/>
-<div>
-<h4 style="margin:0; font-size:1.1rem;">Priya Sharma</h4>
-<p style="margin:0; color:var(--text-muted); font-size:0.9rem;">Chief Water Operations Officer</p>
-</div>
-</div>
-<div style="display: flex; gap: 1.5rem; text-align: center; font-size: 0.85rem;">
-<div><span style="display:block; color:var(--text-muted);">Active Cases</span><strong style="font-size:1.1rem;">8</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Completion</span><strong style="font-size:1.1rem; color:#27ae60;">96%</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Trust Score</span><strong style="font-size:1.1rem;">98</strong></div>
-<div style="align-self:center;"><span class="badge" style="background:#27ae60;">Excellent</span></div>
-</div>
-</div>
-</div>
-<!-- Team -->
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1rem;">
-<div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
-<div style="display:flex; align-items:center; gap: 1rem; margin-bottom: 0.75rem;">
-<img src="https://ui-avatars.com/api/?name=Karan+Verma&amp;background=2c3e50&amp;color=fff&amp;size=40" style="border-radius: 50%;"/>
-<div>
-<h5 style="margin:0; font-size:1rem;">Karan Verma</h5>
-<p style="margin:0; color:var(--text-muted); font-size:0.85rem;">Pipeline Inspector</p>
-</div>
-</div>
-<div style="display: flex; justify-content: space-between; text-align: center; font-size: 0.8rem; background: #f8faff; padding: 0.5rem; border-radius: 4px;">
-<div><span style="display:block; color:var(--text-muted);">Active</span><strong>14</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Completion</span><strong>88%</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Trust Score</span><strong>85</strong></div>
-<div style="align-self:center;"><span class="badge" style="background:#3498db;">On Duty</span></div>
-</div>
-</div>
-<div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
-<div style="display:flex; align-items:center; gap: 1rem; margin-bottom: 0.75rem;">
-<img src="https://ui-avatars.com/api/?name=Neha+Joshi&amp;background=2c3e50&amp;color=fff&amp;size=40" style="border-radius: 50%;"/>
-<div>
-<h5 style="margin:0; font-size:1rem;">Neha Joshi</h5>
-<p style="margin:0; color:var(--text-muted); font-size:0.85rem;">Field Engineer</p>
-</div>
-</div>
-<div style="display: flex; justify-content: space-between; text-align: center; font-size: 0.8rem; background: #f8faff; padding: 0.5rem; border-radius: 4px;">
-<div><span style="display:block; color:var(--text-muted);">Active</span><strong>12</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Completion</span><strong>92%</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Trust Score</span><strong>91</strong></div>
-<div style="align-self:center;"><span class="badge" style="background:#3498db;">On Duty</span></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Department 2: Electricity Board -->
-<div class="admin-panel" style="border-top: 4px solid #f39c12; margin-bottom: 2rem;">
-<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
-<h3 style="margin: 0; color: #f39c12;"><i class="fa-solid fa-bolt"></i> Electricity Board</h3>
-<button class="btn btn-outline-primary btn-sm">View Full Team <i class="fa-solid fa-angle-down"></i></button>
-</div>
-<div style="display: flex; flex-direction: column; gap: 1rem;">
-<!-- Head -->
-<div style="background: #fdfaf3; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
-<p style="margin:0 0 0.5rem 0; font-size:0.8rem; font-weight:bold; color:var(--text-muted); text-transform:uppercase;">Department Head</p>
-<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-<div style="display:flex; align-items:center; gap: 1rem;">
-<img src="https://ui-avatars.com/api/?name=Rajiv+Menon&amp;background=f39c12&amp;color=fff&amp;size=48" style="border-radius: 50%;"/>
-<div>
-<h4 style="margin:0; font-size:1.1rem;">Rajiv Menon</h4>
-<p style="margin:0; color:var(--text-muted); font-size:0.9rem;">Chief Grid Engineer</p>
-</div>
-</div>
-<div style="display: flex; gap: 1.5rem; text-align: center; font-size: 0.85rem;">
-<div><span style="display:block; color:var(--text-muted);">Active Cases</span><strong style="font-size:1.1rem;">4</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Completion</span><strong style="font-size:1.1rem; color:#27ae60;">98%</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Trust Score</span><strong style="font-size:1.1rem;">99</strong></div>
-<div style="align-self:center;"><span class="badge" style="background:#27ae60;">Excellent</span></div>
-</div>
-</div>
-</div>
-<!-- Team -->
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1rem;">
-<div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
-<div style="display:flex; align-items:center; gap: 1rem; margin-bottom: 0.75rem;">
-<img src="https://ui-avatars.com/api/?name=Suresh+Patil&amp;background=2c3e50&amp;color=fff&amp;size=40" style="border-radius: 50%;"/>
-<div>
-<h5 style="margin:0; font-size:1rem;">Suresh Patil</h5>
-<p style="margin:0; color:var(--text-muted); font-size:0.85rem;">Substation Manager</p>
-</div>
-</div>
-<div style="display: flex; justify-content: space-between; text-align: center; font-size: 0.8rem; background: #fdfaf3; padding: 0.5rem; border-radius: 4px;">
-<div><span style="display:block; color:var(--text-muted);">Active</span><strong>28</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Completion</span><strong>94%</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Trust Score</span><strong>95</strong></div>
-<div style="align-self:center;"><span class="badge" style="background:#3498db;">On Duty</span></div>
-</div>
-</div>
-<div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
-<div style="display:flex; align-items:center; gap: 1rem; margin-bottom: 0.75rem;">
-<img src="https://ui-avatars.com/api/?name=Anjali+Gupta&amp;background=2c3e50&amp;color=fff&amp;size=40" style="border-radius: 50%;"/>
-<div>
-<h5 style="margin:0; font-size:1rem;">Anjali Gupta</h5>
-<p style="margin:0; color:var(--text-muted); font-size:0.85rem;">Line Technician</p>
-</div>
-</div>
-<div style="display: flex; justify-content: space-between; text-align: center; font-size: 0.8rem; background: #fdfaf3; padding: 0.5rem; border-radius: 4px;">
-<div><span style="display:block; color:var(--text-muted);">Active</span><strong>18</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Completion</span><strong>91%</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Trust Score</span><strong>88</strong></div>
-<div style="align-self:center;"><span class="badge" style="background:#3498db;">On Duty</span></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Department 3: Waste Management -->
-<div class="admin-panel" style="border-top: 4px solid #8e44ad; margin-bottom: 2rem;">
-<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
-<h3 style="margin: 0; color: #8e44ad;"><i class="fa-solid fa-dumpster"></i> Waste Management</h3>
-<button class="btn btn-outline-primary btn-sm">View Full Team <i class="fa-solid fa-angle-down"></i></button>
-</div>
-<div style="display: flex; flex-direction: column; gap: 1rem;">
-<!-- Head -->
-<div style="background: #fbf8fc; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
-<p style="margin:0 0 0.5rem 0; font-size:0.8rem; font-weight:bold; color:var(--text-muted); text-transform:uppercase;">Department Head</p>
-<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-<div style="display:flex; align-items:center; gap: 1rem;">
-<img src="https://ui-avatars.com/api/?name=Amit+Desai&amp;background=8e44ad&amp;color=fff&amp;size=48" style="border-radius: 50%;"/>
-<div>
-<h4 style="margin:0; font-size:1.1rem;">Amit Desai</h4>
-<p style="margin:0; color:var(--text-muted); font-size:0.9rem;">Director of Sanitation</p>
-</div>
-</div>
-<div style="display: flex; gap: 1.5rem; text-align: center; font-size: 0.85rem;">
-<div><span style="display:block; color:var(--text-muted);">Active Cases</span><strong style="font-size:1.1rem;">22</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Completion</span><strong style="font-size:1.1rem; color:#e74c3c;">64%</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Trust Score</span><strong style="font-size:1.1rem;">72</strong></div>
-<div style="align-self:center;"><span class="badge" style="background:#fbe3e4; color:#e74c3c;">Review Needed</span></div>
-</div>
-</div>
-</div>
-<!-- Team -->
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1rem;">
-<div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
-<div style="display:flex; align-items:center; gap: 1rem; margin-bottom: 0.75rem;">
-<img src="https://ui-avatars.com/api/?name=Sunita+Rao&amp;background=2c3e50&amp;color=fff&amp;size=40" style="border-radius: 50%;"/>
-<div>
-<h5 style="margin:0; font-size:1rem;">Sunita Rao</h5>
-<p style="margin:0; color:var(--text-muted); font-size:0.85rem;">Fleet Coordinator</p>
-</div>
-</div>
-<div style="display: flex; justify-content: space-between; text-align: center; font-size: 0.8rem; background: #fbf8fc; padding: 0.5rem; border-radius: 4px;">
-<div><span style="display:block; color:var(--text-muted);">Active</span><strong>18</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Completion</span><strong>76%</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Trust Score</span><strong>80</strong></div>
-<div style="align-self:center;"><span class="badge" style="background:#3498db;">On Duty</span></div>
-</div>
-</div>
-<div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
-<div style="display:flex; align-items:center; gap: 1rem; margin-bottom: 0.75rem;">
-<img src="https://ui-avatars.com/api/?name=Vikram+Singh&amp;background=e74c3c&amp;color=fff&amp;size=40" style="border-radius: 50%;"/>
-<div>
-<h5 style="margin:0; font-size:1rem;">Vikram Singh</h5>
-<p style="margin:0; color:var(--text-muted); font-size:0.85rem;">Zone Supervisor</p>
-</div>
-</div>
-<div style="display: flex; justify-content: space-between; text-align: center; font-size: 0.8rem; background: #fdf3f2; padding: 0.5rem; border-radius: 4px;">
-<div><span style="display:block; color:var(--text-muted);">Active</span><strong style="color:#e74c3c;">45</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Completion</span><strong style="color:#e74c3c;">38%</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Trust Score</span><strong style="color:#e74c3c;">64</strong></div>
-<div style="align-self:center;"><span class="badge" style="background:#e74c3c;">Flagged</span></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Department 4: Public Works -->
-<div class="admin-panel" style="border-top: 4px solid #7f8c8d; margin-bottom: 2rem;">
-<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
-<h3 style="margin: 0; color: #7f8c8d;"><i class="fa-solid fa-road"></i> Public Works</h3>
-<button class="btn btn-outline-primary btn-sm">View Full Team <i class="fa-solid fa-angle-down"></i></button>
-</div>
-<div style="display: flex; flex-direction: column; gap: 1rem;">
-<!-- Head -->
-<div style="background: #f8f9f9; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
-<p style="margin:0 0 0.5rem 0; font-size:0.8rem; font-weight:bold; color:var(--text-muted); text-transform:uppercase;">Department Head</p>
-<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-<div style="display:flex; align-items:center; gap: 1rem;">
-<img src="https://ui-avatars.com/api/?name=Ravi+Kumar&amp;background=7f8c8d&amp;color=fff&amp;size=48" style="border-radius: 50%;"/>
-<div>
-<h4 style="margin:0; font-size:1.1rem;">Ravi Kumar</h4>
-<p style="margin:0; color:var(--text-muted); font-size:0.9rem;">Chief Civil Engineer</p>
-</div>
-</div>
-<div style="display: flex; gap: 1.5rem; text-align: center; font-size: 0.85rem;">
-<div><span style="display:block; color:var(--text-muted);">Active Cases</span><strong style="font-size:1.1rem;">12</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Completion</span><strong style="font-size:1.1rem; color:#f39c12;">82%</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Trust Score</span><strong style="font-size:1.1rem;">88</strong></div>
-<div style="align-self:center;"><span class="badge" style="background:rgba(243, 156, 18, 0.1); color:#f39c12;">Monitoring</span></div>
-</div>
-</div>
-</div>
-<!-- Team -->
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1rem;">
-<div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
-<div style="display:flex; align-items:center; gap: 1rem; margin-bottom: 0.75rem;">
-<img src="https://ui-avatars.com/api/?name=Sneha+Reddy&amp;background=2c3e50&amp;color=fff&amp;size=40" style="border-radius: 50%;"/>
-<div>
-<h5 style="margin:0; font-size:1rem;">Sneha Reddy</h5>
-<p style="margin:0; color:var(--text-muted); font-size:0.85rem;">Asphalt Supervisor</p>
-</div>
-</div>
-<div style="display: flex; justify-content: space-between; text-align: center; font-size: 0.8rem; background: #f8f9f9; padding: 0.5rem; border-radius: 4px;">
-<div><span style="display:block; color:var(--text-muted);">Active</span><strong>15</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Completion</span><strong>84%</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Trust Score</span><strong>87</strong></div>
-<div style="align-self:center;"><span class="badge" style="background:#3498db;">On Duty</span></div>
-</div>
-</div>
-<div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
-<div style="display:flex; align-items:center; gap: 1rem; margin-bottom: 0.75rem;">
-<img src="https://ui-avatars.com/api/?name=Arjun+Mehta&amp;background=2c3e50&amp;color=fff&amp;size=40" style="border-radius: 50%;"/>
-<div>
-<h5 style="margin:0; font-size:1rem;">Arjun Mehta</h5>
-<p style="margin:0; color:var(--text-muted); font-size:0.85rem;">Site Inspector</p>
-</div>
-</div>
-<div style="display: flex; justify-content: space-between; text-align: center; font-size: 0.8rem; background: #f8f9f9; padding: 0.5rem; border-radius: 4px;">
-<div><span style="display:block; color:var(--text-muted);">Active</span><strong>21</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Completion</span><strong>79%</strong></div>
-<div><span style="display:block; color:var(--text-muted);">Trust Score</span><strong>84</strong></div>
-<div style="align-self:center;"><span class="badge" style="background:#3498db;">On Duty</span></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Global Directory Search (Secondary) -->
-<div class="admin-panel mt-4">
-<div class="panel-header">
-<h3>Global Directory Search</h3>
-</div>
-<div style="display: flex; gap: 1rem; margin-top: 1rem; margin-bottom: 1.5rem;">
-<div style="flex: 1; position: relative;">
-<i class="fa-solid fa-search text-muted" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);"></i>
-<input class="styled-input" placeholder="Search officers by name, ID, or zone..." style="padding-left: 2.5rem; width: 100%;" type="text"/>
-</div>
-<button class="btn btn-outline-primary">Search Directory</button>
-</div>
-<div style="overflow-x: auto;">
-<table style="width:100%; border-collapse:collapse; text-align:left; font-size: 0.9rem;">
-<thead>
-<tr style="background:#f8faff; border-bottom:2px solid var(--border-color);">
-<th style="padding:0.75rem; color:var(--text-muted); font-weight:600;">Officer</th>
-<th style="padding:0.75rem; color:var(--text-muted); font-weight:600;">Department</th>
-<th style="padding:0.75rem; color:var(--text-muted); font-weight:600;">Role</th>
-<th style="padding:0.75rem; color:var(--text-muted); font-weight:600;">Active Cases</th>
-<th style="padding:0.75rem; color:var(--text-muted); font-weight:600;">Status</th>
-</tr>
-</thead>
-<tbody>
-<tr style="border-bottom:1px solid var(--border-color);">
-<td style="padding:0.75rem; font-weight:500;">Priya Sharma</td>
-<td style="padding:0.75rem;">Water Supply</td>
-<td style="padding:0.75rem;">Chief Water Operations Officer</td>
-<td style="padding:0.75rem;">8</td>
-<td style="padding:0.75rem;"><span class="badge" style="background:#27ae60;">Excellent</span></td>
-</tr>
-<tr style="border-bottom:1px solid var(--border-color);">
-<td style="padding:0.75rem; font-weight:500;">Karan Verma</td>
-<td style="padding:0.75rem;">Water Supply</td>
-<td style="padding:0.75rem;">Pipeline Inspector</td>
-<td style="padding:0.75rem;">14</td>
-<td style="padding:0.75rem;"><span class="badge" style="background:#3498db;">On Duty</span></td>
-</tr>
-<tr style="border-bottom:1px solid var(--border-color);">
-<td style="padding:0.75rem; font-weight:500;">Vikram Singh</td>
-<td style="padding:0.75rem;">Waste Management</td>
-<td style="padding:0.75rem;">Zone Supervisor</td>
-<td style="padding:0.75rem; color:#e74c3c;">45</td>
-<td style="padding:0.75rem;"><span class="badge" style="background:#e74c3c;">Flagged</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<!-- View: Accountability Center -->
-<div class="admin-view hidden" id="view-audits">
-<div class="view-header">
-<div>
-<h2>Accountability Center</h2>
-<p class="text-muted">This section monitors officer performance, complaint resolution integrity, deadline adherence, and escalated cases.</p>
-</div>
-<div class="header-actions"><button class="btn btn-outline-primary"><i class="fa-solid fa-download"></i> Export Log</button></div>
-</div>
-<!-- Accountability Metrics Cards -->
-<div class="admin-stats-grid" style="margin-bottom: 2rem;">
-<div class="stat-card" style="border-left: 4px solid #e74c3c;">
-<div class="stat-icon" style="background: rgba(231, 76, 60, 0.1); color: #e74c3c;"><i class="fa-solid fa-clock-rotate-left"></i></div>
-<div class="stat-details">
-<p>Delayed Cases</p>
-<h3>142</h3>
-<span class="trend negative"><i class="fa-solid fa-arrow-trend-up"></i> +12% this week</span>
-</div>
-</div>
-<div class="stat-card" style="border-left: 4px solid #f39c12;">
-<div class="stat-icon" style="background: rgba(243, 156, 18, 0.1); color: #f39c12;"><i class="fa-solid fa-folder-open"></i></div>
-<div class="stat-details">
-<p>Reopened Complaints</p>
-<h3>38</h3>
-<span class="trend neutral"><i class="fa-solid fa-minus"></i> Stable</span>
-</div>
-</div>
-<div class="stat-card" style="border-left: 4px solid #9b59b6;">
-<div class="stat-icon" style="background: rgba(155, 89, 182, 0.1); color: #9b59b6;"><i class="fa-solid fa-turn-up"></i></div>
-<div class="stat-details">
-<p>Escalated Issues</p>
-<h3>89</h3>
-<span class="trend negative"><i class="fa-solid fa-arrow-trend-up"></i> +5% this week</span>
-</div>
-</div>
-<div class="stat-card" style="border-left: 4px solid #c0392b;">
-<div class="stat-icon" style="background: rgba(192, 57, 43, 0.1); color: #c0392b;"><i class="fa-solid fa-calendar-xmark"></i></div>
-<div class="stat-details">
-<p>Missed Deadlines</p>
-<h3>24</h3>
-<span class="trend positive"><i class="fa-solid fa-arrow-trend-down"></i> -8% this week</span>
-</div>
-</div>
-</div>
-<div class="dashboard-grid" style="margin-bottom: 2rem;">
-<!-- Officer Performance Watchlist -->
-<div class="grid-left" style="grid-column: span 1;">
-<div class="admin-panel" style="height: 100%;">
-<div class="panel-header">
-<h3>Officer Performance Watchlist</h3>
-</div>
-<div style="overflow-x: auto;">
-<table style="width: 100%; border-collapse: collapse; margin-top: 0.5rem; font-size: 0.9rem;">
-<thead>
-<tr style="background: #f8faff; border-bottom: 2px solid var(--border-color); text-align: left;">
-<th style="padding: 0.75rem; color: var(--text-muted); font-weight: 600;">Officer</th>
-<th style="padding: 0.75rem; color: var(--text-muted); font-weight: 600; text-align: center;">Assigned</th>
-<th style="padding: 0.75rem; color: var(--text-muted); font-weight: 600; text-align: center;">Completed</th>
-<th style="padding: 0.75rem; color: var(--text-muted); font-weight: 600; text-align: center;">Delay %</th>
-<th style="padding: 0.75rem; color: var(--text-muted); font-weight: 600; text-align: center;">Trust</th>
-</tr>
-</thead>
-<tbody>
-<tr style="border-bottom: 1px solid var(--border-color);">
-<td style="padding: 0.75rem; font-weight: 500;">Vikram Singh</td>
-<td style="padding: 0.75rem; text-align: center;">45</td>
-<td style="padding: 0.75rem; text-align: center;">12</td>
-<td style="padding: 0.75rem; text-align: center; color: #e74c3c; font-weight: 600;">38%</td>
-<td style="padding: 0.75rem; text-align: center;"><span class="badge" style="background:#fbe3e4; color:#e74c3c;">64</span></td>
-</tr>
-<tr style="border-bottom: 1px solid var(--border-color);">
-<td style="padding: 0.75rem; font-weight: 500;">Suresh Patil</td>
-<td style="padding: 0.75rem; text-align: center;">28</td>
-<td style="padding: 0.75rem; text-align: center;">22</td>
-<td style="padding: 0.75rem; text-align: center; color: #f39c12;">15%</td>
-<td style="padding: 0.75rem; text-align: center;"><span class="badge" style="background:rgba(243, 156, 18, 0.1); color:#f39c12;">78</span></td>
-</tr>
-<tr style="border-bottom: 1px solid var(--border-color);">
-<td style="padding: 0.75rem; font-weight: 500;">Anjali Gupta</td>
-<td style="padding: 0.75rem; text-align: center;">32</td>
-<td style="padding: 0.75rem; text-align: center;">31</td>
-<td style="padding: 0.75rem; text-align: center; color: #27ae60;">2%</td>
-<td style="padding: 0.75rem; text-align: center;"><span class="badge" style="background:rgba(39, 174, 96, 0.1); color:#27ae60;">97</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<!-- Integrity Alerts Section -->
-<div class="grid-right" style="grid-column: span 1;">
-<div class="admin-panel ai-insight-panel" style="height: 100%;">
-<div class="panel-header" style="border-bottom: none; margin-bottom: 0;">
-<h3><i class="fa-solid fa-shield-halved text-danger"></i> Integrity Alerts</h3>
-</div>
-<div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
-<div class="insight-box" style="border-left-color: #f39c12; background: #fffdf8;">
-<p style="margin: 0; font-size: 0.95rem;"><strong>Verification Failed:</strong> Complaint #JAN-9012 reopened due to insufficient proof provided by officer.</p>
-</div>
-<div class="insight-box" style="border-left-color: #e74c3c; background: #fdf3f2;">
-<p style="margin: 0; font-size: 0.95rem;"><strong>Intervention Required:</strong> Officer reassignment triggered in East Zone for delayed response (exceeded 72hr SLA).</p>
-</div>
-<div class="insight-box" style="border-left-color: #9b59b6; background: #fbf8fc;">
-<p style="margin: 0; font-size: 0.95rem;"><strong>System Warning:</strong> High escalation trend detected in Waste Management over the last 48 hours.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Action Log Table -->
-<div class="admin-panel">
-<div class="panel-header">
-<h3>Administrative Action Log</h3>
-</div>
-<div style="overflow-x: auto;">
-<table style="width:100%; border-collapse:collapse; text-align:left; margin-top: 0.5rem;">
-<thead>
-<tr style="background:#f8faff; border-bottom:1px solid var(--border-color);">
-<th style="padding:1rem; color: var(--text-muted); font-weight: 600;">Timestamp</th>
-<th style="padding:1rem; color: var(--text-muted); font-weight: 600;">Action</th>
-<th style="padding:1rem; color: var(--text-muted); font-weight: 600;">Admin User</th>
-<th style="padding:1rem; color: var(--text-muted); font-weight: 600;">Ref ID</th>
-</tr>
-</thead>
-<tbody>
-<tr style="border-bottom:1px solid var(--border-color);"><td style="padding:1rem;">Today, 10:45 AM</td><td style="padding:1rem;">Priority Overridden</td><td style="padding:1rem;">admin_demo</td><td style="padding:1rem; font-family: monospace;">#JAN-9012</td></tr>
-<tr style="border-bottom:1px solid var(--border-color);"><td style="padding:1rem;">Yesterday, 04:20 PM</td><td style="padding:1rem;">Officer Reassigned</td><td style="padding:1rem;">super_admin</td><td style="padding:1rem; font-family: monospace;">#JAN-8834</td></tr>
-<tr style="border-bottom:1px solid var(--border-color);"><td style="padding:1rem;">Yesterday, 02:10 PM</td><td style="padding:1rem;">Escalation Ext. Approved</td><td style="padding:1rem;">super_admin</td><td style="padding:1rem; font-family: monospace;">#JAN-8802</td></tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<!-- View: System Settings -->
-<div class="admin-view hidden" id="view-settings">
-<div class="view-header">
-<div>
-<h2>System Settings</h2>
-<p class="text-muted">Configure platform rules, thresholds, and operational parameters.</p>
-</div>
-</div>
-<div class="admin-panel">
-<div style="max-width:600px;">
-<div class="form-group mb-4">
-<label style="display:block; font-weight:bold; margin-bottom:0.5rem;">Escalation SLA Threshold (Hours)</label>
-<input class="styled-input" style="width:100px;" type="number" value="24"/>
-</div>
-<div class="form-group mb-4">
-<label style="display:block; font-weight:bold; margin-bottom:0.5rem;">Auto-Assign Radius (KM)</label>
-<input class="styled-input" style="width:100px;" type="number" value="5"/>
-</div>
-<div class="form-group mb-4" style="display:flex; align-items:center; gap:1rem;">
-<input checked="" id="ai-auto" style="width:20px; height:20px;" type="checkbox"/>
-<label for="ai-auto" style="margin:0; font-weight:bold;">Enable AI Auto-Categorization</label>
-</div>
-<button class="btn btn-primary mt-3">Save Configuration</button>
-</div>
-</div>
-</div>
-</main>
-</section>
-<script src="admin.js"></script>
-<script src="jansetu-core.js"></script>
+    <!-- Navbar -->
+    <nav class="navbar"
+        style="position: fixed; width: 100%; top: 0; z-index: 1000; background: rgba(255, 255, 255, 0.95); box-shadow: 0 4px 6px rgba(0,0,0,0.05); padding: 0.8rem 0;">
+        <div class="nav-container">
+            <a class="logo" href="index.html">
+                <i class="fa-solid fa-bridge-water"></i> Jan<span>Setu</span> <span
+                    style="font-size: 0.8rem; color: var(--text-muted); margin-left: 5px; font-weight: 500;">ADMIN</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" style="color: var(--text-dark);" data-i18n="nav_home">Home</a>
+                <a href="portal.html" style="color: var(--text-dark);" data-i18n="citizen">Citizen</a>
+                <a href="officer.html" style="color: var(--text-dark);" data-i18n="officer">Officer</a>
+                <a class="btn btn-outline-danger hidden" href="#" id="admin-logout-btn"
+                    style="padding: 0.4rem 1rem;" data-i18n="logout">Sign Out</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Admin Login Section -->
+    <main class="portal-main" id="admin-login-section">
+        <section class="portal-section active" style="margin-top: 2rem;">
+            <div class="login-container">
+                <div class="login-header">
+                    <h2 data-i18n="admin_center">Admin Center</h2>
+                    <p data-i18n="central_command">Central Command &amp; Control Login</p>
+                </div>
+                <div class="demo-credentials" style="border-color:#e74c3c; background:#fbe3e4;">
+                    <div class="demo-badge" style="color:#e74c3c;"><i class="fa-solid fa-shield-halved"></i> Admin Demo
+                        Credentials</div>
+                    <div class="demo-grid">
+                        <div class="demo-item">
+                            <span>Username:</span>
+                            <strong>admin_demo</strong>
+                        </div>
+                        <div class="demo-item">
+                            <span>Password:</span>
+                            <strong>jan123</strong>
+                        </div>
+                    </div>
+                </div>
+                <form class="portal-form" id="admin-login-form">
+                    <div class="form-group">
+                        <label data-i18n="username">Username / ID</label>
+                        <div class="input-with-icon">
+                            <i class="fa-solid fa-user"></i>
+                            <input id="admin-user" placeholder="Enter admin ID" type="text" data-i18n="username" />
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label data-i18n="password">Password</label>
+                        <div class="input-with-icon">
+                            <i class="fa-solid fa-lock"></i>
+                            <input id="admin-pass" placeholder="Enter password" type="password" data-i18n="password" />
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-block mt-4" type="submit" data-i18n="authenticate"><i
+                            class="fa-solid fa-right-to-bracket"></i> Authenticate</button>
+                    <div class="login-error hidden" id="login-error-msg"
+                        style="background:#fdeaea; color:#e74c3c; padding:0.8rem; border-radius:6px; margin-top:1rem; text-align:center; border:1px solid #f5c6c6;">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Invalid credentials.</div>
+                </form>
+            </div>
+        </section>
+    </main>
+    <!-- Admin Dashboard Section -->
+    <section class="admin-dashboard hidden" id="admin-dashboard-section">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <div class="admin-profile">
+                <div class="avatar">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div class="info">
+                    <h4 data-i18n="chief_admin">Chief Administrator</h4>
+                    <span data-i18n="central_command">Central Command</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-target="view-overview" data-i18n="sys_overview"><i class="fa-solid fa-chart-pie"></i> System
+                    Overview</button>
+                <button class="nav-btn" data-target="view-departments" data-i18n="departments"><i class="fa-solid fa-building-user"></i>
+                    Departments</button>
+                <button class="nav-btn" data-target="view-officers" data-i18n="officer_dir"><i class="fa-solid fa-id-badge"></i> Officer
+                    Directory</button>
+                <button class="nav-btn" data-target="view-audits" data-i18n="accountability_center"><i class="fa-solid fa-file-invoice"></i>
+                    Accountability Center</button>
+                <button class="nav-btn" data-target="view-settings" data-i18n="sys_settings"><i class="fa-solid fa-gear"></i> System
+                    Settings</button>
+            </nav>
+        </aside>
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <div class="admin-view active" id="view-overview">
+                <div class="view-header">
+                    <div>
+                        <h2 data-i18n="command_overview">Command Overview</h2>
+                        <p class="text-muted" data-i18n="realtime_metrics">Real-time civic performance metrics across all zones.</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn-outline-primary" data-i18n="export_data"><i class="fa-solid fa-download"></i> Export
+                            Data</button>
+                        <button class="btn btn-primary" data-i18n="broadcast_alert"><i class="fa-solid fa-bullhorn"></i> Broadcast Alert</button>
+                    </div>
+                </div>
+                <!-- Overview Cards -->
+                <div class="admin-stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(11, 59, 96, 0.1); color: var(--primary-color);">
+                            <i class="fa-solid fa-layer-group"></i>
+                        </div>
+                        <div class="stat-details">
+                            <p data-i18n="total_complaints">Total Complaints</p>
+                            <h3>24,592</h3>
+                            <span class="trend positive"><i class="fa-solid fa-arrow-trend-up"></i> +12% this
+                                month</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(52, 152, 219, 0.1); color: #3498db;">
+                            <i class="fa-solid fa-spinner"></i>
+                        </div>
+                        <div class="stat-details">
+                            <p data-i18n="active_complaints">Active Complaints</p>
+                            <h3>1,204</h3>
+                            <span class="trend neutral"><i class="fa-solid fa-minus"></i> Stable</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(39, 174, 96, 0.1); color: var(--accent-color);">
+                            <i class="fa-solid fa-check-double"></i>
+                        </div>
+                        <div class="stat-details">
+                            <p data-i18n="resolved">Resolved</p>
+                            <h3>22,890</h3>
+                            <span class="trend positive"><i class="fa-solid fa-arrow-trend-up"></i> +8% completion
+                                rate</span>
+                        </div>
+                    </div>
+                    <div class="stat-card border-left-danger">
+                        <div class="stat-icon" style="background: rgba(231, 76, 60, 0.1); color: #e74c3c;">
+                            <i class="fa-solid fa-fire"></i>
+                        </div>
+                        <div class="stat-details">
+                            <p data-i18n="escalated_critical">Escalated Critical</p>
+                            <h3>498</h3>
+                            <span class="trend negative"><i class="fa-solid fa-arrow-trend-up"></i> <span data-i18n="requires_attention">Requires
+                                attention</span></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Area Hotspot Analysis Map -->
+                <div class="admin-panel mb-4">
+                    <div class="panel-header" style="margin-bottom: 1rem;">
+                        <div>
+                            <h3><i class="fa-solid fa-map-location-dot text-primary"></i> <span data-i18n="hotspot_analysis">Area Hotspot Analysis</span></h3>
+                            <p class="text-muted" style="font-size: 0.9rem; margin-top: 0.25rem;" data-i18n="realtime_metrics">Interactive map
+                                displaying critical complaint density and issue-prone zones.</p>
+                        </div>
+                        <div class="header-actions">
+                            <span class="badge" style="background:#e74c3c; color:#fff;" data-i18n="high_density">High Density</span>
+                            <span class="badge" style="background:#f39c12; color:#fff;" data-i18n="medium">Medium</span>
+                            <span class="badge" style="background:#3498db; color:#fff;" data-i18n="low">Low</span>
+                        </div>
+                    </div>
+                    <div class="map-container"
+                        style="border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; padding: 0;">
+                        <div id="admin-hotspot-map" style="width: 100%; height: 400px; background: #eaf2f8;"></div>
+                    </div>
+                </div>
+                <!-- Layout Grid -->
+                <div class="dashboard-grid">
+                    <!-- Left Column -->
+                    <div class="grid-left">
+                        <!-- Complaint Trends Visualization -->
+                        <div class="admin-panel">
+                            <div class="panel-header">
+                                <h3 data-i18n="complaint_trends">Complaint Trends (Last 6 Months)</h3>
+                                <select class="styled-input-sm">
+                                    <option data-i18n="all_regions">All Regions</option>
+                                </select>
+                            </div>
+                            <div class="chart-wrapper">
+                                <div class="css-line-chart">
+                                    <svg class="chart-svg" viewbox="0 0 500 200">
+                                        <!-- Grid lines -->
+                                        <line stroke="#eee" stroke-width="1" x1="0" x2="500" y1="50" y2="50"></line>
+                                        <line stroke="#eee" stroke-width="1" x1="0" x2="500" y1="100" y2="100"></line>
+                                        <line stroke="#eee" stroke-width="1" x1="0" x2="500" y1="150" y2="150"></line>
+                                        <!-- Data Path -->
+                                        <path
+                                            d="M0,150 C50,130 100,160 150,110 C200,60 250,90 300,50 C350,10 400,60 450,20 L500,20"
+                                            fill="none" stroke="var(--primary-color)" stroke-width="4"></path>
+                                        <!-- Gradient Fill under path -->
+                                        <path
+                                            d="M0,150 C50,130 100,160 150,110 C200,60 250,90 300,50 C350,10 400,60 450,20 L500,20 L500,200 L0,200 Z"
+                                            fill="url(#gradient)" opacity="0.2"></path>
+                                        <!-- Gradient Def -->
+                                        <defs>
+                                            <lineargradient id="gradient" x1="0%" x2="0%" y1="0%" y2="100%">
+                                                <stop offset="0%" stop-color="var(--primary-color)"></stop>
+                                                <stop offset="100%" stop-color="var(--white)" stop-opacity="0"></stop>
+                                            </lineargradient>
+                                        </defs>
+                                        <!-- Points -->
+                                        <circle cx="150" cy="110" fill="var(--accent-color)" r="5"></circle>
+                                        <circle cx="300" cy="50" fill="var(--accent-color)" r="5"></circle>
+                                        <circle cx="450" cy="20" fill="var(--accent-color)" r="5"></circle>
+                                    </svg>
+                                    <div class="chart-labels">
+                                        <span>Nov</span><span>Dec</span><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Department Performance -->
+                        <div class="admin-panel mt-4">
+                            <div class="panel-header">
+                                <h3 data-i18n="dept_perf_sla">Department Performance SLA</h3>
+                                <button class="btn-link" data-i18n="view_detailed">View Detailed <i class="fa-solid fa-arrow-right"></i></button>
+                            </div>
+                            <div class="dept-list">
+                                <div class="dept-item">
+                                    <div class="dept-info">
+                                        <span><i class="fa-solid fa-bolt" style="color:#f39c12; width:20px;"></i>
+                                            Electricity Board</span>
+                                        <strong>94% Resolution</strong>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-fill" style="width: 94%; background: #27ae60;"></div>
+                                    </div>
+                                </div>
+                                <div class="dept-item">
+                                    <div class="dept-info">
+                                        <span><i class="fa-solid fa-faucet-drip" style="color:#3498db; width:20px;"></i>
+                                            Water Supply &amp; Sanitation</span>
+                                        <strong>88% Resolution</strong>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-fill" style="width: 88%; background: #3498db;"></div>
+                                    </div>
+                                </div>
+                                <div class="dept-item">
+                                    <div class="dept-info">
+                                        <span><i class="fa-solid fa-road" style="color:#7f8c8d; width:20px;"></i> Public
+                                            Works (Roads)</span>
+                                        <strong>72% Resolution</strong>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-fill" style="width: 72%; background: #f39c12;"></div>
+                                    </div>
+                                </div>
+                                <div class="dept-item">
+                                    <div class="dept-info">
+                                        <span><i class="fa-solid fa-dumpster" style="color:#8e44ad; width:20px;"></i>
+                                            Solid Waste Management</span>
+                                        <strong style="color:#e74c3c;">58% Resolution</strong>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-fill" style="width: 58%; background: #e74c3c;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Right Column -->
+                    <div class="grid-right">
+                        <!-- Advanced Analytics: Common Categories -->
+                        <div class="admin-panel mb-4">
+                            <div class="panel-header">
+                                <h3 data-i18n="common_categories">Most Common Categories</h3>
+                                <i class="fa-solid fa-chart-bar text-muted"></i>
+                            </div>
+                            <div class="dept-list">
+                                <div class="dept-item">
+                                    <div class="dept-info">
+                                        <span>Roads &amp; Potholes</span>
+                                        <strong>42%</strong>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-fill"
+                                            style="width: 42%; background: var(--primary-color);"></div>
+                                    </div>
+                                </div>
+                                <div class="dept-item">
+                                    <div class="dept-info">
+                                        <span>Water Supply</span>
+                                        <strong>28%</strong>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-fill" style="width: 28%; background: #3498db;"></div>
+                                    </div>
+                                </div>
+                                <div class="dept-item">
+                                    <div class="dept-info">
+                                        <span>Garbage &amp; Waste</span>
+                                        <strong>18%</strong>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-fill" style="width: 18%; background: #8e44ad;"></div>
+                                    </div>
+                                </div>
+                                <div class="dept-item">
+                                    <div class="dept-info">
+                                        <span>Electricity</span>
+                                        <strong>12%</strong>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-fill" style="width: 12%; background: #f39c12;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Accountability Tracking -->
+                        <div class="admin-panel mb-4">
+                            <div class="panel-header">
+                                <h3 data-i18n="accountability_perf">Accountability &amp; Performance</h3>
+                                <i class="fa-solid fa-users-gear text-primary"></i>
+                            </div>
+                            <div class="officer-list">
+                                <!-- Top Performer -->
+                                <div class="officer-item">
+                                    <img alt="Officer"
+                                        src="https://ui-avatars.com/api/?name=Sneha+Reddy&amp;background=27ae60&amp;color=fff" />
+                                    <div class="officer-details">
+                                        <h4>Sneha Reddy <i class="fa-solid fa-circle-check text-success"
+                                                title="High Efficiency"></i></h4>
+                                        <p>Public Works 98% Validation Success</p>
+                                    </div>
+                                    <div class="officer-score">
+                                        <span class="score-badge">98.5</span>
+                                    </div>
+                                </div>
+                                <!-- Average Performer -->
+                                <div class="officer-item">
+                                    <img alt="Officer"
+                                        src="https://ui-avatars.com/api/?name=Anjali+Gupta&amp;background=3498db&amp;color=fff" />
+                                    <div class="officer-details">
+                                        <h4>Anjali Gupta</h4>
+                                        <p>Electricity Board 92% Validation Success</p>
+                                    </div>
+                                    <div class="officer-score">
+                                        <span class="score-badge"
+                                            style="background:rgba(52, 152, 219, 0.1); color:#3498db;">97.2</span>
+                                    </div>
+                                </div>
+                                <!-- Flagged Performer -->
+                                <div class="officer-item" style="border-left: 3px solid #e74c3c; background: #fdf3f2;">
+                                    <img alt="Officer"
+                                        src="https://ui-avatars.com/api/?name=Vikram+Singh&amp;background=e74c3c&amp;color=fff" />
+                                    <div class="officer-details">
+                                        <h4>Vikram Singh <i class="fa-solid fa-triangle-exclamation text-danger"
+                                                title="Flagged for delays"></i></h4>
+                                        <p style="color:#e74c3c; font-weight:500;" data-i18n="repeated_delays">Repeated Delays (3 Escalations)</p>
+                                    </div>
+                                    <div class="officer-score">
+                                        <span class="score-badge"
+                                            style="background:rgba(231, 76, 60, 0.1); color:#e74c3c;">64.2</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline-primary w-100 mt-3" data-i18n="full_accountability_report">View Full Accountability Report</button>
+                        </div>
+                        <!-- Data-driven Insights -->
+                        <div class="admin-panel ai-insight-panel">
+                            <div class="panel-header" style="border-bottom: none; margin-bottom:0;">
+                                <h3><i class="fa-solid fa-lightbulb" style="color:#f39c12;"></i> Data-Driven Insights
+                                </h3>
+                            </div>
+                            <div class="insight-box mb-2" style="border-left-color: #f39c12;">
+                                <p><strong>Recurring Issue:</strong> 65% of pothole complaints are reported from Sector
+                                    14. Recommend immediate structural assessment.</p>
+                                <button class="btn btn-outline-primary btn-sm mt-2"><i
+                                        class="fa-solid fa-file-contract"></i> Draft Priority Order</button>
+                            </div>
+                            <div class="insight-box" style="border-left-color: #e74c3c;">
+                                <p><strong>Priority Action Zone:</strong> The East Zone is experiencing a 30% drop in
+                                    solid waste clearance times. Shift reserve trucks to this route.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Escalation Command Center -->
+                <div class="admin-panel mt-4"
+                    style="border: 2px solid #e74c3c; box-shadow: 0 4px 15px rgba(231, 76, 60, 0.15);">
+                    <div class="panel-header" style="border-bottom: 1px solid #fbe3e4;">
+                        <div>
+                            <h3 style="color: #e74c3c;"><i class="fa-solid fa-triangle-exclamation"></i> <span data-i18n="escalation_command">Escalation
+                                Command Center</span></h3>
+                            <p class="text-muted" style="font-size: 0.9rem; margin-top: 0.25rem;" data-i18n="requires_attention">Immediate
+                                administrative oversight required for overdue and critical complaints.</p>
+                        </div>
+                        <div class="header-actions">
+                            <button class="btn btn-outline-danger" data-i18n="override_priorities"><i class="fa-solid fa-shield"></i> Override All
+                                Priorities</button>
+                        </div>
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+                            <thead>
+                                <tr
+                                    style="background: #f8faff; border-bottom: 2px solid var(--border-color); text-align: left;">
+                                    <th style="padding: 1rem; color: var(--text-muted); font-weight: 600;" data-i18n="complaint_id_table">Complaint ID
+                                    </th>
+                                    <th style="padding: 1rem; color: var(--text-muted); font-weight: 600;" data-i18n="nav_problem">Issue</th>
+                                    <th style="padding: 1rem; color: var(--text-muted); font-weight: 600;" data-i18n="responsible_party">Responsible
+                                        Party</th>
+                                    <th style="padding: 1rem; color: var(--text-muted); font-weight: 600;" data-i18n="escalation_level">Escalation
+                                        Level</th>
+                                    <th style="padding: 1rem; color: var(--text-muted); font-weight: 600;" data-i18n="track_status">Status</th>
+                                    <th
+                                        style="padding: 1rem; color: var(--text-muted); font-weight: 600; text-align: right;" data-i18n="admin_actions">
+                                        Administrative Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--border-color);">
+                                    <td style="padding: 1rem; font-family: monospace; font-weight: bold;">#JAN-9012</td>
+                                    <td style="padding: 1rem;">
+                                        <strong>Major Water Pipe Burst</strong><br />
+                                        <span style="font-size: 0.85rem; color: var(--text-muted);">Sector 42 Main
+                                            Road</span>
+                                    </td>
+                                    <td style="padding: 1rem;">
+                                        <div style="display:flex; align-items:center; gap:0.5rem;">
+                                            <img src="https://ui-avatars.com/api/?name=Vikram+Singh&amp;background=e74c3c&amp;color=fff"
+                                                style="width:24px; border-radius:50%;" />
+                                            <span style="font-size: 0.9rem; font-weight: 500;">Vikram Singh</span>
+                                        </div>
+                                    </td>
+                                    <td style="padding: 1rem;"><span class="badge" style="background:#e74c3c;">Level 3
+                                            Critical</span></td>
+                                    <td style="padding: 1rem; color: #e74c3c; font-weight: 600;"><i
+                                            class="fa-solid fa-clock"></i> 48 Hrs Overdue</td>
+                                    <td
+                                        style="padding: 1rem; text-align: right; display: flex; justify-content: flex-end; gap: 0.5rem;">
+                                        <button class="btn btn-outline-primary btn-sm"
+                                            title="Reassign to another officer" data-i18n="reassign"><i class="fa-solid fa-user-plus"></i>
+                                            Reassign</button>
+                                        <button class="btn btn-danger btn-sm"
+                                            title="Override Priority &amp; Dispatch Reserve" data-i18n="override"><i
+                                                class="fa-solid fa-bolt"></i> Override</button>
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border-color);">
+                                    <td style="padding: 1rem; font-family: monospace; font-weight: bold;">#JAN-8834</td>
+                                    <td style="padding: 1rem;">
+                                        <strong>Fallen Tree on Power Line</strong><br />
+                                        <span style="font-size: 0.85rem; color: var(--text-muted);">Green Park
+                                            Extension</span>
+                                    </td>
+                                    <td style="padding: 1rem;">
+                                        <div style="display:flex; align-items:center; gap:0.5rem;">
+                                            <div
+                                                style="width:24px; height:24px; background:#f39c12; color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.7rem;">
+                                                <i class="fa-solid fa-bolt"></i></div>
+                                            <span style="font-size: 0.9rem; font-weight: 500;">Electricity Board</span>
+                                        </div>
+                                    </td>
+                                    <td style="padding: 1rem;"><span class="badge" style="background:#f39c12;">Level 2
+                                            Warning</span></td>
+                                    <td style="padding: 1rem; color: #f39c12; font-weight: 600;"><i
+                                            class="fa-solid fa-clock"></i> 12 Hrs Overdue</td>
+                                    <td
+                                        style="padding: 1rem; text-align: right; display: flex; justify-content: flex-end; gap: 0.5rem;">
+                                        <button class="btn btn-outline-success btn-sm"
+                                            title="Approve Request for Extension"><i class="fa-solid fa-check"></i>
+                                            Approve Ext.</button>
+                                        <button class="btn btn-outline-danger btn-sm"
+                                            title="Reject Ext. &amp; Demand Update"><i class="fa-solid fa-xmark"></i>
+                                            Reject Ext.</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- View: Departments -->
+            <div class="admin-view hidden" id="view-departments">
+                <div class="view-header" style="margin-bottom: 1.5rem;">
+                    <div>
+                        <h2 data-i18n="departments">Department Control Center</h2>
+                        <p class="text-muted" data-i18n="realtime_metrics">Interactive management interface for departmental oversight, efficiency
+                            tracking, and resource allocation.</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn-primary" id="btn-resource-realloc"><i
+                                class="fa-solid fa-people-arrows"></i> Reallocate Resources</button>
+                    </div>
+                </div>
+                <!-- Department Status Panels -->
+                <div
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                    <!-- Water Supply -->
+                    <div class="admin-panel" style="border-top: 4px solid #3498db;">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
+                            <h3 style="margin: 0; color: #3498db;"><i class="fa-solid fa-faucet-drip"></i> <span data-i18n="cat_water">Water Supply</span>
+                            </h3>
+                            <span class="badge" style="background: rgba(52, 152, 219, 0.1); color: #3498db;" data-i18n="high_density">High
+                                Load</span>
+                        </div>
+                        <div
+                            style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.9rem; margin-bottom: 1rem;">
+                            <div><span style="color: var(--text-muted);">Active:</span> <strong
+                                    style="color: var(--text-dark);">42</strong></div>
+                            <div><span style="color: var(--text-muted);">Resolved:</span> <strong
+                                    style="color: var(--text-dark);">128</strong></div>
+                            <div><span style="color: var(--text-muted);">Pending:</span> <strong
+                                    style="color: #e74c3c;">16</strong></div>
+                            <div><span style="color: var(--text-muted);">Avg Time:</span> <strong>2.4 days</strong>
+                            </div>
+                            <div style="grid-column: span 2;"><span style="color: var(--text-muted);">Head:</span>
+                                <strong>Priya Sharma</strong> (Chief Water Ops)</div>
+                            <div><span style="color: var(--text-muted);">Escalation:</span> <strong
+                                    style="color: #e74c3c;">8%</strong></div>
+                        </div>
+                        <button class="btn btn-outline-primary w-100 btn-dept-details" data-dept="water" data-i18n="view_detailed">View Details <i
+                                class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                    <!-- Electricity -->
+                    <div class="admin-panel" style="border-top: 4px solid #f39c12;">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
+                            <h3 style="margin: 0; color: #f39c12;"><i class="fa-solid fa-bolt"></i> Electricity Board
+                            </h3>
+                            <span class="badge"
+                                style="background: rgba(39, 174, 96, 0.1); color: #27ae60;">Optimal</span>
+                        </div>
+                        <div
+                            style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.9rem; margin-bottom: 1rem;">
+                            <div><span style="color: var(--text-muted);">Active:</span> <strong
+                                    style="color: var(--text-dark);">18</strong></div>
+                            <div><span style="color: var(--text-muted);">Resolved:</span> <strong
+                                    style="color: var(--text-dark);">215</strong></div>
+                            <div><span style="color: var(--text-muted);">Pending:</span> <strong>4</strong></div>
+                            <div><span style="color: var(--text-muted);">Avg Time:</span> <strong>1.1 days</strong>
+                            </div>
+                            <div style="grid-column: span 2;"><span style="color: var(--text-muted);">Head:</span>
+                                <strong>Rajiv Menon</strong> (Chief Grid Engineer)</div>
+                            <div><span style="color: var(--text-muted);">Escalation:</span> <strong
+                                    style="color: #27ae60;">2%</strong></div>
+                        </div>
+                        <button class="btn btn-outline-primary w-100 btn-dept-details" data-dept="electricity">View
+                            Details <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                    <!-- Waste Management -->
+                    <div class="admin-panel" style="border-top: 4px solid #8e44ad;">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
+                            <h3 style="margin: 0; color: #8e44ad;"><i class="fa-solid fa-dumpster"></i> Waste Mgmt</h3>
+                            <span class="badge" style="background: rgba(231, 76, 60, 0.1); color: #e74c3c;">Critical
+                                Delay</span>
+                        </div>
+                        <div
+                            style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.9rem; margin-bottom: 1rem;">
+                            <div><span style="color: var(--text-muted);">Active:</span> <strong
+                                    style="color: var(--text-dark);">56</strong></div>
+                            <div><span style="color: var(--text-muted);">Resolved:</span> <strong
+                                    style="color: var(--text-dark);">89</strong></div>
+                            <div><span style="color: var(--text-muted);">Pending:</span> <strong
+                                    style="color: #e74c3c;">32</strong></div>
+                            <div><span style="color: var(--text-muted);">Avg Time:</span> <strong
+                                    style="color: #e74c3c;">5.2 days</strong></div>
+                            <div style="grid-column: span 2;"><span style="color: var(--text-muted);">Head:</span>
+                                <strong>Amit Desai</strong> (Director of Sanitation)</div>
+                            <div><span style="color: var(--text-muted);">Escalation:</span> <strong
+                                    style="color: #e74c3c;">15%</strong></div>
+                        </div>
+                        <button class="btn btn-outline-primary w-100 btn-dept-details" data-dept="waste">View Details <i
+                                class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                    <!-- Public Works -->
+                    <div class="admin-panel" style="border-top: 4px solid #7f8c8d;">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
+                            <h3 style="margin: 0; color: #7f8c8d;"><i class="fa-solid fa-road"></i> Public Works</h3>
+                            <span class="badge"
+                                style="background: rgba(243, 156, 18, 0.1); color: #f39c12;">Warning</span>
+                        </div>
+                        <div
+                            style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.9rem; margin-bottom: 1rem;">
+                            <div><span style="color: var(--text-muted);">Active:</span> <strong
+                                    style="color: var(--text-dark);">24</strong></div>
+                            <div><span style="color: var(--text-muted);">Resolved:</span> <strong
+                                    style="color: var(--text-dark);">105</strong></div>
+                            <div><span style="color: var(--text-muted);">Pending:</span> <strong>12</strong></div>
+                            <div><span style="color: var(--text-muted);">Avg Time:</span> <strong>3.8 days</strong>
+                            </div>
+                            <div style="grid-column: span 2;"><span style="color: var(--text-muted);">Head:</span>
+                                <strong>Ravi Kumar</strong> (Chief Civil Engineer)</div>
+                            <div><span style="color: var(--text-muted);">Escalation:</span> <strong
+                                    style="color: #f39c12;">11%</strong></div>
+                        </div>
+                        <button class="btn btn-outline-primary w-100 btn-dept-details" data-dept="public">View Details
+                            <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                <div class="dashboard-grid" style="margin-bottom: 2rem;">
+                    <!-- Table Section -->
+                    <div class="grid-left" style="grid-column: span 2;">
+                        <div class="admin-panel">
+                            <div class="panel-header" style="flex-wrap: wrap; gap: 1rem;">
+                                <h3>Department Comparison</h3>
+                                <div class="header-actions" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                    <span
+                                        style="font-size: 0.9rem; color: var(--text-muted); align-self: center; margin-right: 0.5rem;">Sort
+                                        by:</span>
+                                    <button class="btn btn-outline-primary btn-sm sort-btn active">Highest
+                                        Workload</button>
+                                    <button class="btn btn-outline-primary btn-sm sort-btn">Lowest Efficiency</button>
+                                    <button class="btn btn-outline-primary btn-sm sort-btn">Most Escalations</button>
+                                </div>
+                            </div>
+                            <div style="overflow-x: auto;">
+                                <table style="width: 100%; border-collapse: collapse; margin-top: 0.5rem;">
+                                    <thead>
+                                        <tr
+                                            style="background: #f8faff; border-bottom: 2px solid var(--border-color); text-align: left;">
+                                            <th style="padding: 1rem; color: var(--text-muted); font-weight: 600;">
+                                                Department</th>
+                                            <th style="padding: 1rem; color: var(--text-muted); font-weight: 600;">Total
+                                                Cases</th>
+                                            <th style="padding: 1rem; color: var(--text-muted); font-weight: 600;">Avg
+                                                Time</th>
+                                            <th style="padding: 1rem; color: var(--text-muted); font-weight: 600;">
+                                                Satisfaction</th>
+                                            <th style="padding: 1rem; color: var(--text-muted); font-weight: 600;">
+                                                Escalation %</th>
+                                            <th style="padding: 1rem; color: var(--text-muted); font-weight: 600;">
+                                                Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="border-bottom: 1px solid var(--border-color);">
+                                            <td style="padding: 1rem; font-weight: 500;">Waste Management</td>
+                                            <td style="padding: 1rem;">177</td>
+                                            <td style="padding: 1rem; color: #e74c3c; font-weight: 600;">5.2 days</td>
+                                            <td style="padding: 1rem;">64%</td>
+                                            <td style="padding: 1rem; color: #e74c3c; font-weight: 600;">15%</td>
+                                            <td style="padding: 1rem;"><span class="badge"
+                                                    style="background:#fbe3e4; color:#e74c3c;">Critical Focus</span>
+                                            </td>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid var(--border-color);">
+                                            <td style="padding: 1rem; font-weight: 500;">Water Supply</td>
+                                            <td style="padding: 1rem;">186</td>
+                                            <td style="padding: 1rem;">2.4 days</td>
+                                            <td style="padding: 1rem;">82%</td>
+                                            <td style="padding: 1rem;">8%</td>
+                                            <td style="padding: 1rem;"><span class="badge"
+                                                    style="background:#eaf2f8; color:#3498db;">Stable</span></td>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid var(--border-color);">
+                                            <td style="padding: 1rem; font-weight: 500;">Public Works</td>
+                                            <td style="padding: 1rem;">141</td>
+                                            <td style="padding: 1rem;">3.8 days</td>
+                                            <td style="padding: 1rem;">76%</td>
+                                            <td style="padding: 1rem; color: #f39c12; font-weight: 600;">11%</td>
+                                            <td style="padding: 1rem;"><span class="badge"
+                                                    style="background:rgba(243, 156, 18, 0.1); color:#f39c12;">Monitoring</span>
+                                            </td>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid var(--border-color);">
+                                            <td style="padding: 1rem; font-weight: 500;">Electricity Board</td>
+                                            <td style="padding: 1rem;">237</td>
+                                            <td style="padding: 1rem; color: #27ae60; font-weight: 600;">1.1 days</td>
+                                            <td style="padding: 1rem; color: #27ae60; font-weight: 600;">94%</td>
+                                            <td style="padding: 1rem;">2%</td>
+                                            <td style="padding: 1rem;"><span class="badge"
+                                                    style="background:rgba(39, 174, 96, 0.1); color:#27ae60;">Optimized</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Resource Recommendations -->
+                <div class="admin-panel ai-insight-panel">
+                    <div class="panel-header" style="border-bottom: none; margin-bottom: 0;">
+                        <h3 data-i18n="datadriven_insights"><i class="fa-solid fa-microchip text-primary"></i> Resource Recommendations</h3>
+                    </div>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                        <div class="insight-box" style="border-left-color: #e74c3c;">
+                            <p style="margin: 0; font-size: 0.95rem;"><strong>Critical Shortage:</strong> Waste
+                                Management requires <strong>3 additional officers</strong> to clear the pending 32
+                                escalations before weekend surge.</p>
+                            <button class="btn btn-outline-danger btn-sm mt-2">Approve Overtime</button>
+                        </div>
+                        <div class="insight-box" style="border-left-color: #f39c12;">
+                            <p style="margin: 0; font-size: 0.95rem;"><strong>Trend Warning:</strong> Public Works has a
+                                rising escalation trend (+4% this week) in Zone 4. Review material supply chains.</p>
+                            <button class="btn btn-outline-warning btn-sm mt-2">Open Audit Report</button>
+                        </div>
+                        <div class="insight-box" style="border-left-color: #27ae60; background: #f4fdf8;">
+                            <p style="margin: 0; font-size: 0.95rem;"><strong>Benchmark Success:</strong> Electricity
+                                Department is performing 18% above benchmark. Consider rotating their top officers to
+                                train others.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Drill Down Modal -->
+            <div class="modal-overlay hidden" id="dept-drill-modal" style="z-index: 2000;">
+                <div class="modal-content" style="max-width: 800px; width: 90%; text-align: left; padding: 2rem;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+                        <h2 id="modal-dept-title" style="margin: 0;"><i class="fa-solid fa-building"></i> Department
+                            Details</h2>
+                        <button class="btn-icon" id="close-dept-modal"><i class="fa-solid fa-xmark"
+                                style="font-size: 1.5rem;"></i></button>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                        <!-- Left: Current Tasks & Bottlenecks -->
+                        <div>
+                            <h4 style="margin-bottom: 1rem; color: var(--primary-color);">Current Priorities &amp;
+                                Bottlenecks</h4>
+                            <div class="insight-box mb-3" style="border-left-color: #e74c3c;">
+                                <strong style="color: #e74c3c;">Primary Bottleneck:</strong>
+                                <p style="margin-top: 0.25rem;">Lack of heavy machinery allocation delaying 14 active
+                                    tasks in East Zone.</p>
+                            </div>
+                            <h5 style="margin-bottom: 0.5rem; color: var(--text-dark);">Top Delayed Tasks:</h5>
+                            <ul style="padding-left: 1.2rem; color: var(--text-muted); font-size: 0.9rem;">
+                                <li>#JAN-8832: Sector 14 Structural Repair (Overdue 4 days)</li>
+                                <li>#JAN-8911: Route 2 Clearing (Overdue 2 days)</li>
+                                <li>#JAN-8945: Block C Assessment (Overdue 1 day)</li>
+                            </ul>
+                        </div>
+                        <!-- Right: Officer List & Performance -->
+                        <div>
+                            <h4 style="margin-bottom: 1rem; color: var(--primary-color);">Assigned Officers (Active
+                                Roster)</h4>
+                            <div class="officer-list" style="max-height: 200px; overflow-y: auto;">
+                                <div class="officer-item" style="padding: 0.5rem; margin-bottom: 0.5rem;">
+                                    <img src="https://ui-avatars.com/api/?name=Karan+Verma&amp;background=27ae60&amp;color=fff"
+                                        style="width: 32px; height: 32px;" />
+                                    <div class="officer-details">
+                                        <h5 style="margin:0;">Karan Verma</h5>
+                                        <p style="font-size:0.8rem;">Field Agent 12 Active</p>
+                                    </div>
+                                </div>
+                                <div class="officer-item" style="padding: 0.5rem; margin-bottom: 0.5rem;">
+                                    <img src="https://ui-avatars.com/api/?name=Neha+Joshi&amp;background=3498db&amp;color=fff"
+                                        style="width: 32px; height: 32px;" />
+                                    <div class="officer-details">
+                                        <h5 style="margin:0;">Neha Joshi</h5>
+                                        <p style="font-size:0.8rem;">Supervisor 4 Active</p>
+                                    </div>
+                                </div>
+                                <div class="officer-item" style="padding: 0.5rem; margin-bottom: 0.5rem;">
+                                    <img src="https://ui-avatars.com/api/?name=Vikram+Singh&amp;background=e74c3c&amp;color=fff"
+                                        style="width: 32px; height: 32px;" />
+                                    <div class="officer-details">
+                                        <h5 style="margin:0;">Vikram Singh</h5>
+                                        <p style="font-size:0.8rem;">Field Agent 28 Active (Overloaded)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem; text-align: right;">
+                        <button class="btn btn-primary"><i class="fa-solid fa-file-export"></i> Download Full
+                            Report</button>
+                    </div>
+                </div>
+            </div>
+            <!-- View: Officer Directory -->
+            <div class="admin-view hidden" id="view-officers">
+                <div class="view-header" style="margin-bottom: 2rem;">
+                    <div>
+                        <h2>Organizational Command Directory</h2>
+                        <p class="text-muted">Structured oversight of department hierarchies and civic response
+                            personnel.</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn-outline-primary"><i class="fa-solid fa-filter"></i> Filter</button>
+                        <button class="btn btn-primary"><i class="fa-solid fa-user-plus"></i> Add Personnel</button>
+                    </div>
+                </div>
+                <!-- Department 1: Water Supply -->
+                <div class="admin-panel" style="border-top: 4px solid #3498db; margin-bottom: 2rem;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
+                        <h3 style="margin: 0; color: #3498db;"><i class="fa-solid fa-faucet-drip"></i> Water Supply</h3>
+                        <button class="btn btn-outline-primary btn-sm">View Full Team <i
+                                class="fa-solid fa-angle-down"></i></button>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <!-- Head -->
+                        <div
+                            style="background: #f8faff; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
+                            <p
+                                style="margin:0 0 0.5rem 0; font-size:0.8rem; font-weight:bold; color:var(--text-muted); text-transform:uppercase;">
+                                Department Head</p>
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                                <div style="display:flex; align-items:center; gap: 1rem;">
+                                    <img src="https://ui-avatars.com/api/?name=Priya+Sharma&amp;background=3498db&amp;color=fff&amp;size=48"
+                                        style="border-radius: 50%;" />
+                                    <div>
+                                        <h4 style="margin:0; font-size:1.1rem;">Priya Sharma</h4>
+                                        <p style="margin:0; color:var(--text-muted); font-size:0.9rem;">Chief Water
+                                            Operations Officer</p>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 1.5rem; text-align: center; font-size: 0.85rem;">
+                                    <div><span style="display:block; color:var(--text-muted);">Active
+                                            Cases</span><strong style="font-size:1.1rem;">8</strong></div>
+                                    <div><span style="display:block; color:var(--text-muted);">Completion</span><strong
+                                            style="font-size:1.1rem; color:#27ae60;">96%</strong></div>
+                                    <div><span style="display:block; color:var(--text-muted);">Trust Score</span><strong
+                                            style="font-size:1.1rem;">98</strong></div>
+                                    <div style="align-self:center;"><span class="badge"
+                                            style="background:#27ae60;">Excellent</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Team -->
+                        <div
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1rem;">
+                            <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
+                                <div style="display:flex; align-items:center; gap: 1rem; margin-bottom: 0.75rem;">
+                                    <img src="https://ui-avatars.com/api/?name=Karan+Verma&amp;background=2c3e50&amp;color=fff&amp;size=40"
+                                        style="border-radius: 50%;" />
+                                    <div>
+                                        <h5 style="margin:0; font-size:1rem;">Karan Verma</h5>
+                                        <p style="margin:0; color:var(--text-muted); font-size:0.85rem;">Pipeline
+                                            Inspector</p>
+                                    </div>
+                                </div>
+                                <div
+                                    style="display: flex; justify-content: space-between; text-align: center; font-size: 0.8rem; background: #f8faff; padding: 0.5rem; border-radius: 4px;">
+                                    <div><span
+                                            style="display:block; color:var(--text-muted);">Active</span><strong>14</strong>
+                                    </div>
+                                    <div><span
+                                            style="display:block; color:var(--text-muted);">Completion</span><strong>88%</strong>
+                                    </div>
+                                    <div><span style="display:block; color:var(--text-muted);">Trust
+                                            Score</span><strong>85</strong></div>
+                                    <div style="align-self:center;"><span class="badge" style="background:#3498db;">On
+                                            Duty</span></div>
+                                </div>
+                            </div>
+                            <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
+                                <div style="display:flex; align-items:center; gap: 1rem; margin-bottom: 0.75rem;">
+                                    <img src="https://ui-avatars.com/api/?name=Neha+Joshi&amp;background=2c3e50&amp;color=fff&amp;size=40"
+                                        style="border-radius: 50%;" />
+                                    <div>
+                                        <h5 style="margin:0; font-size:1rem;">Neha Joshi</h5>
+                                        <p style="margin:0; color:var(--text-muted); font-size:0.85rem;">Field Engineer
+                                        </p>
+                                    </div>
+                                </div>
+                                <div
+                                    style="display: flex; justify-content: space-between; text-align: center; font-size: 0.8rem; background: #f8faff; padding: 0.5rem; border-radius: 4px;">
+                                    <div><span
+                                            style="display:block; color:var(--text-muted);">Active</span><strong>12</strong>
+                                    </div>
+                                    <div><span
+                                            style="display:block; color:var(--text-muted);">Completion</span><strong>92%</strong>
+                                    </div>
+                                    <div><span style="display:block; color:var(--text-muted);">Trust
+                                            Score</span><strong>91</strong></div>
+                                    <div style="align-self:center;"><span class="badge" style="background:#3498db;">On
+                                            Duty</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Department 2: Electricity Board -->
+                <div class="admin-panel" style="border-top: 4px solid #f39c12; margin-bottom: 2rem;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
+                        <h3 style="margin: 0; color: #f39c12;"><i class="fa-solid fa-bolt"></i> Electricity Board</h3>
+                        <button class="btn btn-outline-primary btn-sm">View Full Team <i
+                                class="fa-solid fa-angle-down"></i></button>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <!-- Head -->
+                        <div
+                            style="background: #fdfaf3; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
+                            <p
+                                style="margin:0 0 0.5rem 0; font-size:0.8rem; font-weight:bold; color:var(--text-muted); text-transform:uppercase;">
+                                Department Head</p>
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                                <div style="display:flex; align-items:center; gap: 1rem;">
+                                    <img src="https://ui-avatars.com/api/?name=Rajiv+Menon&amp;background=f39c12&amp;color=fff&amp;size=48"
+                                        style="border-radius: 50%;" />
+                                    <div>
+                                        <h4 style="margin:0; font-size:1.1rem;">Rajiv Menon</h4>
+                                        <p style="margin:0; color:var(--text-muted); font-size:0.9rem;">Chief Grid
+                                            Engineer</p>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 1.5rem; text-align: center; font-size: 0.85rem;">
+                                    <div><span style="display:block; color:var(--text-muted);">Active
+                                            Cases</span><strong style="font-size:1.1rem;">4</strong></div>
+                                    <div><span style="display:block; color:var(--text-muted);">Completion</span><strong
+                                            style="font-size:1.1rem; color:#27ae60;">98%</strong></div>
+                                    <div><span style="display:block; color:var(--text-muted);">Trust Score</span><strong
+                                            style="font-size:1.1rem;">99</strong></div>
+                                    <div style="align-self:center;"><span class="badge"
+                                            style="background:#27ae60;">Excellent</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Team -->
+                        <div
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1rem;">
+                            <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
+                                <div style="display:flex; align-items:center; gap: 1rem; margin-bottom: 0.75rem;">
+                                    <img src="https://ui-avatars.com/api/?name=Suresh+Patil&amp;background=2c3e50&amp;color=fff&amp;size=40"
+                                        style="border-radius: 50%;" />
+                                    <div>
+                                        <h5 style="margin:0; font-size:1rem;">Suresh Patil</h5>
+                                        <p style="margin:0; color:var(--text-muted); font-size:0.85rem;">Substation
+                                            Manager</p>
+                                    </div>
+                                </div>
+                                <div
+                                    style="display: flex; justify-content: space-between; text-align: center; font-size: 0.8rem; background: #fdfaf3; padding: 0.5rem; border-radius: 4px;">
+                                    <div><span
+                                            style="display:block; color:var(--text-muted);">Active</span><strong>28</strong>
+                                    </div>
+                                    <div><span
+                                            style="display:block; color:var(--text-muted);">Completion</span><strong>94%</strong>
+                                    </div>
+                                    <div><span style="display:block; color:var(--text-muted);">Trust
+                                            Score</span><strong>95</strong></div>
+                                    <div style="align-self:center;"><span class="badge" style="background:#3498db;">On
+                                            Duty</span></div>
+                                </div>
+                            </div>
+                            <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
+                                <div style="display:flex; align-items:center; gap: 1rem; margin-bottom: 0.75rem;">
+                                    <img src="https://ui-avatars.com/api/?name=Anjali+Gupta&amp;background=2c3e50&amp;color=fff&amp;size=40"
+                                        style="border-radius: 50%;" />
+                                    <div>
+                                        <h5 style="margin:0; font-size:1rem;">Anjali Gupta</h5>
+                                        <p style="margin:0; color:var(--text-muted); font-size:0.85rem;">Line Technician
+                                        </p>
+                                    </div>
+                                </div>
+                                <div
+                                    style="display: flex; justify-content: space-between; text-align: center; font-size: 0.8rem; background: #fdfaf3; padding: 0.5rem; border-radius: 4px;">
+                                    <div><span
+                                            style="display:block; color:var(--text-muted);">Active</span><strong>18</strong>
+                                    </div>
+                                    <div><span
+                                            style="display:block; color:var(--text-muted);">Completion</span><strong>91%</strong>
+                                    </div>
+                                    <div><span style="display:block; color:var(--text-muted);">Trust
+                                            Score</span><strong>88</strong></div>
+                                    <div style="align-self:center;"><span class="badge" style="background:#3498db;">On
+                                            Duty</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Department 3: Waste Management -->
+                <div class="admin-panel" style="border-top: 4px solid #8e44ad; margin-bottom: 2rem;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
+                        <h3 style="margin: 0; color: #8e44ad;"><i class="fa-solid fa-dumpster"></i> Waste Management
+                        </h3>
+                        <button class="btn btn-outline-primary btn-sm">View Full Team <i
+                                class="fa-solid fa-angle-down"></i></button>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <!-- Head -->
+                        <div
+                            style="background: #fbf8fc; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
+                            <p
+                                style="margin:0 0 0.5rem 0; font-size:0.8rem; font-weight:bold; color:var(--text-muted); text-transform:uppercase;">
+                                Department Head</p>
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                                <div style="display:flex; align-items:center; gap: 1rem;">
+                                    <img src="https://ui-avatars.com/api/?name=Amit+Desai&amp;background=8e44ad&amp;color=fff&amp;size=48"
+                                        style="border-radius: 50%;" />
+                                    <div>
+                                        <h4 style="margin:0; font-size:1.1rem;">Amit Desai</h4>
+                                        <p style="margin:0; color:var(--text-muted); font-size:0.9rem;">Director of
+                                            Sanitation</p>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 1.5rem; text-align: center; font-size: 0.85rem;">
+                                    <div><span style="display:block; color:var(--text-muted);">Active
+                                            Cases</span><strong style="font-size:1.1rem;">22</strong></div>
+                                    <div><span style="display:block; color:var(--text-muted);">Completion</span><strong
+                                            style="font-size:1.1rem; color:#e74c3c;">64%</strong></div>
+                                    <div><span style="display:block; color:var(--text-muted);">Trust Score</span><strong
+                                            style="font-size:1.1rem;">72</strong></div>
+                                    <div style="align-self:center;"><span class="badge"
+                                            style="background:#fbe3e4; color:#e74c3c;">Review Needed</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Team -->
+                        <div
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1rem;">
+                            <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
+                                <div style="display:flex; align-items:center; gap: 1rem; margin-bottom: 0.75rem;">
+                                    <img src="https://ui-avatars.com/api/?name=Sunita+Rao&amp;background=2c3e50&amp;color=fff&amp;size=40"
+                                        style="border-radius: 50%;" />
+                                    <div>
+                                        <h5 style="margin:0; font-size:1rem;">Sunita Rao</h5>
+                                        <p style="margin:0; color:var(--text-muted); font-size:0.85rem;">Fleet
+                                            Coordinator</p>
+                                    </div>
+                                </div>
+                                <div
+                                    style="display: flex; justify-content: space-between; text-align: center; font-size: 0.8rem; background: #fbf8fc; padding: 0.5rem; border-radius: 4px;">
+                                    <div><span
+                                            style="display:block; color:var(--text-muted);">Active</span><strong>18</strong>
+                                    </div>
+                                    <div><span
+                                            style="display:block; color:var(--text-muted);">Completion</span><strong>76%</strong>
+                                    </div>
+                                    <div><span style="display:block; color:var(--text-muted);">Trust
+                                            Score</span><strong>80</strong></div>
+                                    <div style="align-self:center;"><span class="badge" style="background:#3498db;">On
+                                            Duty</span></div>
+                                </div>
+                            </div>
+                            <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
+                                <div style="display:flex; align-items:center; gap: 1rem; margin-bottom: 0.75rem;">
+                                    <img src="https://ui-avatars.com/api/?name=Vikram+Singh&amp;background=e74c3c&amp;color=fff&amp;size=40"
+                                        style="border-radius: 50%;" />
+                                    <div>
+                                        <h5 style="margin:0; font-size:1rem;">Vikram Singh</h5>
+                                        <p style="margin:0; color:var(--text-muted); font-size:0.85rem;">Zone Supervisor
+                                        </p>
+                                    </div>
+                                </div>
+                                <div
+                                    style="display: flex; justify-content: space-between; text-align: center; font-size: 0.8rem; background: #fdf3f2; padding: 0.5rem; border-radius: 4px;">
+                                    <div><span style="display:block; color:var(--text-muted);">Active</span><strong
+                                            style="color:#e74c3c;">45</strong></div>
+                                    <div><span style="display:block; color:var(--text-muted);">Completion</span><strong
+                                            style="color:#e74c3c;">38%</strong></div>
+                                    <div><span style="display:block; color:var(--text-muted);">Trust Score</span><strong
+                                            style="color:#e74c3c;">64</strong></div>
+                                    <div style="align-self:center;"><span class="badge"
+                                            style="background:#e74c3c;">Flagged</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Department 4: Public Works -->
+                <div class="admin-panel" style="border-top: 4px solid #7f8c8d; margin-bottom: 2rem;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
+                        <h3 style="margin: 0; color: #7f8c8d;"><i class="fa-solid fa-road"></i> Public Works</h3>
+                        <button class="btn btn-outline-primary btn-sm">View Full Team <i
+                                class="fa-solid fa-angle-down"></i></button>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <!-- Head -->
+                        <div
+                            style="background: #f8f9f9; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
+                            <p
+                                style="margin:0 0 0.5rem 0; font-size:0.8rem; font-weight:bold; color:var(--text-muted); text-transform:uppercase;">
+                                Department Head</p>
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                                <div style="display:flex; align-items:center; gap: 1rem;">
+                                    <img src="https://ui-avatars.com/api/?name=Ravi+Kumar&amp;background=7f8c8d&amp;color=fff&amp;size=48"
+                                        style="border-radius: 50%;" />
+                                    <div>
+                                        <h4 style="margin:0; font-size:1.1rem;">Ravi Kumar</h4>
+                                        <p style="margin:0; color:var(--text-muted); font-size:0.9rem;">Chief Civil
+                                            Engineer</p>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 1.5rem; text-align: center; font-size: 0.85rem;">
+                                    <div><span style="display:block; color:var(--text-muted);">Active
+                                            Cases</span><strong style="font-size:1.1rem;">12</strong></div>
+                                    <div><span style="display:block; color:var(--text-muted);">Completion</span><strong
+                                            style="font-size:1.1rem; color:#f39c12;">82%</strong></div>
+                                    <div><span style="display:block; color:var(--text-muted);">Trust Score</span><strong
+                                            style="font-size:1.1rem;">88</strong></div>
+                                    <div style="align-self:center;"><span class="badge"
+                                            style="background:rgba(243, 156, 18, 0.1); color:#f39c12;">Monitoring</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Team -->
+                        <div
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1rem;">
+                            <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
+                                <div style="display:flex; align-items:center; gap: 1rem; margin-bottom: 0.75rem;">
+                                    <img src="https://ui-avatars.com/api/?name=Sneha+Reddy&amp;background=2c3e50&amp;color=fff&amp;size=40"
+                                        style="border-radius: 50%;" />
+                                    <div>
+                                        <h5 style="margin:0; font-size:1rem;">Sneha Reddy</h5>
+                                        <p style="margin:0; color:var(--text-muted); font-size:0.85rem;">Asphalt
+                                            Supervisor</p>
+                                    </div>
+                                </div>
+                                <div
+                                    style="display: flex; justify-content: space-between; text-align: center; font-size: 0.8rem; background: #f8f9f9; padding: 0.5rem; border-radius: 4px;">
+                                    <div><span
+                                            style="display:block; color:var(--text-muted);">Active</span><strong>15</strong>
+                                    </div>
+                                    <div><span
+                                            style="display:block; color:var(--text-muted);">Completion</span><strong>84%</strong>
+                                    </div>
+                                    <div><span style="display:block; color:var(--text-muted);">Trust
+                                            Score</span><strong>87</strong></div>
+                                    <div style="align-self:center;"><span class="badge" style="background:#3498db;">On
+                                            Duty</span></div>
+                                </div>
+                            </div>
+                            <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
+                                <div style="display:flex; align-items:center; gap: 1rem; margin-bottom: 0.75rem;">
+                                    <img src="https://ui-avatars.com/api/?name=Arjun+Mehta&amp;background=2c3e50&amp;color=fff&amp;size=40"
+                                        style="border-radius: 50%;" />
+                                    <div>
+                                        <h5 style="margin:0; font-size:1rem;">Arjun Mehta</h5>
+                                        <p style="margin:0; color:var(--text-muted); font-size:0.85rem;">Site Inspector
+                                        </p>
+                                    </div>
+                                </div>
+                                <div
+                                    style="display: flex; justify-content: space-between; text-align: center; font-size: 0.8rem; background: #f8f9f9; padding: 0.5rem; border-radius: 4px;">
+                                    <div><span
+                                            style="display:block; color:var(--text-muted);">Active</span><strong>21</strong>
+                                    </div>
+                                    <div><span
+                                            style="display:block; color:var(--text-muted);">Completion</span><strong>79%</strong>
+                                    </div>
+                                    <div><span style="display:block; color:var(--text-muted);">Trust
+                                            Score</span><strong>84</strong></div>
+                                    <div style="align-self:center;"><span class="badge" style="background:#3498db;">On
+                                            Duty</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Global Directory Search (Secondary) -->
+                <div class="admin-panel mt-4">
+                    <div class="panel-header">
+                        <h3>Global Directory Search</h3>
+                    </div>
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem; margin-bottom: 1.5rem;">
+                        <div style="flex: 1; position: relative;">
+                            <i class="fa-solid fa-search text-muted"
+                                style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);"></i>
+                            <input class="styled-input" placeholder="Search officers by name, ID, or zone..."
+                                style="padding-left: 2.5rem; width: 100%;" type="text" />
+                        </div>
+                        <button class="btn btn-outline-primary">Search Directory</button>
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table style="width:100%; border-collapse:collapse; text-align:left; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="background:#f8faff; border-bottom:2px solid var(--border-color);">
+                                    <th style="padding:0.75rem; color:var(--text-muted); font-weight:600;">Officer</th>
+                                    <th style="padding:0.75rem; color:var(--text-muted); font-weight:600;">Department
+                                    </th>
+                                    <th style="padding:0.75rem; color:var(--text-muted); font-weight:600;">Role</th>
+                                    <th style="padding:0.75rem; color:var(--text-muted); font-weight:600;">Active Cases
+                                    </th>
+                                    <th style="padding:0.75rem; color:var(--text-muted); font-weight:600;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid var(--border-color);">
+                                    <td style="padding:0.75rem; font-weight:500;">Priya Sharma</td>
+                                    <td style="padding:0.75rem;">Water Supply</td>
+                                    <td style="padding:0.75rem;">Chief Water Operations Officer</td>
+                                    <td style="padding:0.75rem;">8</td>
+                                    <td style="padding:0.75rem;"><span class="badge"
+                                            style="background:#27ae60;">Excellent</span></td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border-color);">
+                                    <td style="padding:0.75rem; font-weight:500;">Karan Verma</td>
+                                    <td style="padding:0.75rem;">Water Supply</td>
+                                    <td style="padding:0.75rem;">Pipeline Inspector</td>
+                                    <td style="padding:0.75rem;">14</td>
+                                    <td style="padding:0.75rem;"><span class="badge" style="background:#3498db;">On
+                                            Duty</span></td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border-color);">
+                                    <td style="padding:0.75rem; font-weight:500;">Vikram Singh</td>
+                                    <td style="padding:0.75rem;">Waste Management</td>
+                                    <td style="padding:0.75rem;">Zone Supervisor</td>
+                                    <td style="padding:0.75rem; color:#e74c3c;">45</td>
+                                    <td style="padding:0.75rem;"><span class="badge"
+                                            style="background:#e74c3c;">Flagged</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- View: Accountability Center -->
+            <div class="admin-view hidden" id="view-audits">
+                <div class="view-header">
+                    <div>
+                        <h2>Accountability Center</h2>
+                        <p class="text-muted">This section monitors officer performance, complaint resolution integrity,
+                            deadline adherence, and escalated cases.</p>
+                    </div>
+                    <div class="header-actions"><button class="btn btn-outline-primary"><i
+                                class="fa-solid fa-download"></i> Export Log</button></div>
+                </div>
+                <!-- Accountability Metrics Cards -->
+                <div class="admin-stats-grid" style="margin-bottom: 2rem;">
+                    <div class="stat-card" style="border-left: 4px solid #e74c3c;">
+                        <div class="stat-icon" style="background: rgba(231, 76, 60, 0.1); color: #e74c3c;"><i
+                                class="fa-solid fa-clock-rotate-left"></i></div>
+                        <div class="stat-details">
+                            <p>Delayed Cases</p>
+                            <h3>142</h3>
+                            <span class="trend negative"><i class="fa-solid fa-arrow-trend-up"></i> +12% this
+                                week</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" style="border-left: 4px solid #f39c12;">
+                        <div class="stat-icon" style="background: rgba(243, 156, 18, 0.1); color: #f39c12;"><i
+                                class="fa-solid fa-folder-open"></i></div>
+                        <div class="stat-details">
+                            <p>Reopened Complaints</p>
+                            <h3>38</h3>
+                            <span class="trend neutral"><i class="fa-solid fa-minus"></i> Stable</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" style="border-left: 4px solid #9b59b6;">
+                        <div class="stat-icon" style="background: rgba(155, 89, 182, 0.1); color: #9b59b6;"><i
+                                class="fa-solid fa-turn-up"></i></div>
+                        <div class="stat-details">
+                            <p>Escalated Issues</p>
+                            <h3>89</h3>
+                            <span class="trend negative"><i class="fa-solid fa-arrow-trend-up"></i> +5% this week</span>
+                        </div>
+                    </div>
+                    <div class="stat-card" style="border-left: 4px solid #c0392b;">
+                        <div class="stat-icon" style="background: rgba(192, 57, 43, 0.1); color: #c0392b;"><i
+                                class="fa-solid fa-calendar-xmark"></i></div>
+                        <div class="stat-details">
+                            <p>Missed Deadlines</p>
+                            <h3>24</h3>
+                            <span class="trend positive"><i class="fa-solid fa-arrow-trend-down"></i> -8% this
+                                week</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="dashboard-grid" style="margin-bottom: 2rem;">
+                    <!-- Officer Performance Watchlist -->
+                    <div class="grid-left" style="grid-column: span 1;">
+                        <div class="admin-panel" style="height: 100%;">
+                            <div class="panel-header">
+                                <h3>Officer Performance Watchlist</h3>
+                            </div>
+                            <div style="overflow-x: auto;">
+                                <table
+                                    style="width: 100%; border-collapse: collapse; margin-top: 0.5rem; font-size: 0.9rem;">
+                                    <thead>
+                                        <tr
+                                            style="background: #f8faff; border-bottom: 2px solid var(--border-color); text-align: left;">
+                                            <th style="padding: 0.75rem; color: var(--text-muted); font-weight: 600;">
+                                                Officer</th>
+                                            <th
+                                                style="padding: 0.75rem; color: var(--text-muted); font-weight: 600; text-align: center;">
+                                                Assigned</th>
+                                            <th
+                                                style="padding: 0.75rem; color: var(--text-muted); font-weight: 600; text-align: center;">
+                                                Completed</th>
+                                            <th
+                                                style="padding: 0.75rem; color: var(--text-muted); font-weight: 600; text-align: center;">
+                                                Delay %</th>
+                                            <th
+                                                style="padding: 0.75rem; color: var(--text-muted); font-weight: 600; text-align: center;">
+                                                Trust</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="border-bottom: 1px solid var(--border-color);">
+                                            <td style="padding: 0.75rem; font-weight: 500;">Vikram Singh</td>
+                                            <td style="padding: 0.75rem; text-align: center;">45</td>
+                                            <td style="padding: 0.75rem; text-align: center;">12</td>
+                                            <td
+                                                style="padding: 0.75rem; text-align: center; color: #e74c3c; font-weight: 600;">
+                                                38%</td>
+                                            <td style="padding: 0.75rem; text-align: center;"><span class="badge"
+                                                    style="background:#fbe3e4; color:#e74c3c;">64</span></td>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid var(--border-color);">
+                                            <td style="padding: 0.75rem; font-weight: 500;">Suresh Patil</td>
+                                            <td style="padding: 0.75rem; text-align: center;">28</td>
+                                            <td style="padding: 0.75rem; text-align: center;">22</td>
+                                            <td style="padding: 0.75rem; text-align: center; color: #f39c12;">15%</td>
+                                            <td style="padding: 0.75rem; text-align: center;"><span class="badge"
+                                                    style="background:rgba(243, 156, 18, 0.1); color:#f39c12;">78</span>
+                                            </td>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid var(--border-color);">
+                                            <td style="padding: 0.75rem; font-weight: 500;">Anjali Gupta</td>
+                                            <td style="padding: 0.75rem; text-align: center;">32</td>
+                                            <td style="padding: 0.75rem; text-align: center;">31</td>
+                                            <td style="padding: 0.75rem; text-align: center; color: #27ae60;">2%</td>
+                                            <td style="padding: 0.75rem; text-align: center;"><span class="badge"
+                                                    style="background:rgba(39, 174, 96, 0.1); color:#27ae60;">97</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Integrity Alerts Section -->
+                    <div class="grid-right" style="grid-column: span 1;">
+                        <div class="admin-panel ai-insight-panel" style="height: 100%;">
+                            <div class="panel-header" style="border-bottom: none; margin-bottom: 0;">
+                                <h3><i class="fa-solid fa-shield-halved text-danger"></i> Integrity Alerts</h3>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+                                <div class="insight-box" style="border-left-color: #f39c12; background: #fffdf8;">
+                                    <p style="margin: 0; font-size: 0.95rem;"><strong>Verification Failed:</strong>
+                                        Complaint #JAN-9012 reopened due to insufficient proof provided by officer.</p>
+                                </div>
+                                <div class="insight-box" style="border-left-color: #e74c3c; background: #fdf3f2;">
+                                    <p style="margin: 0; font-size: 0.95rem;"><strong>Intervention Required:</strong>
+                                        Officer reassignment triggered in East Zone for delayed response (exceeded 72hr
+                                        SLA).</p>
+                                </div>
+                                <div class="insight-box" style="border-left-color: #9b59b6; background: #fbf8fc;">
+                                    <p style="margin: 0; font-size: 0.95rem;"><strong>System Warning:</strong> High
+                                        escalation trend detected in Waste Management over the last 48 hours.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Action Log Table -->
+                <div class="admin-panel">
+                    <div class="panel-header">
+                        <h3>Administrative Action Log</h3>
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table style="width:100%; border-collapse:collapse; text-align:left; margin-top: 0.5rem;">
+                            <thead>
+                                <tr style="background:#f8faff; border-bottom:1px solid var(--border-color);">
+                                    <th style="padding:1rem; color: var(--text-muted); font-weight: 600;">Timestamp</th>
+                                    <th style="padding:1rem; color: var(--text-muted); font-weight: 600;">Action</th>
+                                    <th style="padding:1rem; color: var(--text-muted); font-weight: 600;">Admin User
+                                    </th>
+                                    <th style="padding:1rem; color: var(--text-muted); font-weight: 600;">Ref ID</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid var(--border-color);">
+                                    <td style="padding:1rem;">Today, 10:45 AM</td>
+                                    <td style="padding:1rem;">Priority Overridden</td>
+                                    <td style="padding:1rem;">admin_demo</td>
+                                    <td style="padding:1rem; font-family: monospace;">#JAN-9012</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border-color);">
+                                    <td style="padding:1rem;">Yesterday, 04:20 PM</td>
+                                    <td style="padding:1rem;">Officer Reassigned</td>
+                                    <td style="padding:1rem;">super_admin</td>
+                                    <td style="padding:1rem; font-family: monospace;">#JAN-8834</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border-color);">
+                                    <td style="padding:1rem;">Yesterday, 02:10 PM</td>
+                                    <td style="padding:1rem;">Escalation Ext. Approved</td>
+                                    <td style="padding:1rem;">super_admin</td>
+                                    <td style="padding:1rem; font-family: monospace;">#JAN-8802</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- View: System Settings -->
+            <div class="admin-view hidden" id="view-settings">
+                <div class="view-header">
+                    <div>
+                        <h2>System Settings</h2>
+                        <p class="text-muted">Configure platform rules, thresholds, and operational parameters.</p>
+                    </div>
+                </div>
+                <div class="admin-panel">
+                    <div style="max-width:600px;">
+                        <div class="form-group mb-4">
+                            <label style="display:block; font-weight:bold; margin-bottom:0.5rem;">Escalation SLA
+                                Threshold (Hours)</label>
+                            <input class="styled-input" style="width:100px;" type="number" value="24" />
+                        </div>
+                        <div class="form-group mb-4">
+                            <label style="display:block; font-weight:bold; margin-bottom:0.5rem;">Auto-Assign Radius
+                                (KM)</label>
+                            <input class="styled-input" style="width:100px;" type="number" value="5" />
+                        </div>
+                        <div class="form-group mb-4" style="display:flex; align-items:center; gap:1rem;">
+                            <input checked="" id="ai-auto" style="width:20px; height:20px;" type="checkbox" />
+                            <label for="ai-auto" style="margin:0; font-weight:bold;">Enable AI
+                                Auto-Categorization</label>
+                        </div>
+                        <button class="btn btn-primary mt-3">Save Configuration</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </section>
+    <script src="admin.js"></script>
+    <script src="i18n.js"></script>
+    <script src="jansetu-core.js"></script>
+    <script src="chatbot.js"></script>
 </body>
+
 </html>
