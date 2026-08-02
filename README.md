@@ -120,12 +120,6 @@ CREATE TABLE IF NOT EXISTS complaints (
    npm start
    ```
 
-4. **Access the application in your browser:**
-   - **Citizen Portal:** [http://localhost:5000/](http://localhost:5000/)
-   - **Officer Dashboard:** [http://localhost:5000/officer.html](http://localhost:5000/officer.html)
-   - **Admin Dashboard:** [http://localhost:5000/admin.html](http://localhost:5000/admin.html)
-   - **Backend API Test:** [http://localhost:5000/api/test](http://localhost:5000/api/test)
-
 ---
 
 ## 📡 Active REST API Endpoints
